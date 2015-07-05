@@ -1,0 +1,11 @@
+<object name="portal_skins">
+<object name="adi_forumail"
+meta_type="Filesystem Directory View"
+directory="adi.forumail:skins/adi_forumail"/>
+
+<skin-path name="adi.forumail" based-on="Sunburst Theme">
+<layer name="adi_forumail" insert-after="custom"/>
+
+</skin-path>
+
+</object>

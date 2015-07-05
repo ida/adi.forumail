@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<metadata>
+<version>1000</version>
+<!--
+<dependencies>
+<dependency>profile-mailtoplone.base:default</dependency>
+<dependency>profile-collective.contentrules.mailtogroup:default</dependency>
+<dependency>profile-plone.api:default</dependency></dependencies>
+-->
+</metadata>

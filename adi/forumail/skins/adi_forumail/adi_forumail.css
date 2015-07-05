@@ -1,0 +1,43 @@
+body{
+/*
+background-color:black;
+color:#999;
+*/
+line-height: 1.5em;
+}
+body:before{content:"Congrats, adi_forumail.css has been loaded succesfully!"}
+
+a,a:link,a:visited { color: blue; text-decoration: none; }
+
+#content {
+    outline:1px dotted lightgreen;
+margin-left: 0.85em;
+}
+
+.item { /* post */
+    outline:1px dotted red;
+margin: 0.85em 0;
+position: relative;
+}
+
+a.summary { /* post-title */
+font-size: 88%;
+}
+
+#content div.documentByLine { /* post-author+date */
+/*
+position: absolute;
+right: 0;
+margin-top: -1.5em;
+*/
+}
+
+
+#parent-fieldname-text .gmail_extra, /* gmail-quote */
+#parent-fieldname-text > div > div > div, /* gmx-quote */
+.portaltype-collection #viewlet-below-content-title div.documentByLine,
+.portaltype-collection #parent-fieldname-title,
+.documentModified span, /* ByLine: 'Last modified' */
+#edit-bar { 
+display: none; 
+}
