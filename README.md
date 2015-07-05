@@ -27,6 +27,12 @@ Download the installer script
 Open the script with a text-editor and enter the needed mailaccount-credentials.
 
 
+Make the script executable
+--------------------------
+
+    $ chmod +x buildout_forumail.sh
+
+
 Execute the installer script
 ----------------------------
 
