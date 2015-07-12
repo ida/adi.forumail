@@ -37,9 +37,9 @@ rm -rf $instance_dir; mkdir -p $instance_dir; cd $instance_dir;
 virtualenv py-env; . pyenv/bin/activate
 pip install setuptools -U; pip install zc.buildout
 mkdir -p $eggs_dir ; mkdir -p $dev_eggs_dir; cd $dev_eggs_dir
+git clone https://github.com/ida/adi.forumail
 git clone https://github.com/ida/collective.contentrules.mailtogroup --branch $forum_name 
 git clone https://github.com/ida/mailtoplone.base  --branch $forum_name
-git clone https://github.com/ida/adi.forumail --branch $forum_name
 
 ####  Set plonesite-mail-credentials via profile/default-xml-files:
 pro=$dev_eggs_dir/adi.forumail/adi/forumail/profiles/default
