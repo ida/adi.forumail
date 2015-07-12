@@ -17,6 +17,14 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="forumail"
+      title="adi.forumail settings"
+      directory="profiles/forumail"
+      description="mailsettings"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
   <cmf:registerDirectory name="adi_forumail"/>
 
   <genericsetup:importStep

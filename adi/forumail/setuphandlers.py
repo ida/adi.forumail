@@ -1,37 +1,60 @@
-from Products.CMFCore.utils import getToolByName
 from Products.Five.utilities.marker import mark
 from mailtoplone.base.interfaces import IBlogMailDropBoxMarker 
-from plone.contentrules.engine.interfaces import IRuleStorage
-from plone.app.contentrules.rule import Rule
+from plone import api
 from plone.app.contentrules.api import assign_rule
-from zope.component import getMultiAdapter
 
-def doOnInstall(context):
+def doOnInstall(portal):
 
-    qi = getToolByName(context, 'portal_quickinstaller')
-    prods = qi.listInstallableProducts(skipInstalled=False)
-    for prod in prods: # Do this only on an initial install, not on re-installs:
-        if (prod['id'] == 'adi.forumail') and (prod['status'] == 'uninstalled'):
+    app_name = 'adi.forumail'
 
-            urltool = getToolByName(context, 'portal_url')
-            portal = urltool.getPortalObject()
-            typestool = getToolByName(context, 'portal_types')
+    INI_INSTALL = False
+    qi = portal.portal_quickinstaller
+    addons = qi.listInstallableProducts(skipInstalled=False)
 
-            # Create dropbox:
-            dropbox = typestool.constructContent(type_name="Folder", container=portal, id='dropbox', Title='Dropbox')
-            # Assign interface:
-            mark(portal.dropbox, IBlogMailDropBoxMarker)
+    for addon in addons:
+        if (addon['id'] == app_name) and (addon['status'] == 'new'):
+            INI_INSTALL = True
 
-            # Assign contentrule:
-            assign_rule(portal.dropbox, 'rule-1')
+    if INI_INSTALL:
+        forum_name = app_name.split('.')[-1]
+        forum_title = forum_name.title()
+        mail_from = portal.getProperty('email_from_address')
+        mail_domain = mail_from.split('@')[1]
+        setup_tool = portal.portal_setup
+        user_name = forum_name + 'er'
+        user_mail = user_name + '@' + mail_domain
+        group_name = user_name + 's'
+        group_mail = group_name + '@' + mail_domain
+        mail_to = group_mail
 
-            # Update dropbox in catalogue after changes:
-            portal.dropbox.reindexObject()
-                    
+        # Create forum-container:
+        folder = api.content.create(type='Folder', title=forum_title, container=portal)
+        # Assign mailtoplone.base-interface to it:
+        mark(folder, IBlogMailDropBoxMarker)
+        # Create a group:
+        api.group.create(groupname=group_name, title=group_name.title())
+        # Set permissions for group on container:
+        folder.manage_setLocalRoles(group_name, ['Contributor', 'Reader'])
+        # Update changes in DB-index-cache, a.k.a portal_catalogue:
+        folder.reindexObject()
+        folder.reindexObjectSecurity()
+        # Now, we have the group and container, load contentrules.xml of profile 'forumname',
+        # to make our rule available and selectable in the Plone-site:
+        setup_tool.runAllImportStepsFromProfile('profile-' + app_name + ':' + forum_name, ignore_dependencies=True)
+        # Then, assign contentrule to container. Note: rule- and profile-name must equal forum_name!
+        assign_rule(folder, forum_name)
+
+        # Add a group-member (do this before creating first welcome-post, to check, if notimail works):
+        api.user.create(username=user_name, password=user_name, email=user_mail, properties=dict(fullname=user_name))
+        api.group.add_user(groupname=group_name, username=user_name)
+
+        # Create a first welcome-post:
+        post = api.content.create(type='Document', title='Welcome to the Forum of "%s"!'%portal.Title(), text='Express yourself, don\'t repress yourself.', container=folder)
+        post.reindexObject()
 
 def setupVarious(context):
     portal = context.getSite()
+    # Make sure, profile has been imported, otherwise will be executed also, when barely running buildout:
     if context.readDataFile('adi.forumail.marker.txt') is None:
         return
-
     doOnInstall(portal)

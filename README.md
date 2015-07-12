@@ -1,14 +1,40 @@
 Introduction
 ============
 
-For now, an experimental proof of concept for a mailinglist/forum-hybrid, realized with Plone.
+An experimental proof of concept for a mailinglist/forum-hybrid, realized with Plone.
 
-Preparation
-===========
+For development-purposes only:
 
-You need a mail-account and -server for the mailinglist.
-A filter must be set, to let only mails of permitted senders
-(=Plonesite-users) come through to the inbox.
+- Mail-account-password will be stored in plaintext two times. Changeable with:
+
+    $ crontab -e
+
+    $ vim ~/forumail/dev-addons/adi.forumail/adi/forumail/profiles/default/mailhost.xml
+
+
+- Mail-inbox needs a filter, to check, whether a sender is a permitted forum's participant.
+
+
+Requirements
+=============
+
+- Operating system is unixish.
+
+- Min. sys-pckgs Plone needs, preinstalled. And git.
+
+- You have at least two mail-accounts with the following usernames at the same domain:
+
+    - 'forumail' -> 'From:'-address for mail-notificas, forum's inbox.
+
+    - 'forumailers' -> 'To:'-address for mail-notificas, gets what groupmembers get.
+                        Must differ to 'From:'-address, to not create an infinite loop.
+
+- Optionally also:
+
+    - 'forumailer' -> Example-user, belonging to the group 'forumailers'.
+                      Should become a notification-mail with the initially
+                      created welcome-post after install, if everything went well.
+
 
 Dependencies
 ============
@@ -16,81 +42,73 @@ Dependencies
 Development-versions of mailtoplone.base and collective.contentrules.mailtogroup,
 will be installed of script automatically.
 
+
+
 Installation
 ============
+
+The installer-script creates a folder in your $HOME called 'forumail' and
+installs Plone and this addon in it.
+
 
 Download the installer script
 -----------------------------
 
     $ wget https://raw.githubusercontent.com/ida/adi.forumail/master/buildout_forumail.sh
 
+
+
+Set credentials in it
+---------------------
+
 Open the script with a text-editor and enter the needed mailaccount-credentials.
 
 
-Make the script executable
---------------------------
+
+Make it executable
+------------------
 
     $ chmod +x buildout_forumail.sh
 
 
-Execute the installer script
-----------------------------
+Execute it
+----------
 
     $ ./buildout_forumail.sh
 
 
-- It creates a folder '~/.virtualenv' and installs buildout 
-in it, isolation is a good idea, here.
-
-- It creates a folder '~/.buildout/eggs', to store the 
-needed sources.
-
-- It will create a folder named 'instance' right where you 
-are, to be the home of server and dev-addons,
-do the installs and start server in foreground.
-
-- It enters six crons, to achieve a period of ten seconds
-  for triggering the mail-inbox-lookup and dropping them to Plone.
-  In case, you want to remove them again, you can do this with:
-  
-    $ crontab -e
+After a while you should see "ZOPE ready to handle requests" at the prompt.
 
 
-If everything went fine, after a while, 
-you should see "ZOPE ready to handle requests" at the prompt.
+Usage
+=====
 
-
-Enter the Plonesite's mailsettings
-----------------------------------
-
-Open 'http://localhost:8080/Plone/mail-controlpanel in a browser, set credentials.
-
-
-
-Create users and assign them to a group
----------------------------------------
-
-Create user's via 'http://localhost:8080/Plone/usergroup-userprefs',
-assign the wanted participants to the group 'Reviewers' (TODO: Create dedicated Group).
-
-!!! Make sure, you don't have a user with the same email-adress as the inbox,
-    that'll create an infinite circuit of dropping a mail to plone, 
-    get notified via mail, drop that new mail...
-
-
-Grant permissions on container (TODO: do programatically)
-------------------------------
-Go to 'http://localhost:8080/Plone/dropbox/sharing', 
-grant 'Can add'-permission to group Reviewers.
-
-If you don't want to publish the dropbox-folder, also add 'Can view'.
-
-
-Give it a go
+Access forum
 ------------
 
-- Mails landing in your specified inbox should be automatically be pushed to the dropbox-folder.
+In a browser open 'localhost:8080/Plone/forumail'.
 
-- Users of group Reviewers, can add (news-)items in the dropbox-folder, 
-all Reviewers will be notified of the new post with a mail, containing all the bodytext.
+Login with 'admin:'admin', or 'forumailer:forumailer', or any member of the group 'forumailers'.
 
+
+Add post via Web-UI
+-------------------
+
+Click 'Add new...' -> 'Page', fill out form, save.
+
+
+Reply to post via Web-UI
+------------------------
+
+TODO
+
+Add post via mail
+-----------------
+
+As a groupmember (if usermail=fromaddress) send a mail to 'forumail@[YOURMAILDOMAIN]'.
+Add tags (=categories) in body, like this: '[tag1,tag2,tag3]'.
+
+Reply to post via mail
+----------------------
+
+Reply to the mail-notification of an added post, leave subject untouched.

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+ <contentrules>
+  <rule name="forumail" title="Forumail" cascading="False" description=""
+    enabled="True" event="zope.lifecycleevent.interfaces.IObjectAddedEvent"
+    stop-after="False">
+   <conditions/>
+   <actions>
+    <action type="plone.actions.MailGroup">
+     <property name="source"/>
+     <property name="message">${text}</property>
+     <property name="members"/>
+     <property name="groups"><element>forumailers</element></property>
+     <property name="subject">${title}</property>
+     <property name="message">${text}
+----
+${subject}
+----
+${tags}
+     </property>
+    </action>
+   </actions>
+  </rule>
+ <assignment name="forumail" bubbles="True" enabled="True" location="forumail"/>
+</contentrules>

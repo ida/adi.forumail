@@ -37,7 +37,6 @@ margin-top: -1.5em;
 #parent-fieldname-text > div > div > div, /* gmx-quote */
 .portaltype-collection #viewlet-below-content-title div.documentByLine,
 .portaltype-collection #parent-fieldname-title,
-.documentModified span, /* ByLine: 'Last modified' */
-#edit-bar { 
+.documentModified span {
 display: none; 
 }
