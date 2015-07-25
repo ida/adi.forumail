@@ -1,20 +1,20 @@
 # Required, set at least:
 mailbox_username=asmith
-mailbox_domain=gmail.com
+mailbox_domain=adomain.org
 mailbox_password='yourSuperSecretPassword'
 
 mailbox_address=$mailbox_username@$mailbox_domain
 mailbox_name=$mailbox_username
 mailbox_server=$mailbox_domain
 imap_server=imap.$mailbox_server
-smtp_server=localhost # smtp.$mailbox_server
+smtp_server=smtp.$mailbox_server
 imap_port=993
 smtp_port=25 #465
 
 # Optionally change:
-instance_dir=$HOME/tmp/$forum_name
-eggs_dir=$HOME/.buildout/eggs # $instance_dir/addons
-dev_eggs_dir=$HOME/repos #$instance_dir/dev-addons
+instance_dir=$HOME/$forum_name
+eggs_dir=$instance_dir/eggs
+dev_eggs_dir=$instance_dir/dev-addons
 plone_version='4.3.5'
 
 #####################################################################
