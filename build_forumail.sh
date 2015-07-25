@@ -1,38 +1,33 @@
-forum_name='forumail' # Do *not* change this one :-)
-
-# Must haves, you gotta set at least these two:
-mailbox_password=')§)DH"kdow3o330d"D\+'
+# Required, set at least:
+mailbox_username=asmith
 mailbox_domain=gmail.com
+mailbox_password='yourSuperSecretPassword'
 
-# And doublecheck the following vars, based on good assumptions:
-mailbox_username=$forum_name
-mailbox_adress=$mailbox_username@$mailbox_domain
-mailbox_name=$mailbox_adress
+mailbox_address=$mailbox_username@$mailbox_domain
+mailbox_name=$mailbox_username
 mailbox_server=$mailbox_domain
 imap_server=imap.$mailbox_server
-smtp_server=smtp.$mailbox_server
+smtp_server=localhost # smtp.$mailbox_server
 imap_port=993
-smtp_port=25
+smtp_port=25 #465
 
-# Change optionally:
-instance_dir=$HOME/$forum_name
+# Optionally change:
+instance_dir=$HOME/tmp/$forum_name
 eggs_dir=$HOME/.buildout/eggs # $instance_dir/addons
-dev_eggs_dir=$instance_dir/dev-addons
+dev_eggs_dir=$HOME/repos #$instance_dir/dev-addons
 plone_version='4.3.5'
 
-# Very well done, save, exit and make
-# sure this script is executable:
-# $ chmod +x buildout_forumail.sh
-# Then execute it:
-# $ ./buildout_forumail.sh
-# Thanks! Oh look: A dragon...
+#####################################################################
+############ Don't change anything after this line.  ################
+#####################################################################
 
-# Hardies, do not change:
+# Hardies:
+forum_name='forumail'
 mailtoplone_folder=http://admin:admin@localhost:8080/Plone/$forum_name
 mailtoplone_script=$dev_eggs_dir/mailtoplone.base/mailtoplone/base/scripts/fetchemail
 mailtoplone_command="${mailtoplone_script} -u ${mailtoplone_folder} -i ${imap_server} -t ${imap_port} -e ${mailbox_name} -p ${mailbox_password}"
 
-####  Create folders, install buildout with pip in a virtenv and get dev-eggs:
+#  Create folders, install buildout with pip in a virtenv and get dev-eggs:
 rm -rf $instance_dir; mkdir -p $instance_dir; cd $instance_dir;
 virtualenv py-env; . pyenv/bin/activate
 pip install setuptools -U; pip install zc.buildout
@@ -41,7 +36,7 @@ git clone https://github.com/ida/adi.forumail
 git clone https://github.com/ida/collective.contentrules.mailtogroup --branch $forum_name 
 git clone https://github.com/ida/mailtoplone.base  --branch $forum_name
 
-####  Set plonesite-mail-credentials via profile/default-xml-files:
+#  Set plonesite-mail-credentials via profile/default-xml-files:
 pro=$dev_eggs_dir/adi.forumail/adi/forumail/profiles/default
 fil=$pro/mailhost.xml
 rm $fil
@@ -63,7 +58,7 @@ printf "<?xml version=\"1.0\"?>
     type=\"string\">$mailbox_address</property>
 </site>
 " >> $fil
-#################     Write buildout.cfg:    ##########################
+# Write buildout.cfg:
 fil=$instance_dir/buildout.cfg
 rm $fil
 printf "[buildout]
@@ -73,8 +68,8 @@ parts =
     mailtoplone_cron
 eggs-directory = $eggs_dir
 extends = http://dist.plone.org/release/$plone_version/versions.cfg
-#DEV:extends = $HOME/.buildout/versions.cfg
-#DEV:offline = true
+#extends = $HOME/.buildout/versions.cfg # DEV
+#offline = true                         # DEV
 develop =
     $dev_eggs_dir/adi.forumail
     $dev_eggs_dir/mailtoplone.base
@@ -87,15 +82,17 @@ eggs =
     Plone
     adi.forumail
     mailtoplone.base
-#DEV:    plone.reload
+    plone.reload
+
 zcml =
     mailtoplone.base
-#DEV:    plone.reload
+    plone.reload
+
 [plonesite]
 recipe = collective.recipe.plonesite == 1.9.0
 products = adi.forumail
 [mailtoplone_cron]
-# Fetch emails of an inbox and drop them to a plonesite-folderevery ten seconds:
+# Fetch emails of an inbox and drop them to a plonesite-folder every ten seconds:
 recipe = z3c.recipe.usercrontab
 # Every minute ...
 times = * * * * *
@@ -103,8 +100,8 @@ times = * * * * *
 #     each time with an increasing delay of ten seconds via 'sleep':
 command = $mailtoplone_command; sleep 10 && $mailtoplone_command; sleep 20 && $mailtoplone_command; sleep 30 && $mailtoplone_command; sleep 40 && $mailtoplone_command; sleep 50 && $mailtoplone_command
 " >> $fil
-#################     Build it out:          ##########################
+# Build it out:
 cd $instance_dir
-buildout -U # we use U-option, to ignore a possible existing '~/.buildout/default.cfg'
-#################     Start server:          ##########################
+buildout -U # we use U(pdate)-option, to ignore a possible existing '~/.buildout/default.cfg'
+# Start server:
 ./bin/instance fg # in foreground, for better debugging

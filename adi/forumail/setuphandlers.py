@@ -5,7 +5,7 @@ from plone.app.contentrules.api import assign_rule
 
 def doOnInstall(portal):
 
-    app_name = 'adi.forumail'
+    app_name = 'adi.forumail' #__file__.split('/')[-3] # grandpa'-dir's name, should be egg's name, if two-dotted-namespace, here should be: 'adi.forummail'
 
     INI_INSTALL = False
     qi = portal.portal_quickinstaller
@@ -29,13 +29,15 @@ def doOnInstall(portal):
 
         # Create forum-container:
         folder = api.content.create(type='Folder', title=forum_title, container=portal)
+        # Set 'all_content' as default-view of container:
+        folder.setLayout('folder_full_view')
         # Assign mailtoplone.base-interface to it:
         mark(folder, IBlogMailDropBoxMarker)
         # Create a group:
         api.group.create(groupname=group_name, title=group_name.title())
         # Set permissions for group on container:
         folder.manage_setLocalRoles(group_name, ['Contributor', 'Reader'])
-        # Update changes in DB-index-cache, a.k.a portal_catalogue:
+        # After modifications, pdate changes in DB-index-cache, a.k.a portal_catalogue:
         folder.reindexObject()
         folder.reindexObjectSecurity()
         # Now, we have the group and container, load contentrules.xml of profile 'forumname',
@@ -49,7 +51,7 @@ def doOnInstall(portal):
         api.group.add_user(groupname=group_name, username=user_name)
 
         # Create a first welcome-post:
-        post = api.content.create(type='Document', title='Welcome to the Forum of "%s"!'%portal.Title(), text='Express yourself, don\'t repress yourself.', container=folder)
+        post = api.content.create(type='News Item', title='Welcome to the Forum of "%s"!'%portal.Title(), text='Express yourself, don\'t repress yourself.', container=folder)
         post.reindexObject()
 
 def setupVarious(context):

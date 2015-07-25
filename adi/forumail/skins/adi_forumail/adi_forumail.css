@@ -1,12 +1,25 @@
-body{
 /*
-background-color:black;
-color:#999;
+body:before{content:"Congrats, adi_forumail.css has been loaded succesfully!"}
 */
+#content .documentDescription,
+#content #description,
+#content .discreet,
+#content div.documentByLine,
+h1, h2, h3, h4, h5, h6,
+body{
+background-color: #111;
+color: #e2e2e2;
+background-color: #e2e2e2;
+color: darkblue;
 line-height: 1.5em;
 }
-body:before{content:"Congrats, adi_forumail.css has been loaded succesfully!"}
 
+#content a:link, 
+dl.portlet a:link,
+#content a.link-overlay, 
+#content .documentDescription {
+border: none !important;
+}
 a,a:link,a:visited { color: blue; text-decoration: none; }
 
 #content {
@@ -29,10 +42,20 @@ font-size: 88%;
 position: absolute;
 right: 0;
 margin-top: -1.5em;
+#edit-bar,
 */
 }
 
-
+/* DEV: /
+#breadcrumbs-home,
+*/
+#breadcrumbs-you-are-here,
+div a.managePortletsFallback,
+#portal-footer,
+#portal-colophon,
+#portal-siteactions,
+#portal-top,
+/* EO DEV */
 #parent-fieldname-text .gmail_extra, /* gmail-quote */
 #parent-fieldname-text > div > div > div, /* gmx-quote */
 .portaltype-collection #viewlet-below-content-title div.documentByLine,
