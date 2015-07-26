@@ -66,10 +66,7 @@ def setupVarious(context):
         return
 
     if isInitialInstall(site, app_name):
-        INSTALLED_INITIALLY = False
-        site_domain = ''
 # These last lines should be inserted of installer-script as last lines:
-        #if not INSTALLED_INITIALLY:
-        #    doOnInstall(site, app_name, site_domain, INSTALLED_INITIALLY)
-        #    INSTALLED_INITIALLY = True
+        site_domain = ''
+        #doOnInstall(site, app_name, site_domain)
 

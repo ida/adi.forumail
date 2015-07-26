@@ -6,20 +6,20 @@ site_domain=$HOSTNAME
 inbox_server=imap.gmail.com
 inbox_port=993
 inbox_user=asmith
-inbox_password=aSuperSecretPassword
+inbox_password='aSuperSecretPassword'
 inbox_address=asmith@gmail.com
 
 sender_server=localhost
 sender_port=25
 sender_user=$forum_name
-sender_password=$sender_user
-sender_address=$forum_name@$site_domain
+sender_password=''
+sender_address=''
 
 # Optionally change:
 forum_dir=$HOME/$forum_name
 instance_dir=$forum_dir/server
-eggs_dir=$forum_dir/apps
-dev_eggs_dir=$forum_dir/dev-apps
+eggs_dir=$forum_dir/.addons
+dev_eggs_dir=$forum_dir/dev-addons
 plone_version='4.3.6'
 
 ################## Don't change anything after this line. #####################
@@ -28,8 +28,9 @@ mailtoplone_script=$dev_eggs_dir/mailtoplone.base/mailtoplone/base/scripts/fetch
 mailtoplone_command="${mailtoplone_script} -u ${mailtoplone_folder} -i ${inbox_server} -t ${inbox_port} -e ${inbox_address} -p ${inbox_password}"
 
 ###########  Create folders, install buildout with pip in a virtenv and get dev-eggs:
-rm -rf $instance_dir; mkdir -p $instance_dir; cd $instance_dir;
-virtualenv py-env; . pyenv/bin/activate
+rm -rf $instance_dir; mkdir -p $instance_dir; cd $forum_dir
+virtualenv .virtenv
+. .virtenv/bin/activate
 pip install setuptools -U; pip install zc.buildout
 mkdir -p $eggs_dir ; mkdir -p $dev_eggs_dir; cd $dev_eggs_dir
 git clone https://github.com/ida/adi.forumail
@@ -39,9 +40,7 @@ git clone https://github.com/ida/mailtoplone.base  --branch forumail
 ###########  Pass this sever's domain to addon-install-setup-script (not available to script during runtime):
 fil=$dev_eggs_dir/adi.forumail/adi/forumail/setuphandlers.py
 printf "        site_domain = '$site_domain'
-        if not INSTALLED_INITIALLY:
-            doOnInstall(site, app_name, site_domain, INSTALLED_INITIALLY)
-            INSTALLED_INITIALLY = True
+        doOnInstall(site, app_name, site_domain)
 " >> $fil
 ###########  Set plonesite-mail-credentials via profile/default-xml-files:
 pro=$dev_eggs_dir/adi.forumail/adi/forumail/profiles/default
@@ -51,10 +50,19 @@ printf "<?xml version=\"1.0\"?>
 <object name=\"MailHost\"
     smtp_host=\"$sender_server\"
     smtp_port=\"$sender_port\"
+" >> $fil
+# If sender_password is not empty...
+if [ -n $sender_password ]
+then
+# ... append creds:
+    printf "smtp_pwd=\"$sender_password\"
+    smtp_uid=\"$sender_address\"" >> $fil
+fi
+# And close tag:
+printf "
     />
 " >> $fil
-    #smtp_pwd=\"$sender_password\"
-    #smtp_uid=\"$sender_user\"
+
 fil=$pro/properties.xml
 rm $fil
 printf "<?xml version=\"1.0\"?>
@@ -67,7 +75,10 @@ printf "<?xml version=\"1.0\"?>
 " >> $fil
 ########### Write buildout.cfg:
 fil=$instance_dir/buildout.cfg
-rm $fil
+if test -f "$fil" 
+    then
+        rm $fil
+fi
 printf "[buildout]
 parts =
     instance
