@@ -1,5 +1,5 @@
 (function($) { $(document).ready(function() {
-$("#visual-portal-wrapper").prepend("Congrats, adi_forumail.js has been loaded succesfully!")
+//$("#visual-portal-wrapper").prepend("Congrats, adi_forumail.js has been loaded succesfully!")
 
 
 // Add indent to post, if starting with 'Re: ':

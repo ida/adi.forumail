@@ -1,62 +1,75 @@
+import os
 from Products.Five.utilities.marker import mark
 from mailtoplone.base.interfaces import IBlogMailDropBoxMarker 
 from plone import api
 from plone.app.contentrules.api import assign_rule
 
-def doOnInstall(portal):
-
-    app_name = 'adi.forumail' #__file__.split('/')[-3] # grandpa'-dir's name, should be egg's name, if two-dotted-namespace, here should be: 'adi.forummail'
-
+def isInitialInstall(site, app_name):
     INI_INSTALL = False
-    qi = portal.portal_quickinstaller
-    addons = qi.listInstallableProducts(skipInstalled=False)
-
+    addons = site.portal_quickinstaller.listInstallableProducts(skipInstalled=False)
     for addon in addons:
         if (addon['id'] == app_name) and (addon['status'] == 'new'):
             INI_INSTALL = True
+    return INI_INSTALL
 
-    if INI_INSTALL:
-        forum_name = app_name.split('.')[-1]
-        forum_title = forum_name.title()
-        mail_from = portal.getProperty('email_from_address')
-        mail_domain = mail_from.split('@')[1]
-        setup_tool = portal.portal_setup
-        user_name = forum_name + 'er'
-        user_mail = user_name + '@' + mail_domain
-        group_name = user_name + 's'
-        group_mail = group_name + '@' + mail_domain
-        mail_to = group_mail
+def doOnInstall(site, app_name, site_domain):
 
-        # Create forum-container:
-        folder = api.content.create(type='Folder', title=forum_title, container=portal)
-        # Set 'all_content' as default-view of container:
-        folder.setLayout('folder_full_view')
-        # Assign mailtoplone.base-interface to it:
-        mark(folder, IBlogMailDropBoxMarker)
-        # Create a group:
-        api.group.create(groupname=group_name, title=group_name.title())
-        # Set permissions for group on container:
-        folder.manage_setLocalRoles(group_name, ['Contributor', 'Reader'])
-        # After modifications, pdate changes in DB-index-cache, a.k.a portal_catalogue:
-        folder.reindexObject()
-        folder.reindexObjectSecurity()
-        # Now, we have the group and container, load contentrules.xml of profile 'forumname',
-        # to make our rule available and selectable in the Plone-site:
-        setup_tool.runAllImportStepsFromProfile('profile-' + app_name + ':' + forum_name, ignore_dependencies=True)
-        # Then, assign contentrule to container. Note: rule- and profile-name must equal forum_name!
-        assign_rule(folder, forum_name)
+    if site_domain == '':
+        exit('Didn\'t get site_domain of installer-script, aborting now.')
 
-        # Add a group-member (do this before creating first welcome-post, to check, if notimail works):
-        api.user.create(username=user_name, password=user_name, email=user_mail, properties=dict(fullname=user_name))
-        api.group.add_user(groupname=group_name, username=user_name)
+    forum_id = app_name.split('.')[1]
+    forum_name = forum_id.title()
+    user_id = forum_id + 'er'
+    user_name = user_id.title()
+    user_mail = user_id + '@' + site_domain
+    group_id = forum_id + 'ers'
+    group_name = group_id.title()
 
-        # Create a first welcome-post:
-        post = api.content.create(type='News Item', title='Welcome to the Forum of "%s"!'%portal.Title(), text='Express yourself, don\'t repress yourself.', container=folder)
-        post.reindexObject()
+    # Create forum:    
+    forum = api.content.create(type='Folder', title=forum_name, container=site)
+    # Set forum's view:
+    forum.setLayout('folder_full_view')
+    # Assign interface for mail-dropping:
+    mark(forum, IBlogMailDropBoxMarker)
+
+    # Create group:
+    api.group.create(groupname=group_id, title=group_name)
+    
+    # Assign group-perms to forum:
+    forum.manage_setLocalRoles(group_id, ['Contributor', 'Reader'])
+    # Update perm-change:
+    forum.reindexObjectSecurity()
+
+    # Import contentrule of profile 'forumail':
+    site.portal_setup.runAllImportStepsFromProfile('profile-' + app_name + ':' + app_name.split('.')[1], ignore_dependencies=True)
+    # Assign contentrule to forum:
+    assign_rule(forum, forum_id)
+
+    # Add user:
+    api.user.create(username=user_id, password=user_id, email=user_mail, properties=dict(fullname=user_name))
+
+    # Assign user to group:
+    api.group.add_user(groupname=group_id, username=user_id)
+
+    # Create forum-post:
+    post = api.content.create(type='News Item', title='Welcome to the Forum of "%s"'%site.Title(), text='Express yourself, don\'t repress yourself!', container=forum)
+    
+    # Update content-change:
+    post.reindexObject()
 
 def setupVarious(context):
-    portal = context.getSite()
+    app_name = 'adi.forumail'
+    site = api.portal.get()
+
     # Make sure, profile has been imported, otherwise will be executed also, when barely running buildout:
-    if context.readDataFile('adi.forumail.marker.txt') is None:
+    if context.readDataFile(app_name + '.marker.txt') is None:
         return
-    doOnInstall(portal)
+
+    if isInitialInstall(site, app_name):
+        INSTALLED_INITIALLY = False
+        site_domain = ''
+# These last lines should be inserted of installer-script as last lines:
+        #if not INSTALLED_INITIALLY:
+        #    doOnInstall(site, app_name, site_domain, INSTALLED_INITIALLY)
+        #    INSTALLED_INITIALLY = True
+
