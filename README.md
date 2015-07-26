@@ -3,52 +3,36 @@ Introduction
 
 An experimental proof of concept for a mailinglist/forum-hybrid, realized with Plone.
 
-For development-purposes only:
-
-- Mail-account-password will be stored in plaintext two times. Changeable with:
+For development-purposes only, will store inbox-password in plaintext two times,
+change-/removable with:
 
     $ crontab -e
 
     $ vim ~/forumail/dev-addons/adi.forumail/adi/forumail/profiles/default/mailhost.xml
 
-
-- Mail-inbox needs a filter, to check, whether a sender is a permitted forum's participant.
+The installer-script creates a folder in your $HOME called 'forumail' and
+install Plone and this addon in it.
 
 
 Requirements
 =============
 
-- Operating system is unixish.
+- Operating system is unixish and the sys-pckgs Plone needs, are preinstalled.
 
-- Min. sys-pckgs Plone needs, preinstalled. And git.
-
-- You have at least two mail-accounts with the following usernames at the same domain:
-
-    - 'forumail' -> 'From:'-address for mail-notificas, forum's inbox.
-
-    - 'forumailers' -> 'To:'-address for mail-notificas, gets what groupmembers get.
-                        Must differ to 'From:'-address, to not create an infinite loop.
-
-- Optionally also:
-
-    - 'forumailer' -> Example-user, belonging to the group 'forumailers'.
-                      Should become a notification-mail with the initially
-                      created welcome-post after install, if everything went well.
+- A Mail-inbox with IMAP-support and an SMTP-Server.
 
 
 Dependencies
 ============
 
-Development-versions of mailtoplone.base and collective.contentrules.mailtogroup,
-will be installed of script automatically.
+- mailtoplone.base
+- collective.contentrules.mailtogroup
 
+Currently dev-versions, will be fetched of installer-script.
 
 
 Installation
 ============
-
-The installer-script creates a folder in your $HOME called 'forumail' and
-installs Plone and this addon in it.
 
 
 Download the installer script
@@ -62,11 +46,11 @@ Set credentials in it
 ---------------------
 
 Open the script with a text-editor and enter the needed mailaccount-credentials.
+Optionally set more params, like a shared eggs-directory, if you got one already.
 
 
-
-Make it executable
-------------------
+Make sure, it's executable
+--------------------------
 
     $ chmod +x buildout_forumail.sh
 
@@ -88,7 +72,8 @@ Access forum
 
 In a browser open 'localhost:8080/Plone/forumail'.
 
-Login with 'admin:'admin', or 'forumailer:forumailer', or any member of the group 'forumailers'.
+Login with 'admin:'admin', or 'forumailer:forumailer',
+or any member of the group 'forumailers'.
 
 
 Add post via Web-UI
@@ -105,10 +90,11 @@ TODO
 Add post via mail
 -----------------
 
-As a groupmember (if usermail=fromaddress) send a mail to 'forumail@[YOURMAILDOMAIN]'.
-Add tags (=categories) in body, like this: '[tag1,tag2,tag3]'.
+Send a mail to your inboxes address.
+Add tags (=categories/keywords) in the last line, like this: '[tag1,tag2,tag3]'.
+
 
 Reply to post via mail
 ----------------------
 
-Reply to the mail-notification of an added post, leave subject untouched.
+Reply to the mail-notification of an added post, leave subject and last line untouched.
