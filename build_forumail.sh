@@ -1,7 +1,3 @@
-# Leave these two untouched:
-forum_name=forumail
-site_domain=$HOSTNAME
-
 # Set and check the following:
 inbox_server=imap.gmail.com
 inbox_port=993
@@ -11,14 +7,15 @@ inbox_address=asmith@gmail.com
 
 sender_server=localhost
 sender_port=25
-sender_user=$forum_name
+sender_user=
 sender_password=''
 sender_address=''
 
 # Optionally change:
+forum_name=forumail
 forum_dir=$HOME/$forum_name
 instance_dir=$forum_dir/server
-eggs_dir=$forum_dir/.addons
+eggs_dir=$forum_dir/.addons # $HOME/.buildout/eggs
 dev_eggs_dir=$forum_dir/dev-addons
 plone_version='4.3.6'
 
@@ -37,12 +34,7 @@ git clone https://github.com/ida/adi.forumail
 git clone https://github.com/ida/collective.contentrules.mailtogroup --branch forumail
 git clone https://github.com/ida/mailtoplone.base  --branch forumail
 
-###########  Pass this sever's domain to addon-install-setup-script (not available to script during runtime):
-fil=$dev_eggs_dir/adi.forumail/adi/forumail/setuphandlers.py
-printf "        site_domain = '$site_domain'
-        doOnInstall(site, app_name, site_domain)
-" >> $fil
-###########  Set plonesite-mail-credentials via profile/default-xml-files:
+###########  Set the Plonesite's mail-credentials via profile/default-xml-files:
 pro=$dev_eggs_dir/adi.forumail/adi/forumail/profiles/default
 fil=$pro/mailhost.xml
 rm $fil

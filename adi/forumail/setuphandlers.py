@@ -3,6 +3,7 @@ from Products.Five.utilities.marker import mark
 from mailtoplone.base.interfaces import IBlogMailDropBoxMarker 
 from plone import api
 from plone.app.contentrules.api import assign_rule
+import platform
 
 def isInitialInstall(site, app_name):
     INI_INSTALL = False
@@ -12,10 +13,9 @@ def isInitialInstall(site, app_name):
             INI_INSTALL = True
     return INI_INSTALL
 
-def doOnInstall(site, app_name, site_domain):
+def doOnInstall(site, app_name):
 
-    if site_domain == '':
-        exit('Didn\'t get site_domain of installer-script, aborting now.')
+    site_domain = platform.uname()[1]
 
     forum_id = app_name.split('.')[1]
     forum_name = forum_id.title()
@@ -66,7 +66,5 @@ def setupVarious(context):
         return
 
     if isInitialInstall(site, app_name):
-# These last lines should be inserted of installer-script as last lines:
-        site_domain = ''
-        #doOnInstall(site, app_name, site_domain)
+        doOnInstall(site, app_name, site_domain)
 
