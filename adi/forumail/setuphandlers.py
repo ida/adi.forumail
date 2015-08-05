@@ -66,5 +66,5 @@ def setupVarious(context):
         return
 
     if isInitialInstall(site, app_name):
-        doOnInstall(site, app_name, site_domain)
+        doOnInstall(site, app_name)
 
