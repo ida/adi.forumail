@@ -19,9 +19,11 @@ def doOnInstall(site, app_name):
 
     forum_id = app_name.split('.')[1]
     forum_name = forum_id.title()
+
     user_id = forum_id + 'er'
     user_name = user_id.title()
     user_mail = user_id + '@' + site_domain
+
     group_id = forum_id + 'ers'
     group_name = group_id.title()
 
@@ -66,5 +68,5 @@ def setupVarious(context):
         return
 
     if isInitialInstall(site, app_name):
-        doOnInstall(site, app_name, site_domain)
+        doOnInstall(site, app_name)
 
