@@ -1,35 +1,45 @@
-# Set and check the following:
-inbox_server=imap.gmail.com
-inbox_port=993
-inbox_user=asmith
-inbox_password='aSuperSecretPassword'
-inbox_address=asmith@gmail.com
+project_name=forumail
 
-sender_server=localhost
+# Set and check the following:
+
+mail_server_domain=example.com
+mail_address_domain=example.org
+
+inbox_user_id=exampleorg-0001
+inbox_password='superSecretPassword'
+inbox_address=$project_name@$mail_address_domain
+inbox_server=imap.$mail_server_domain
+inbox_port=993
+
+sender_user_id=$inbox_user_id
+sender_password=$inbox_password
+sender_address=$inbox_address
+sender_server=smtp.$mail_server_domain
 sender_port=25
-sender_user=
-sender_password=''
-sender_address=''
 
 # Optionally change:
-forum_name=forumail
-forum_dir=$HOME/$forum_name
-instance_dir=$forum_dir/instance
-eggs_dir=$forum_dir/.addons # $HOME/.buildout/eggs
-dev_eggs_dir=$forum_dir/dev-addons
+
+project_dir=$HOME/$project_name
+instance_dir=$project_dir/instance
+eggs_dir=$project_dir/.addons # $HOME/.buildout/eggs
+eggs_dir=$HOME/.buildout/eggs
+dev_eggs_dir=$project_dir/dev-addons
 plone_version='4.3.6'
 
-################## Don't change anything after this line. #####################
-mailtoplone_folder=http://admin:admin@localhost:8080/Plone/$forum_name
+##### Don't change anything after this line unless you know what you are doing. ####
+
+mailtoplone_folder=http://admin:admin@localhost:8080/Plone/$project_name
 mailtoplone_script=$dev_eggs_dir/mailtoplone.base/mailtoplone/base/scripts/fetchemail
-mailtoplone_command="${mailtoplone_script} -u ${mailtoplone_folder} -i ${inbox_server} -t ${inbox_port} -e ${inbox_address} -p ${inbox_password}"
+mailtoplone_command="${mailtoplone_script} -u ${mailtoplone_folder} -i ${inbox_server} -t ${inbox_port} -e ${inbox_user_id} -p ${inbox_password}"
+
+this_script_name=`basename "$0"`
+devinfo_prefix=INFO_$this_script_name: 
 
 createFolders() {
-rm -rf $instance_dir; mkdir -p $instance_dir
-cd $forum_dir
-mkdir -p $eggs_dir ; mkdir -p $dev_eggs_dir
+mkdir -p $instance_dir; mkdir -p $eggs_dir ; mkdir -p $dev_eggs_dir
 }
 installBuildout() {
+    cd $project_dir
     virtualenv .virtenv
     . .virtenv/bin/activate
     pip install setuptools -U; pip install zc.buildout
@@ -40,10 +50,9 @@ getDevEggs() {
     git clone https://github.com/ida/collective.contentrules.mailtogroup --branch forumail
     git clone https://github.com/ida/mailtoplone.base  --branch forumail
 }
-setMailCreds() {
-#  Set the Plonesite's mail-credentials via profile/default-xml-files.
-    pro=$dev_eggs_dir/adi.forumail/adi/forumail/profiles/default
-    fil=$pro/mailhost.xml
+setMailCredsViaXML() {
+    dev_egg_profile=$dev_eggs_dir/adi.forumail/adi/forumail/profiles/default
+    fil=$dev_egg_profile/mailhost.xml
     rm $fil
     printf "<?xml version=\"1.0\"?>
 <object name=\"MailHost\"
@@ -54,14 +63,14 @@ setMailCreds() {
     if [ -n $sender_password ]; then
 # ... append creds:
         printf "smtp_pwd=\"$sender_password\"
-smtp_uid=\"$sender_address\"" >> $fil
+smtp_uid=\"$sender_user_id\"" >> $fil
     fi
 # And close tag:
     printf "
         />
     " >> $fil
 
-    fil=$pro/properties.xml
+    fil=$dev_egg_profile/properties.xml
     rm $fil
     printf "<?xml version=\"1.0\"?>
 <site>
@@ -88,6 +97,7 @@ develop =
     $dev_eggs_dir/adi.forumail
     $dev_eggs_dir/mailtoplone.base
     $dev_eggs_dir/collective.contentrules.mailtogroup
+
 [instance]
 recipe = plone.recipe.zope2instance
 user = admin:admin
@@ -102,9 +112,6 @@ zcml =
     mailtoplone.base
     plone.reload
 
-[plonesite]
-recipe = collective.recipe.plonesite == 1.9.0
-products = adi.forumail
 [mailtoplone_cron]
 # Fetch emails of an inbox and drop them to a plonesite-folder every ten seconds:
 recipe = z3c.recipe.usercrontab
@@ -113,6 +120,10 @@ times = * * * * *
 # ... execute 'mailtoplone_command' six times,
 #     each time with an increasing delay of ten seconds via 'sleep':
 command = $mailtoplone_command; sleep 10 && $mailtoplone_command; sleep 20 && $mailtoplone_command; sleep 30 && $mailtoplone_command; sleep 40 && $mailtoplone_command; sleep 50 && $mailtoplone_command
+
+[plonesite]
+recipe = collective.recipe.plonesite == 1.9.0
+products = adi.forumail
 " >> $fil
 } # EO writeBuildoutConfig()
 buildOut() {
@@ -123,12 +134,39 @@ runInstance() {
     cd $instance_dir
     ./bin/instance fg # In foreground, for better debugging.
 }
+devDestroyProjectDir() {
+    rm -rf $project_dir; echo INFO $0: Destroyed project-container.
+}
+devDestroyDeveggsDir() {
+    rm -rf $dev_eggs_dir; echo INFO $0: Destroyed deveggs-container.
+}
+devDestroyPlonesite() {
+    printf "site-replace=true" >> $instance_dir/buildout.cfg
+    echo $devinfo_prefix: Config set to destroy plonesite.
+}
+devCopyDeveggXMLToDevrepoXML() {
+    dev_repo_profile=$HOME/repos/adi.forumail/adi/forumail/profiles/default
+    cp $dev_egg_profile/mailhost.xml $dev_repo_profile/mailhost.xml
+    cp $dev_egg_profile/properties.xml $dev_repo_profile/properties.xml
+    echo $devinfo_prefix: Copied dev-egg-xmls to dev-repo-xmls.
+}
+devSymlinkDeveggsToDevrepos() {
+    cd $dev_eggs_dir; rm -rf adi.forumail; ln -s /home/ida/repos/adi.forumail
+    echo $devinfo_prefix: Symlinked dev-egg to dev-repo.
+}
+devReplaceDevEggsWithRepoEggs() {
+    devCopyDeveggXMLToDevrepoXML
+    devSymlinkDeveggsToDevrepos
+}
 main() {
+#devDestroyProjectDir
     createFolders
     installBuildout
     getDevEggs
-    setMailCreds
+#devReplaceDevEggsWithRepoEggs
+    setMailCredsViaXML
     writeBuildoutConfig
+#devDestroyPlonesite
     buildOut
     runInstance
 }

@@ -17,6 +17,9 @@ def doOnInstall(site, app_name):
 
     site_domain = platform.uname()[1]
 
+    if site_domain == 'localhost.localdomain':
+        site_domain = 'example.org'
+
     forum_id = app_name.split('.')[1]
     forum_name = forum_id.title()
 
@@ -49,13 +52,11 @@ def doOnInstall(site, app_name):
 
     # Add user:
     api.user.create(username=user_id, password=user_id, email=user_mail, properties=dict(fullname=user_name))
-
     # Assign user to group:
     api.group.add_user(groupname=group_id, username=user_id)
 
     # Create forum-post:
     post = api.content.create(type='News Item', title='Welcome to the Forum of "%s"'%site.Title(), text='Express yourself, don\'t repress yourself!', container=forum)
-    
     # Update content-change:
     post.reindexObject()
 
