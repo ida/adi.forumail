@@ -12,10 +12,9 @@
      <property name="groups"><element>forumailers</element></property>
      <property name="subject">${title}</property>
      <property name="message">${text}
-----
-${subject}
-----
-${tags}
+**** This is an automatic email-notification of a new post in ${namedirectory}. 
+When replying to it, please leave the following line untouched.
+**** tags:${tags} url:${url}
      </property>
     </action>
    </actions>
