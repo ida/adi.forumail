@@ -5,9 +5,9 @@ project_name=forumail
 mail_server_domain=example.com
 mail_address_domain=example.org
 
-inbox_user_id=exampleorg-0001
 inbox_password='superSecretPassword'
 inbox_address=$project_name@$mail_address_domain
+inbox_user_id=exampleorg-0001 # $inbox_address 
 inbox_server=imap.$mail_server_domain
 inbox_port=993
 
