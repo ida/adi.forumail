@@ -9,7 +9,7 @@
      <property name="source"/>
      <property name="message">${text}</property>
      <property name="members"/>
-     <property name="groups"><element>forumailers</element></property>
+     <property name="groups"><element>Forumailers</element></property>
      <property name="subject">${title}</property>
      <property name="message">${text}
 **** This is an automatic email-notification of a new post in ${namedirectory}. 

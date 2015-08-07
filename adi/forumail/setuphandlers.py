@@ -23,12 +23,12 @@ def doOnInstall(site, app_name):
     forum_id = app_name.split('.')[1]
     forum_name = forum_id.title()
 
-    user_id = forum_id + 'er'
-    user_name = user_id.title()
+    user_id = 'forumailer'
+    user_name = 'Forum Mailer'
     user_mail = user_id + '@' + site_domain
 
-    group_id = forum_id + 'ers'
-    group_name = group_id.title()
+    group_id = 'Forumailers'
+    group_name = group_id
 
     # Create forum:    
     forum = api.content.create(type='Folder', title=forum_name, container=site)
@@ -40,7 +40,7 @@ def doOnInstall(site, app_name):
     # Create group:
     api.group.create(groupname=group_id, title=group_name)
     
-    # Assign group-perms to forum:
+    # Assign group-permissions to forum:
     forum.manage_setLocalRoles(group_id, ['Contributor', 'Reader'])
     # Update perm-change:
     forum.reindexObjectSecurity()
