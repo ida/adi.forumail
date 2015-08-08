@@ -1,16 +1,13 @@
-/*
-body:before{content:"Congrats, adi_forumail.css has been loaded succesfully!"}
-*/
 #content .documentDescription,
 #content #description,
 #content .discreet,
 #content div.documentByLine,
 h1, h2, h3, h4, h5, h6,
 body{
-background-color: #111;
-color: #e2e2e2;
 background-color: #e2e2e2;
 color: darkblue;
+background-color: lightyellow;
+color: #999;
 line-height: 1.5em;
 }
 

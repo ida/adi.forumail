@@ -131,12 +131,5 @@ and last line of mailbody untouched.
 TODOS
 =====
 
-- Parse mail for tags in last-line, looking like `(tag1, tag2, tag3)`
-and apply them to the pushed post.
-Or: Look for hashtags (words starting with '#'), anywhere in the body.
-
-- Lookup sender mail-address before pushing a mail to the Plone-site and grant
-the user of the Plone-site with the same mailaddress the Creator-role on the post.
-
 - On install, create collections with alphabetical and newest ordering.
 
