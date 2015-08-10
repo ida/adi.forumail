@@ -63,10 +63,11 @@ def doOnInstall(site, app_name):
     # Assign user to group:
     api.group.add_user(groupname=group_id, username=user_id)
 
-    # Create forum-post:
+    # Create forum-post, should trigger an email-noti:
     post = api.content.create(type='News Item', title='Welcome to the Forum of "%s"'%site.Title(), text='Express yourself, don\'t repress yourself!', container=forum)
 
 def doOnReinstall(site):
+
     pass
 
 def setupVarious(context):
@@ -81,6 +82,4 @@ def setupVarious(context):
         doOnInstall(site, app_name)
     else:
         doOnReinstall(site)
-    criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
-    criterion.setValue('News Item')
 
