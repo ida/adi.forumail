@@ -4,10 +4,15 @@
 #content div.documentByLine,
 h1, h2, h3, h4, h5, h6,
 body{
+/* daysight */
 background-color: #e2e2e2;
-color: darkblue;
-background-color: lightyellow;
 color: #999;
+/* nightsight */
+background-color: #444;
+color: lightblue;
+/* daysight */
+background-color: lightyellow;
+color: darkblue;
 line-height: 1.5em;
 }
 
@@ -36,27 +41,24 @@ font-size: 88%;
 
 #content div.documentByLine { /* post-author+date */
 /*
+*/
 position: absolute;
 right: 0;
 margin-top: -1.5em;
-#edit-bar,
-*/
 }
 
-/* DEV: /
-#breadcrumbs-home,
+/*
+.section-forumail #breadcrumbs-home,
 */
-#breadcrumbs-you-are-here,
-div a.managePortletsFallback,
-#portal-footer,
-#portal-colophon,
-#portal-siteactions,
-#portal-top,
-/* EO DEV */
-#parent-fieldname-text .gmail_extra, /* gmail-quote */
-#parent-fieldname-text > div > div > div, /* gmx-quote */
-.portaltype-collection #viewlet-below-content-title div.documentByLine,
-.portaltype-collection #parent-fieldname-title,
-.documentModified span {
+.section-forumail #edit-bar,
+.section-forumail #breadcrumbs-you-are-here,
+.section-forumail div a.managePortletsFallback,
+.section-forumail #portal-footer,
+.section-forumail #portal-colophon,
+.section-forumail #portal-siteactions,
+.section-forumail #portal-top,
+.section-forumail .portaltype-collection #viewlet-below-content-title div.documentByLine,
+.section-forumail .portaltype-collection #parent-fieldname-title,
+.section-forumail .documentModified span {
 display: none; 
 }
