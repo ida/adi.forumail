@@ -50,7 +50,7 @@ margin-top: -1.5em;
 /*
 .section-forumail #breadcrumbs-home,
 */
-.section-forumail #edit-bar,
+.section-forumail:not(.template-folder_contents) #edit-bar,
 .section-forumail #breadcrumbs-you-are-here,
 .section-forumail div a.managePortletsFallback,
 .section-forumail #portal-footer,
