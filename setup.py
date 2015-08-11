@@ -23,6 +23,7 @@ setup(name='adi.forumail',
       install_requires=[
           'mailtoplone.base',
           'collective.contentrules.mailtogroup',
+          'collective.formcriteria',
           'plone.api',
           'setuptools',
       ],
