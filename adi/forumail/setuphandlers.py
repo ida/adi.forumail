@@ -59,12 +59,12 @@ def doOnInstall(site, app_name):
     collection.setSortCriterion('id', reversed=False)
     
     # Add user, we need at least one, so collective.contentrule.mailtogroup  will not complain:
-    api.user.create(username=user_id, password=user_id, email=user_mail, properties=dict(fullname=user_name))
+#DEV    api.user.create(username=user_id, password=user_id, email=user_mail, properties=dict(fullname=user_name))
     # Assign user to group:
-    api.group.add_user(groupname=group_id, username=user_id)
+#    api.group.add_user(groupname=group_id, username=user_id)
 
     # Create forum-post, should trigger an email-noti:
-    post = api.content.create(type='News Item', title='Welcome to the Forum of "%s"'%site.Title(), text='Express yourself, don\'t repress yourself!', container=forum)
+#DEV    post = api.content.create(type='News Item', title='Welcome to the Forum of "%s"'%site.Title(), text='Express yourself, don\'t repress yourself!', container=forum)
 
 def doOnReinstall(site):
 
