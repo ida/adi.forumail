@@ -14,7 +14,7 @@
      <property name="message">${text}
 **** This is an automatic email-notification of a new post in ${namedirectory}. 
 When replying to it, please leave the following line untouched.
-**** tags:${tags} url:${url}
+tags:${tags} username:${username} url:${url}
      </property>
     </action>
    </actions>
