@@ -1,4 +1,4 @@
-#!/bin/env
+#!/bin/bash
 #
 # This is an install-helper for the Plone-addon 'adi.forumail'.
 #
