@@ -1,10 +1,30 @@
-# Set the following:
+#!/bin/env
+#
+# This is an install-helper for the Plone-addon 'adi.forumail'.
+#
+# Requires to have Plone's needed sys-pckgs to be pre-installed.
+#
+# Creates a container-directory named 'forumail' in your $HOME,
+# adds and installs the add-on and its dependencies in it, using
+# a virtualenv, to not screw up your enviroment, nor be screwed up of it.
+#
+# Adds a cron in your user's crontab, for fetching mails of inbox. The inboxe's
+# password will be stored in it in plaintext. You can edit/remove it with `crontab -e`, in case.
+#
+# Adds xml-files to the addon on the fly, holding mail-creds. Also there, the
+# password is stored in plaintext, after install you can safely remove them,
+# they are no longer longer needed. By default, you'll find them here:
+#
+# $HOME/forumail/dev-eggs/adi/forumail/profiles/default/mailhost.xml
+# $HOME/forumail/dev-eggs/adi/forumail/profiles/default/mailhost.xml
+#
+# Set the following var's vals:
 
 inbox_address=''    # forumailers@some-domain.net
 inbox_password=''   # 'lkqqn392§$42pi'
 inbox_user_id=''    # some-domain-0027
 
-imap_host=''        # imap.provider.com
+imap_host=''        # imap.provider.org
 imap_port=993
 
 
@@ -25,6 +45,18 @@ instance_dir=$project_dir/instance
 plone_version='4.3.6'
 
 
+# That's all needed, execute this script of the commandline, like this:
+# ./build_forumail.sh
+#
+# In case it should complain about permissions, make it executable beforehand with:
+# chmod +x build_forumail.sh
+#
+# Count in about 15 minutes for the install, if you're not using a shared eggs-dir.
+#
+# If everything went allright, you should see 'ZOPE ready for taking requests', the
+# prompt, then open http://localhost:8080/Plone/forumail and login with 'admin:admin'.
+#
+#
 ##### Don't change anything after this line, unless you know, what you are doing. ####
 
 mailtoplone_folder=http://admin:admin@localhost:8080/Plone/forumail
