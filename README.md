@@ -4,7 +4,38 @@ Introduction
 An experimental proof of concept for a mailinglist/forum-hybrid, realized with Plone.
 
 Currently ment for development-purposes only: Will store the inboxe's password
-on the filesystem in plaintext. See Installation-chapter below, for details.
+on the filesystem in plaintext. See installation-chapter below, for details.
+
+
+Goal
+====
+
+Replace the currently used non-Plone-based forum of the Plone-community,
+as it has flaws and because Plone can.
+
+
+Preamble
+========
+
+If you have questions or suggestions or would like to contribute, don't
+hesitate to open an issue, or, if you don't have/want a GitHub-account,
+send a mail to <contact@ida-ebkes.eu>.
+
+Plone-newbies and -wannabies, are very welcome to participate, basic skills
+with CSS and/or JS and/or Python should help, but there's always non-programming
+things to do, just ping.
+
+If people get involved, the author (meh) will certainly love to move
+this addon into the collective-namespace.
+
+"Old-style"-techniques are used for the sake of holding everything configurable
+via a site's UI, which is one of my attempts, when developing addons, in order to
+empower the site-users and not be depending on hiring a Ploneirdo, or learn how to
+plone for next two years, before being able, to become truly productive.
+
+Nevertheless alternative suggestions will be happily considered and ideally,
+sub-packages are created, to keep it modular and even have several possibilities
+to choose of.
 
 
 Requirements
@@ -19,6 +50,8 @@ and one with IMAP-support for receiving mail, e.g. 'forumailers@example.org'.
 
 Dependencies
 ============
+
+Will be installed by buildout along the way:
 
 - mailtoplone.base (development-version)
 
@@ -37,8 +70,8 @@ the following steps manually.
 Note: The usual prompt-prefix for commands is ommited, so one can copy'n'paste them.
 
 
-Add cron for fetching mails of inbox:
--------------------------------------
+Add cron for fetching mails of inbox
+------------------------------------
 
     crontab -e
 
@@ -58,6 +91,10 @@ A good period can be every 10 seconds.
 
 When done, hit Esc-key for leaving insertion-mode and type ':wq' to save and
 close the file. The cron wil be active immediately.
+
+In case needed, you can remove the entry again like this:
+After opening with 'crontab -e', hit the 'd'-key as long,
+ until nothing's left, then again do ':wq'.
 
 
 Get addon and its dependencies
