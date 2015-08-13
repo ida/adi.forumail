@@ -16,7 +16,7 @@
     <property name="message">${text}
 **** This is an automatic email-notification of a new post in "${namedirectory}".
 When replying to it, please leave the following line untouched.
-Tags: ${tags} URL: ${url}
+Tags: [${tags}] URL: ${url}
     </property>
     <property name="groups">
      <element>Forumailers</element>
