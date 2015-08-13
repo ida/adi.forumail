@@ -1,23 +1,31 @@
 <?xml version="1.0"?>
- <contentrules>
-  <rule name="forumail" title="Forumail" cascading="False" description=""
+<contentrules>
+ <rule name="forumail" title="Forumail" cascading="False" description=""
     enabled="True" event="zope.lifecycleevent.interfaces.IObjectAddedEvent"
     stop-after="False">
-   <conditions/>
-   <actions>
-    <action type="plone.actions.MailGroup">
-     <property name="source"/>
-     <property name="message">${text}</property>
-     <property name="members"/>
-     <property name="groups"><element>Forumailers</element></property>
-     <property name="subject">${title}</property>
-     <property name="message">${text}
-**** This is an automatic email-notification of a new post in ${namedirectory}. 
-When replying to it, please leave the following line untouched.
-tags:${tags} username:${username} url:${url}
-     </property>
-    </action>
-   </actions>
-  </rule>
- <assignment name="forumail" bubbles="True" enabled="True" location="forumail"/>
+  <conditions>
+   <condition type="plone.conditions.PortalType">
+    <property name="check_types">
+     <element>News Item</element>
+    </property>
+   </condition>
+  </conditions>
+  <actions>
+   <action type="plone.actions.MailGroup">
+    <property name="source">${username} <[INBOX_MAIL_ADDRESS]></property>
+    <property name="message">${text}
+     **** This is an automatic email-notification of a new post in "${namedirectory}".
+     When replying to it, please leave the following line untouched.
+     Id: ${id} Tags: ${tags} From: ${username}
+          </property>
+    <property name="groups">
+     <element>Forumailers</element>
+    </property>
+    <property name="members"/>
+    <property name="subject">${title}</property>
+   </action>
+  </actions>
+ </rule>
+ <assignment name="forumail" bubbles="True" enabled="True"
+    location="/forumail"/>
 </contentrules>
