@@ -5,41 +5,36 @@ from mailtoplone.base.interfaces import IBlogMailDropBoxMarker
 from plone import api
 from plone.app.contentrules.api import assign_rule
 
-def isInitialInstall(site, app_name):
+def isInitialInstall(site, addon_name):
     INI_INSTALL = False
     addons = site.portal_quickinstaller.listInstallableProducts(skipInstalled=False)
     for addon in addons:
-        if (addon['id'] == app_name) and (addon['status'] == 'new'):
+        if (addon['id'] == addon_name) and (addon['status'] == 'new'):
             INI_INSTALL = True
     return INI_INSTALL
 
-def doOnInstall(site, app_name):
+def doOnInstall(site, addon_name):
 
     site_domain = platform.uname()[1]
 
-    if site_domain == 'localhost.localdomain':
-        site_domain = 'example.org'
+    forum_id = 'forumail'
+    forum_name = 'Forumail'
 
-    forum_id = app_name.split('.')[1]
-    forum_name = forum_id.title()
+    user_id = 'forumailer'
+    user_name = 'Foru Mailer'
 
     group_id = 'Forumailers'
-    group_name = group_id
+    group_name = 'Forumailers'
 
     # Create forum:    
     forum = api.content.create(type='Folder', title=forum_name, container=site)
     # Assign interface for mail-dropping via mailtoplone.base:
     mark(forum, IBlogMailDropBoxMarker)
-
-    # Set forum's view:
-    forum.setLayout('folder_full_view')
-
     # Create group:
     api.group.create(groupname=group_id, title=group_name)
-    
     # Assign group-permissions to forum:
     forum.manage_setLocalRoles(group_id, ['Contributor', 'Reader'])
-    # Update perm-change in portal_catalog:
+    # Update content- and permission-change in portal_catalog:
     forum.reindexObject()
     forum.reindexObjectSecurity()
 
@@ -48,18 +43,21 @@ def doOnInstall(site, app_name):
     contenttype_criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
     contenttype_criterion.setValue('News Item')
     collection.setSortCriterion('id', reversed=False)
-    
+    # Set collection's default-view:
+    collection.setLayout('folder_full_view')
+    # Set collection as forum's default-view:
+    forum.setDefaultPage(collection)
+ 
     # Import contentrule of profile 'forumail' 
     # (! If this is done before content-creation and no user is assigned to group,
-    # contentrule will complain, that there's no one, to send the mail to.)
+    # contentrule will righteously complain, that there's nobody to send the mail to.)
     # and complain, no recipients are designated:
-    site.portal_setup.runAllImportStepsFromProfile('profile-' + app_name + ':' + app_name.split('.')[1], ignore_dependencies=True)
+    site.portal_setup.runAllImportStepsFromProfile('profile-' + addon_name + ':' + addon_name.split('.')[1], ignore_dependencies=True)
     # Assign contentrule to forum:
     assign_rule(forum, forum_id)
 
-    if site_domain != 'localhost.localdomain' and site_domain != 'example.org':
-        user_id = 'forumailer'
-        user_name = 'Forum Mailer'
+    if site_domain != 'localhost.localdomain':
+        
         user_mail = user_id + '@' + site_domain
 
         # Add user, we need at least one, so collective.contentrule.mailtogroup  will not complain:
@@ -75,15 +73,15 @@ def doOnReinstall(site):
     pass
 
 def setupVarious(context):
-    app_name = 'adi.forumail'
+    addon_name = 'adi.forumail'
     site = api.portal.get()
 
     # Make sure, profile has been imported, otherwise will be executed also, when barely running buildout:
-    if context.readDataFile(app_name + '.marker.txt') is None:
+    if context.readDataFile(addon_name + '.marker.txt') is None:
         return
 
-    if isInitialInstall(site, app_name):
-        doOnInstall(site, app_name)
+    if isInitialInstall(site, addon_name):
+        doOnInstall(site, addon_name)
     else:
         doOnReinstall(site)
 
