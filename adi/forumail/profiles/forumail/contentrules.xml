@@ -14,9 +14,9 @@
    <action type="plone.actions.MailGroup">
     <property name="source">${username} &lt;[INBOX_MAIL_ADDRESS]&gt;</property>
     <property name="message">${text}
-    **** This is an automatic email-notification of a new post in "${namedirectory}".
-    When replying to it, please leave the following line untouched.
-    From: ${username} Tags: ${tags} URL: ${url}
+**** This is an automatic email-notification of a new post in "${namedirectory}".
+When replying to it, please leave the following line untouched.
+Tags: ${tags} URL: ${url}
     </property>
     <property name="groups">
      <element>Forumailers</element>
