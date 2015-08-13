@@ -159,7 +159,7 @@ http://example.org:8080/yourPloneSiteId/++rule++forumail/@@manage-elements,
 scroll down to "Send email to groups and members", click "Edit".
 
 You should now get a popup-form, in there, enter your inbox-address in the 
-field "Email source", scroll down, click "Save".
+field "Email source", replace '[INBOX_MAIL_ADDRESS]' with your inbox-address, scroll down, click "Save".
 
 You'll land back on the contentrule-form. To be on the sure side, also there click "Save",
 right below the "Enabled"-field.
