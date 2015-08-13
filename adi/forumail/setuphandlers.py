@@ -23,10 +23,6 @@ def doOnInstall(site, app_name):
     forum_id = app_name.split('.')[1]
     forum_name = forum_id.title()
 
-    user_id = 'forumailer'
-    user_name = 'Forum Mailer'
-    user_mail = user_id + '@' + site_domain
-
     group_id = 'Forumailers'
     group_name = group_id
 
@@ -47,24 +43,32 @@ def doOnInstall(site, app_name):
     forum.reindexObject()
     forum.reindexObjectSecurity()
 
-    # Import contentrule of profile 'forumail':
-    site.portal_setup.runAllImportStepsFromProfile('profile-' + app_name + ':' + app_name.split('.')[1], ignore_dependencies=True)
-    # Assign contentrule to forum:
-    assign_rule(forum, forum_id)
-
     # Add a collection, which sorts id alphabetically (1, 1-1, 1-2, 2, 2-1, 2-2, ...):
     collection = api.content.create(type='Topic', title='Threaded', container=forum)
     contenttype_criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
     contenttype_criterion.setValue('News Item')
     collection.setSortCriterion('id', reversed=False)
     
-    # Add user, we need at least one, so collective.contentrule.mailtogroup  will not complain:
-#DEV    api.user.create(username=user_id, password=user_id, email=user_mail, properties=dict(fullname=user_name))
-    # Assign user to group:
-#    api.group.add_user(groupname=group_id, username=user_id)
+    # Import contentrule of profile 'forumail' 
+    # (! If this is done before content-creation and no user is assigned to group,
+    # contentrule will complain, that there's no one, to send the mail to.)
+    # and complain, no recipients are designated:
+    site.portal_setup.runAllImportStepsFromProfile('profile-' + app_name + ':' + app_name.split('.')[1], ignore_dependencies=True)
+    # Assign contentrule to forum:
+    assign_rule(forum, forum_id)
 
-    # Create forum-post, should trigger an email-noti:
-#DEV    post = api.content.create(type='News Item', title='Welcome to the Forum of "%s"'%site.Title(), text='Express yourself, don\'t repress yourself!', container=forum)
+    if site_domain != 'localhost.localdomain' and site_domain != 'example.org':
+        user_id = 'forumailer'
+        user_name = 'Forum Mailer'
+        user_mail = user_id + '@' + site_domain
+
+        # Add user, we need at least one, so collective.contentrule.mailtogroup  will not complain:
+        api.user.create(username=user_id, password=user_id, email=user_mail, properties=dict(fullname=user_name))
+        # Assign user to group:
+        api.group.add_user(groupname=group_id, username=user_id)
+        # Create forum-post, should trigger an email-noti:
+        post = api.content.create(type='News Item', title='Welcome to the Forum of "%s"'%site.Title(), text='Express yourself, don\'t repress yourself!', container=forum)
+    
 
 def doOnReinstall(site):
 
