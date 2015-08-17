@@ -26,7 +26,8 @@ setup(name='adi.forumail',
           'collective.formcriteria',
           'plone.api',
           'setuptools',
-          'Products.ContentWellPortlets',
+# Pin ContentWellPortlets for now, in newest vs. manage-portlet-links dissapeared:
+          'Products.ContentWellPortlets==4.2.0',
       ],
       entry_points="""
       # -*- Entry points: -*-

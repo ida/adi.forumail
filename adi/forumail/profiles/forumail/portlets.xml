@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<portlets>
+ <assignment name="add-post" category="context" key="/forumail"
+manager="ContentWellPortlets.AbovePortletManager3"
+    type="plone.portlet.static.Static" visible="True">
+  <property
+     name="text">&lt;p style="text-align: right; "&gt;&lt;a class="internal-link" href="createObject?type_name=News Item" target="_self"&gt;+ Add a new post&lt;/a&gt;&lt;/p&gt;</property>
+  <property name="more_url"/>
+  <property name="omit_border">True</property>
+  <property name="header">Add post</property>
+  <property name="footer"/>
+ </assignment>
+</portlets>
