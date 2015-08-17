@@ -26,6 +26,7 @@ setup(name='adi.forumail',
           'collective.formcriteria',
           'plone.api',
           'setuptools',
+          'Products.ContentWellPortlets',
       ],
       entry_points="""
       # -*- Entry points: -*-
