@@ -46,7 +46,7 @@ def doOnInstall(site, addon_name):
     # Set collection's default-view:
     collection.setLayout('folder_full_view')
     # Set collection as forum's default-view:
-    forum.setDefaultPage(collection)
+    forum.setDefaultPage('threaded')
  
     # Import contentrule of profile 'forumail' 
     # (! If this is done before content-creation and no user is assigned to group,
