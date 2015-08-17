@@ -49,6 +49,7 @@ margin-top: -1.5em;
 
 
 .section-forumail:not(.template-folder_contents) #edit-bar,
+.section-forumail:not(.template-folder_contents) #content a.managePortletsFallback,
 .section-forumail:not(.template-folder_contents) div a.managePortletsFallback,
 .section-forumail:not(.template-folder_contents) div.managePortletsLink,
 .section-forumail #breadcrumbs-you-are-here,
@@ -56,6 +57,7 @@ margin-top: -1.5em;
 .section-forumail #portal-colophon,
 .section-forumail #portal-siteactions,
 .section-forumail #portal-top,
+.section-forumail.portaltype-topic #content div.documentByLine,
 .section-forumail .portaltype-collection #viewlet-below-content-title div.documentByLine,
 .section-forumail .portaltype-collection #parent-fieldname-title,
 .section-forumail .documentModified span {
