@@ -47,8 +47,10 @@ right: 0;
 margin-top: -1.5em;
 }
 
+
 .section-forumail:not(.template-folder_contents) #edit-bar,
 .section-forumail:not(.template-folder_contents) div a.managePortletsFallback,
+.section-forumail:not(.template-folder_contents) div.managePortletsLink,
 .section-forumail #breadcrumbs-you-are-here,
 .section-forumail #portal-footer,
 .section-forumail #portal-colophon,
