@@ -33,20 +33,40 @@ function adjustReplyToPath(reply_to_link) {
     reply_to_link.attr('href', '.' + reply_to_link.attr('href'))
 }
 function setTitleOfUrlHash() {
+    // Get hashtag of url:
     var title = window.location.href.split('#')[1]
+    // Set hashtag as title:
     $('#title').val(title)
-    $('#title').parent().hide() // Hide field, so user cannot damage auto-title.
+    // Hide field, so user cannot damage auto-title:
+    $('#title').parent().hide()
+}
+function checkTinyMCELoaded () {
+    // This snippet was kindly shared by Luca Fabbri a.k.a. 'keul' on:
+    // stackoverflow.com/questions/32088348/how-to-set-focus-on-rich-text-field-in-edit-mode-of-a-contenttype
+    // Make sure to check out his blog, too: http://blog.keul.it/
+    if (window.tinymce==undefined || !tinymce.editors.length) {
+        setTimeout(checkTinyMCELoaded, 100)
+        return
+    }
+    // Now we checked TinyMCE is loaded, set focus on its body-text-field:
+    $('#text_ifr').contents().find(".mceContentBody").get(0).focus()
+}
+function manipulateReplyEditform() {
+    setTitleOfUrlHash()
+    setTimeout(checkTinyMCELoaded, 100); // sets focus on body-text-field
 }
 function main() {
 
-    // Listview:
+    // Is listview:
     if($('.section-forumail.portaltype-topic').length > 0) {
         $('.item #portlets-below a').each(function() { adjustReplyToPath($(this)) });
         $('.headline a').each(function() { indentReply($(this)) });
     }
 
-    // Editview and is a reply, because url contains a hash:
+    // Is editview and a reply, because url contains a hash:
     if($('.section-forumail.template-atct_edit').length > 0 && window.location.href.indexOf('#') != -1) {
-        setTitleOfUrlHash()
+        manipulateReplyEditform()
     }
+
 } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
+
