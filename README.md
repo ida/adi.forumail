@@ -114,9 +114,9 @@ Modify your buildout.cfg accordingly:
     [buildout]
     
     development =
-        your/dev-eggs-dir/adi.forumail
-        your/dev-eggs-dir/mailtoplone.base
-        your/dev-eggs-dir/collective.contentrules.mailtogroup
+        your-dev-eggs-dir/adi.forumail
+        your-dev-eggs-dir/mailtoplone.base
+        your-dev-eggs-dir/collective.contentrules.mailtogroup
     
     [instance]
     
@@ -172,18 +172,23 @@ In a browser open 'example.org:8080/Plone/forumail'.
 
 Login as admin, or as any member of the group 'Forumailers'.
 
+Define categories
+-----------------
+
+Navigate to 'http://localhost:8080/Plone/forumail/edit/#fieldsetlegend-categorization',
+enter the categories you want to be available, wehre it says "Create and apply new tags." and click save.
+
 
 Add post via Web-UI
 -------------------
 
-TODO #14: Click 'Add new post', fill out form, save.
+Click 'Add new post', fill out form, save.
 
 
 Reply to post via Web-UI
 ------------------------
 
-TODO #15: Provide a button, which triggers a post-creation with the next increasing id
-relative to the post answered to, e.g.: '1-1' -> '1-2', or '2-7-3' -> '2-7-4'.
+Click 'Reply', fill out form, save.
 
 
 Add post via mail
@@ -191,9 +196,9 @@ Add post via mail
 
 Send a mail to your inboxes address.
 
-Add tags in the last line of your mail like this:
+Optionally add categories in the last line of your mail like this:
 
-    {tag1, tag2, tag3}
+    [a category, another category, cat é gory]
 
 
 Reply to post via mail
