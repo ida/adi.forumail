@@ -25,13 +25,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
-  <cmf:registerDirectory name="adi_forumail"/>
-
   <genericsetup:importStep
       name="adi.forumail"
       title="adi.forumail special import handlers"
       description=""
       handler="adi.forumail.setuphandlers.setupVarious" />
       />
+
+  <include package=".browser" />
 
 </configure>

@@ -1,0 +1,22 @@
+<configure
+ xmlns="http://namespaces.zope.org/zope"
+ xmlns:five="http://namespaces.zope.org/five"
+ xmlns:browser="http://namespaces.zope.org/browser"
+ i18n_domain="adi.forumail">
+
+    <include package="plone.app.contentmenu" />
+
+    <browser:resourceDirectory
+        name="adi.forumail.resources"
+        directory="resources"
+      />
+
+    <browser:page
+        for="*"
+        name="forumail_thread"
+        class=".resources.logic.View"
+        permission="zope2.View"
+        layer=".interfaces.IAdiForumail"
+      />
+
+</configure>

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-    <layers>
-        <layer name="adi.forumailbrowser.layer"
-                   interface="adi.forumail.interfaces.IAdiForumail" />
-    </layers>
+<layers>
+    <layer name="IAdiForumail"
+        interface="adi.forumail.browser.interfaces.IAdiForumail">
+    </layer>
+</layers>

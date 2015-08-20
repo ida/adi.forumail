@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <object name="portal_css">
  <stylesheet title=""
-    id="portal_skins/adi_forumail/adi_forumail.css"
-    media="screen" rel="stylesheet" rendering="link"
+    id="++resource++adi.forumail.resources/style.css"
+    media="screen" rel="stylesheet" rendering="import"
     cacheable="True" compression="safe" cookable="True"
     enabled="1" expression=""/>
 
