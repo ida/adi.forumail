@@ -1,41 +1,59 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      metal:use-macro="context/main_template/macros/master">
+      metal:use-macro="context/main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+<metal:block fill-slot="content">
+<div tal:define="posts nocall: view/getThread; mtool nocall: context/portal_membership;" class="forumail posts">
+<div tal:repeat="post posts" class="post">
+    
+    <div tal:condition="repeat/post/start" tal:define="categories post/Subject" id="category" class="categories">
+        <a tal:repeat="cat categories"
+           tal:content="cat"
+           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?Subject%3Alist=${cat};
+                           title string:Click to see all posts tagged as #${cat};
+                           alt string:${cat};"
+           class="link-category">
+Category
+        </a>
+    </div>
 
-    <metal:block fill-slot="main">
-<ul class="thread"
-    tal:define="thread nocall: view/getThread;
-                getPortraitUrl nocall: view/getPortraitUrl;"
-    tal:repeat="post thread">
+    <div tal:condition="repeat/post/start" tal:content="post/Title" class="title">
+Title
+    </div>
 
-    <li class="thread-post"
-        tal:define="author post/Creator;
-                    portrait_url python: getPortraitUrl(author)">
-        
-        <h2 class="thread-post-initial"
-            tal:condition="repeat/post/start"
-             tal:define="categories post/Subject">
-            <span class="thread-title"
-                  tal:content="post/Title" />
-            <span class="thread-categories"
-                  tal:repeat="cat categories">
-                <span class="thread-category"
-                      tal:content="cat" />
-            </span>
-        </h2>
-        
-        <div tal:content="portrait_url" />
-        
-        <span tal:content="author" />
-        
-        <span tal:content="post/CreationDate" />
-        
-        <div tal:content="structure post/getText" />
-    </li>
-</ul>
-    </metal:block>
+    <a tal:content="post/id" tal:condition="python: mtool.checkPermission('Add Page Templates', context)" tal:attributes="href string:./${post/id}; alt string:${post/id}" class="id edit">
+Id
+    </a>
+    <a tal:define="author post/Creator;"
+       tal:attributes="title string:See all posts of ${author};
+       href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
+       alt string:Go to all posts of user '${author}';"
+       class="author"><img tal:define="portrait python: mtool.getPersonalPortrait(author); portrait_url portrait/absolute_url" tal:attributes="
+       src string:${portrait_url}; alt string:
+Avatar
+       " class="author-avatar">
+    </a>
+    <a tal:define="author post/Creator;"
+       tal:content="author"
+       tal:attributes="title string:See all posts of ${author};
+       href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
+       alt string:Go to all posts of user '${author}';"
+       class="author author-name">
+Author
+       </a>
 
+        
+        <span tal:content="post/CreationDate" class="creation-date">
+Date
+        </span>
+
+
+    <div tal:content="structure post/getText" class="post-text text">
+Text
+    </div>
+</div><!-- .post -->
+</div><!-- .posts -->
+</metal:block>
 </html>
 

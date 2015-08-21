@@ -35,7 +35,7 @@ class View(BrowserView):
         """Returns brain."""
         post = aq_inner(self.context)
         forum = aq_parent(post)
-        forum_posts = api.content.find(context=forum, portal_type='News Item')
+        forum_posts = api.content.find(context=forum, portal_type='News Item', sort_on='id')
         return forum_posts
 
     def getThreadPosts(self, thread_id):
@@ -57,9 +57,11 @@ class View(BrowserView):
         return posts
 
 
-    def getPortraitUrl(self, user_id):
-       member_tool = api.portal.get_tool('portal_membership')
-       portrait = member_tool.getPersonalPortrait(user_id)
-       portrait_url = portrait.absolute_url()
-       return portrait_url
+    def getAvatarUrl(self, user_id):
+        member_tool = api.portal.get_tool('portal_membership')
+        portrait = member_tool.getPersonalPortrait(user_id)
+        portrait_url = portrait.absolute_url()
+        if portrait_url.endswith('/defaultUser.png'):
+            portrait_url = '/'.join(portrait_url.split('/')[:-1]) + '/logo.png'
+        return portrait_url
 

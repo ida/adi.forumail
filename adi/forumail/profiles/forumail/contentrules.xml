@@ -12,7 +12,10 @@
   </conditions>
   <actions>
    <action type="plone.actions.MailGroup">
+<!--
     <property name="source">${username} &lt;[INBOX_MAIL_ADDRESS]&gt;</property>
+-->
+    <property name="source">${username} &lt;forumailers@ida-ebkes.eu&gt;</property>
     <property name="message">${text}
 **** This is an automatic email-notification of a new post in "${namedirectory}".
 When replying to it, please leave the following line untouched.

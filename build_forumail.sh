@@ -36,6 +36,20 @@ smtp_host=''        # smtp.provider.org
 smtp_port=25
 
 
+inbox_address=forumailers@ida-ebkes.eu
+inbox_password=2DragO7fdh
+inbox_user_id=ida-ebkeseu-0004
+
+imap_host=imap.udag.de
+imap_port=993
+
+sender_address=forumail@ida-ebkes.eu
+sender_password=$inbox_password
+sender_user_id=ida-ebkeseu-0003
+
+smtp_host=smtp.udag.de
+smtp_port=25
+
 # Optionally change:
 
 project_dir=$HOME/forumail
@@ -133,8 +147,8 @@ parts =
     mailtoplone_cron
 eggs-directory = $eggs_dir
 extends = http://dist.plone.org/release/$plone_version/versions.cfg
-#extends = $HOME/.buildout/versions.cfg # DEV
-#offline = true                         # DEV
+#DEV: extends = $HOME/.buildout/versions.cfg
+#DEV: offline = true
 develop =
     $dev_eggs_dir/adi.forumail
     $dev_eggs_dir/mailtoplone.base
@@ -210,9 +224,9 @@ devReplaceDevEggsWithRepoEggs() {
 }
 main() {
 #devDestroyProjectDir
-    createFolders
-    installBuildout
-    getDevEggs
+#    createFolders
+#    installBuildout
+#    getDevEggs
 #devReplaceDevEggsWithRepoEggs
     setMailCredsViaXML
     writeBuildoutConfig

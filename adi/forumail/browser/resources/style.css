@@ -1,1 +1,146 @@
-body:before { content: "You've got some style, here."; }
+.forumail p,
+.forumail { 
+    font: 14px, Helvetica, Arial, FreeSans, sans-serif;
+    line-height: 1.5em;
+    background: lightyellow;
+    color: #272727;
+    border-color: #272727;
+}
+.forumail #content a:link,
+.forumail dl.portlet a:link,
+.forumail a:link,
+.forumail a:active,
+.forumail a:visited{
+    color: #00d2ff;
+    background: transparent;
+    text-decoration: none;
+    border-bottom: none !important;
+}
+.forumail a.state-private {
+    color: #00d2ff !important;
+}
+/* CATEGORIES
+ * Greenturquise from bright to dark:
+#e3faea
+#a9e6e5
+#00d2ff
+#7cbdca
+#00a4a2
+#006057
+#272727
+*/
+a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=announcements"],
+a[alt="announcements"] { background:
+#e3faea
+!important; color:
+#272727
+!important; }
+a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=general"],
+a[alt="general"] { background:
+#a9e6e5
+!important; color:
+#272727
+!important; }
+a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=users"],
+a[alt="users"] { background:
+#00d2ff
+!important; color:
+#272727
+!important; }
+a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=developers"],
+a[alt="developers"] { background:
+#7cbdca
+!important; color:
+#272727
+!important; }
+a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=core-developers"],
+a[alt="core-developers"] { background:
+#00a4a2
+!important; color:
+#e3faea
+!important; }
+a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=documentation"],
+a[alt="documentation"] { background:
+#006057
+!important; color:
+#e3faea
+!important; }
+a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=communication"],
+a[alt="communication"] { background:
+#272727
+!important; color:
+#e3faea
+!important; }
+.forumail {
+    padding: 2.7em;
+    margin: 2.7em;
+}
+.forumail .title {
+    font-size: 1.27em;
+}
+.forumail img.author-avatar {
+    height: 1.27em;
+    width: 1.27em; 
+}
+/*
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+.forumail {
+    position: relative;
+}
+.forumail .post {
+border-top: 1px solid darkblue;
+}
+.forumail .categories,
+.forumail .creation-date {
+    position: absolute;
+    right: 0;
+}
+.forumail .id,
+.forumail .author-name {
+}
+/*
+    position: absolute;
+    left: -2.77em;
+.forumail .post-details {
+    position: absolute;
+width: 5em;
+overflow: hidden;
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+*/
+#breadcrumbs-you-are-here,
+#portal-footer,
+#portal-siteactions,
+#portal-colophon,
+#portal-top{display:none}
