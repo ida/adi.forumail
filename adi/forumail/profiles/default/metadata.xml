@@ -3,6 +3,7 @@
 <version>1000</version>
 <dependencies>
 <dependency>profile-mailtoplone.base:default</dependency>
+  <dependency>profile-Products.ContentWellPortlets:default</dependency>
 </dependencies>
 </metadata>
 

@@ -25,6 +25,7 @@ setup(name='adi.forumail',
           'collective.contentrules.mailtogroup',
           'plone.api',
           'setuptools',
+          'Products.ContentWellPortlets',
       ],
       entry_points="""
       # -*- Entry points: -*-

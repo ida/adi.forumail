@@ -19,4 +19,12 @@
         layer=".interfaces.IAdiForumail"
       />
 
+    <browser:page
+        for="*"
+        name="forumail_posts"
+        class=".resources.logic.View"
+        permission="zope2.View"
+        layer=".interfaces.IAdiForumail"
+      />
+
 </configure>

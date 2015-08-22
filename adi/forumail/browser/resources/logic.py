@@ -9,7 +9,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 class View(BrowserView):
 
-    index = ViewPageTemplateFile("thread.pt")
+    index = ViewPageTemplateFile("posts.pt")
 
     def render(self):
         return self.index()
@@ -31,12 +31,25 @@ class View(BrowserView):
             thread_id = post_id
         return thread_id
 
-    def getForumPosts(self):
-        """Returns brain."""
-        post = aq_inner(self.context)
-        forum = aq_parent(post)
-        forum_posts = api.content.find(context=forum, portal_type='News Item', sort_on='id')
-        return forum_posts
+    def getPosts(self):
+        """Expects forum or post, returns post-objects."""
+        posts = []
+        thread_id = None
+        context = aq_inner(self.context)
+        if context.Type() == 'News Item':
+            thread_id = context.getId()
+            context = aq_parent(context)
+        posts_brain = api.content.find(context=context, portal_type='News Item', sort_on='id')
+        for post in posts_brain:
+            post = post.getObject()
+            post_id = post.getId()
+            if thread_id:
+                if post.getId().startswith(thread_id):
+                    posts.append(post)
+            else:
+                    posts.append(post)
+
+        return posts
 
     def getThreadPosts(self, thread_id):
         """Returns objects."""
@@ -57,11 +70,11 @@ class View(BrowserView):
         return posts
 
 
-    def getAvatarUrl(self, user_id):
-        member_tool = api.portal.get_tool('portal_membership')
-        portrait = member_tool.getPersonalPortrait(user_id)
-        portrait_url = portrait.absolute_url()
-        if portrait_url.endswith('/defaultUser.png'):
-            portrait_url = '/'.join(portrait_url.split('/')[:-1]) + '/logo.png'
-        return portrait_url
+    def getPPosts(self, context_id):
+        """Returns objects."""
+        post_objects = []
+        posts = self.getForumPosts()
+        for post in posts:
+            posts_objects.append(post.getObject())
+        return posts_objects
 
