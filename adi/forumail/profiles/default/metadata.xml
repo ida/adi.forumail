@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <metadata>
-<version>1000</version>
-<dependencies>
-<dependency>profile-mailtoplone.base:default</dependency>
-  <dependency>profile-Products.ContentWellPortlets:default</dependency>
-</dependencies>
+  <version>1000</version>
+  <dependencies>
+    <dependency>profile-mailtoplone.base:default</dependency>
+  </dependencies>
 </metadata>
 
