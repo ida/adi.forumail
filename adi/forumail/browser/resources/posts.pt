@@ -4,81 +4,83 @@
       metal:use-macro="context/main_template/macros/master"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 <metal:block fill-slot="content">
-    <div class="forumail"
-         tal:define="mtool nocall: context/portal_membership;">
-        <div class="header">
-            <a class="add" href="./createObject?type_name=News%20Item">
-                + Add a new post
-            </a>
-        </div>
-        <div class="posts"
-             tal:define="posts nocall: view/getPosts;
-                         is_thread python: context.Type() == 'News Item';
-                         mtool nocall: context/portal_membership;">
-            <div class="post"
-                 tal:repeat="post posts">
-                <span tal:replace="nothing">
-                    .post .header
-                </span>
-                 <div class="header"
-                      tal:define="is_first repeat/post/start;
-                                  show_thread_head python: is_first and is_thread or not is_thread"
-                      tal:condition="show_thread_head">
+<div class="forumail"
+     tal:define="mtool nocall: context/portal_membership;">
+    <div class="header">
+        <a class="add" href="./createObject?type_name=News%20Item">
+            + Add new post
+        </a>
+    </div>
+    <div class="posts" tal:define="posts nocall: view/getPosts;
+                                   is_thread python: context.Type() == 'News Item';
+                                   mtool nocall: context/portal_membership;">
+    <div class="post" tal:repeat="post posts">
+         <div class="header"
+              tal:define="is_first repeat/post/start;
+                          show_thread_head python: is_first and is_thread or not is_thread"
+              tal:condition="show_thread_head">
 
-                    <div tal:define="categories post/Subject" id="category" class="categories">
-                        <span tal:replace="nothing">#category and .link-category are used to inherit plone-styles (SunburstTheme)</span>
-                        <a class="link-category category link"
-                           tal:repeat="cat categories"
-                           tal:content="cat"
-                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?Subject%3Alist=${cat};
-                                           title string:Click to 
-                                           alt string:${cat};">
+            <div id="category" class="categories" tal:define="categories post/Subject">
+                <a class="link-category category link"
+                   tal:repeat="cat categories"
+                   tal:content="cat"
+                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?Subject%3Alist=${cat};
+                                   title string:Click to 
+                                   alt string:${cat};">
 Category
-                        </a>
-                    </div>
-                    <div class="title" tal:content="post/Title">
+                </a>
+            </div>
+            <div class="title" tal:content="post/Title">
 Title
-                    </div>
-                </div>
-                <span tal:replace="nothing">
-                    EO .post .header
-                </span>
-                <a class="id" tal:content="post/id" tal:attributes="href string:./${post/id}; alt string:${post/id}">
+            </div>
+        </div>
+        <span tal:replace="nothing">
+            EO .post .header
+        </span>
+        <a class="id" tal:content="post/id" tal:attributes="href string:./${post/id}/forumail_view; alt string:${post/id}">
 Id
-                </a>
-                <a class="author link"
-                   tal:define="author post/Creator;"
-                   tal:attributes="title string:See all posts of ${author};
-                   href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
-                   alt string:Go to all posts of user '${author}';">
-                   <img class="avatar"
-                        tal:define="portrait python: mtool.getPersonalPortrait(author);
-                                    portrait_url portrait/absolute_url"
-                        tal:attributes="src string:${portrait_url}; alt string:
+        </a>
+        <a class="author home"
+           tal:define="author post/Creator;"
+           tal:attributes="title string:See all posts of ${author};
+           href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
+           alt string:Go to all posts of user '${author}';">
+           <img class="avatar"
+                tal:define="portrait python: mtool.getPersonalPortrait(author);
+                            portrait_url portrait/absolute_url"
+                tal:attributes="src string:${portrait_url}; alt string:
 Avatar">
-                </a>
-                <a class="author name link"
-                   tal:define="author post/Creator;"
-                   tal:content="author"
-                   tal:attributes="title string:See all posts of ${author};
-                   href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
-                   alt string:Go to all posts of user '${author}';">
+        </a>
+        <a class="author name"
+           tal:define="author post/Creator;"
+           tal:content="author"
+           tal:attributes="title string:See all posts of ${author};
+           href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
+           alt string:Go to all posts of user '${author}';">
 Author
-                </a>
-                <span class="creation-date" tal:content="post/CreationDate">
-                    <span tal:replace="nothing">
-                        .creation-date is used instead of .date,  to *not* inherit plone-styles (jq-ui)
-                    </span>
+        </a>
+        <span class="creation-date" tal:content="post/CreationDate">
+            <span tal:replace="nothing">
+                .creation-date is used instead of .date,  to *not* inherit plone-styles (jq-ui)
+            </span>
 Date
-                </span>
+        </span>
 
 
-                <div tal:content="structure post/getText" class="post-text text">
+        <div tal:content="structure post/getText" class="post-text text">
 Text
-                </div>
-            </div><span tal:replace="nothing">EO .post</span>
-        </div><span tal:replace="nothing">EO .posts</span>
-    </div><span tal:replace="nothing">EO .forumail</span>
+        </div>
+        <a class="reply"
+         tal:define="getNextId nocall: view/getNextId;
+                     post_id post/id;
+                     reply_id python: getNextId(post_id)"
+         tal:attributes="href string:./createObject?type_name=News+Item&id=${reply_id}&Title='yippi';
+                         alt string:Reply to ${post/id};">
+Reply
+        </a>
+        </div><!-- .post -->
+    </div><!-- .posts -->
+</div><!-- .forumail -->
 </metal:block>
 </html>
 

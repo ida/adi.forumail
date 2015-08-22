@@ -17,8 +17,18 @@ class View(BrowserView):
     def __call__(self):
         return self.render()
 
+    def isNr(string):
+        IS_NR = False
+        nrs = ['0','1','2','3','4','5','6','7','8','9']
+        i = len(string)-1
+        while i < len(nrs)-1 and string[i] in nrs:
+            i -= 1
+        if i == 0: IS_NR = True
+        return IS_NR
+
+
     def getThreadId(self, post_id):
-        thread_id = ''
+        thread_id = None
         nrs = ['0','1','2','3','4','5','6','7','8','9']
         i = len(post_id)-1
         if post_id[-1] in nrs:
@@ -55,4 +65,28 @@ class View(BrowserView):
             else:
                     posts.append(post)
         return posts
+
+    def getPostIds(self):
+        post_ids = []
+        posts = self.getPosts()
+        for post in posts:
+            post_ids.append(post.getId())
+        return post_ids
+
+    def getNextId(self, post_id):
+        """ Expects a post-obj and post-id, returns next reply-to-id."""
+        next_id = None
+        next_nr = None
+        post_ids = self.getPostIds
+        if post_id != self.getThreadId(post_id):
+            next_nr = int(post_id.split('-')[-1]) + 1
+            next_id = '-'.join(post_id.split('-')[:-1]) + '-' + str(next_nr)
+        else:
+            next_id = post_id + '-1'
+        # If id exists, increase:
+        while next_id in post_ids:
+            next_nr += 1
+            next_id = '-'.join(post_id.split('-')[:-1]) + '-' + str(next_nr)
+
+        return next_id
 
