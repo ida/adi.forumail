@@ -61,7 +61,7 @@ Author
         </a>
         <span class="creation-date" tal:content="post/CreationDate">
             <span tal:replace="nothing">
-                .creation-date is used instead of .date,  to *not* inherit plone-styles (jq-ui)
+                .creation-date is used instead of .date, to *not* inherit plone-styles (jq-ui)
             </span>
 Date
         </span>
@@ -71,11 +71,11 @@ Date
 Text
         </div>
         <a class="reply"
-         tal:define="getNextId nocall: view/getNextId;
+         tal:define="
                      post_id post/id;
-                     reply_id python: getNextId(post_id)"
+                     reply_id python: view.getNextId(post_id)"
          tal:attributes="href string:./createObject?type_name=News+Item&id=${reply_id}&Title='yippi';
-                         alt string:Reply to ${post/id};">
+                         alt string:Reply to ${post_id};">
 Reply
         </a>
         </div><!-- .post -->

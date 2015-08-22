@@ -75,9 +75,9 @@ class View(BrowserView):
 
     def getNextId(self, post_id):
         """ Expects a post-obj and post-id, returns next reply-to-id."""
-        next_id = None
-        next_nr = None
-        post_ids = self.getPostIds
+        next_id = ''
+        next_nr = 0
+        post_ids = self.getPostIds()
         if post_id != self.getThreadId(post_id):
             next_nr = int(post_id.split('-')[-1]) + 1
             next_id = '-'.join(post_id.split('-')[:-1]) + '-' + str(next_nr)
@@ -85,7 +85,7 @@ class View(BrowserView):
             next_id = post_id + '-1'
         # If id exists, increase:
         while next_id in post_ids:
-            next_nr += 1
+            next_nr = next_nr + 1
             next_id = '-'.join(post_id.split('-')[:-1]) + '-' + str(next_nr)
 
         return next_id
