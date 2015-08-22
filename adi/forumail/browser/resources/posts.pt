@@ -6,6 +6,11 @@
 <metal:block fill-slot="content">
     <div class="forumail"
          tal:define="mtool nocall: context/portal_membership;">
+        <div class="header">
+            <a class="add" href="./createObject?type_name=News%20Item">
+                + Add a new post
+            </a>
+        </div>
         <div class="posts"
              tal:define="posts nocall: view/getPosts;
                          is_thread python: context.Type() == 'News Item';
@@ -13,16 +18,16 @@
             <div class="post"
                  tal:repeat="post posts">
                 <span tal:replace="nothing">
-                    .thread-head
+                    .post .header
                 </span>
-                 <div class="thread-head"
+                 <div class="header"
                       tal:define="is_first repeat/post/start;
                                   show_thread_head python: is_first and is_thread or not is_thread"
                       tal:condition="show_thread_head">
 
                     <div tal:define="categories post/Subject" id="category" class="categories">
                         <span tal:replace="nothing">#category and .link-category are used to inherit plone-styles (SunburstTheme)</span>
-                        <a class="link-category category"
+                        <a class="link-category category link"
                            tal:repeat="cat categories"
                            tal:content="cat"
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?Subject%3Alist=${cat};
@@ -36,12 +41,12 @@ Title
                     </div>
                 </div>
                 <span tal:replace="nothing">
-                    EO .thread-head
+                    EO .post .header
                 </span>
                 <a class="id" tal:content="post/id" tal:attributes="href string:./${post/id}; alt string:${post/id}">
 Id
                 </a>
-                <a class="author"
+                <a class="author link"
                    tal:define="author post/Creator;"
                    tal:attributes="title string:See all posts of ${author};
                    href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
@@ -52,7 +57,7 @@ Id
                         tal:attributes="src string:${portrait_url}; alt string:
 Avatar">
                 </a>
-                <a class="author"
+                <a class="author name link"
                    tal:define="author post/Creator;"
                    tal:content="author"
                    tal:attributes="title string:See all posts of ${author};

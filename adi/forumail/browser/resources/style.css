@@ -82,7 +82,7 @@ a[alt="communication"] { background:
 .forumail .title {
     font-size: 1.27em;
 }
-.forumail img.author-avatar {
+.forumail img.avatar {
     height: 1.27em;
     width: 1.27em; 
 }
@@ -118,5 +118,4 @@ a[alt="communication"] { background:
 #breadcrumbs-you-are-here,
 #portal-footer,
 #portal-siteactions,
-#portal-colophon,
-#portal-top{display:none}
+#portal-colophon{display:none}
