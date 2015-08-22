@@ -71,6 +71,10 @@ a[alt="communication"] { background:
 !important; color:
 #e3faea
 !important; }
+/*
+*/
+
+/* General */
 .forumail {
     padding: 2.7em;
     margin: 2.7em;
@@ -82,56 +86,28 @@ a[alt="communication"] { background:
     height: 1.27em;
     width: 1.27em; 
 }
-/*
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
+.forumail .post {
+    border-top: 1px solid darkblue;
+}
 .forumail {
-    position: relative;
+    border: 1px dotted lightgreen;
 }
 .forumail .post {
-border-top: 1px solid darkblue;
+    border: 1px dotted lightblue;
+}
+.forumail .title {
+    border-bottom: 1px solid darkblue;
+}
+/* Structure */
+.forumail {
+    position: relative;
 }
 .forumail .categories,
 .forumail .creation-date {
     position: absolute;
     right: 0;
 }
-.forumail .id,
-.forumail .author-name {
-}
-/*
-    position: absolute;
-    left: -2.77em;
-.forumail .post-details {
-    position: absolute;
-width: 5em;
-overflow: hidden;
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Borders */
 
 
 
