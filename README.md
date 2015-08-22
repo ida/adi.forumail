@@ -172,11 +172,20 @@ In a browser open 'example.org:8080/Plone/forumail'.
 
 Login as admin, or as any member of the group 'Forumailers'.
 
-Define categories
------------------
+Define allowed categories
+-------------------------
 
-Navigate to 'http://localhost:8080/Plone/forumail/edit/#fieldsetlegend-categorization',
-enter the categories you want to be available, wehre it says "Create and apply new tags." and click save.
+Navigate to:
+
+    http://localhost:8080/Plone/forumail/edit/#fieldsetlegend-categorization
+
+Enter the categories you want to be available, where it's written "Create and apply new tags", and click save.
+
+Categories are filtered of mails, whether the parent-folder holds the given
+categories, too, or not.
+
+Users adding posts via the web-UI can only choose of categories you defined on the
+forum's folder.
 
 
 Add post via Web-UI
