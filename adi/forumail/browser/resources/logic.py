@@ -32,12 +32,18 @@ class View(BrowserView):
         return thread_id
 
     def getPosts(self):
-        """Expects forum or post, returns post-objects."""
+        """
+        Expects forum-(Folder)- or post-(News Item)-object,
+        returns post-objects.
+        If self is a forum, returns all posts in forum,
+        if self is a post, returns all posts of thread.
+        """
         posts = []
         thread_id = None
         context = aq_inner(self.context)
         if context.Type() == 'News Item':
-            thread_id = context.getId()
+            post_id = context.getId()
+            thread_id = self.getThreadId(post_id)
             context = aq_parent(context)
         posts_brain = api.content.find(context=context, portal_type='News Item', sort_on='id')
         for post in posts_brain:
@@ -51,30 +57,4 @@ class View(BrowserView):
 
         return posts
 
-    def getThreadPosts(self, thread_id):
-        """Returns objects."""
-        thread_posts = []
-        posts = self.getForumPosts()
-        for post in posts:
-            post_id = post.getObject().getId()
-            if post_id.startswith(thread_id):
-                thread_posts.append(post.getObject())
-        return thread_posts
-
-    def getThread(self):
-        thread = []
-        post = aq_inner(self.context)
-        post_id = post.getId()
-        thread_id = self.getThreadId(post_id)
-        posts = self.getThreadPosts(thread_id)
-        return posts
-
-
-    def getPPosts(self, context_id):
-        """Returns objects."""
-        post_objects = []
-        posts = self.getForumPosts()
-        for post in posts:
-            posts_objects.append(post.getObject())
-        return posts_objects
 

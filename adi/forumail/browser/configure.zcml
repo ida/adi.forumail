@@ -13,15 +13,7 @@
 
     <browser:page
         for="*"
-        name="forumail_thread"
-        class=".resources.logic.View"
-        permission="zope2.View"
-        layer=".interfaces.IAdiForumail"
-      />
-
-    <browser:page
-        for="*"
-        name="forumail_posts"
+        name="forumail_view"
         class=".resources.logic.View"
         permission="zope2.View"
         layer=".interfaces.IAdiForumail"
