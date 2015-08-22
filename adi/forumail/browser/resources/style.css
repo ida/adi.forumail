@@ -115,7 +115,13 @@ a[alt="communication"] { background:
 
 /*
 */
+.section-forumail:not(.template-folder_contents) #content a.managePortletsFallback,
+.section-forumail:not(.template-folder_contents) div a.managePortletsFallback,
+.section-forumail:not(.template-folder_contents) div.managePortletsLink,
 #breadcrumbs-you-are-here,
+#portal-logo,
+#portal-searchbox,
+#portal-globalnav,
 #portal-footer,
 #portal-siteactions,
 #portal-colophon{display:none}
