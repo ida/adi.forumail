@@ -45,7 +45,7 @@ class View(BrowserView):
             post_id = context.getId()
             thread_id = self.getThreadId(post_id)
             context = aq_parent(context)
-        posts_brain = api.content.find(context=context, portal_type='News Item', sort_on='id')
+        posts_brain = api.content.find(context=context, portal_type='News Item', sort_on='created')
         for post in posts_brain:
             post = post.getObject()
             post_id = post.getId()
@@ -54,7 +54,5 @@ class View(BrowserView):
                     posts.append(post)
             else:
                     posts.append(post)
-
         return posts
-
 
