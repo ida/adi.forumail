@@ -30,6 +30,8 @@ def doOnInstall(site, addon_name):
     forum = api.content.create(type='Folder', title=forum_name, container=site)
     # Assign interface for mail-dropping via mailtoplone.base:
     mark(forum, IBlogMailDropBoxMarker)
+    # Set default-view of forum:
+    forum.setLayout('forumail_view')
     # Create group:
     api.group.create(groupname=group_id, title=group_name)
     # Assign group-permissions to forum:
@@ -38,23 +40,6 @@ def doOnInstall(site, addon_name):
     forum.reindexObject()
     forum.reindexObjectSecurity()
 
-    # Add a collection, which sorts id alphabetically (1, 1-1, 1-2, 2, 2-1, 2-2, ...):
-    collection = api.content.create(type='Topic', title='Threads', container=forum)
-    contenttype_criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
-    contenttype_criterion.setValue('News Item')
-    collection.setSortCriterion('id', reversed=False)
-    # Set collection's default-view:
-    collection.setLayout('folder_full_view')
-    # Set collection as forum's default-view:
-    forum.setDefaultPage('threads')
- 
-    # Add a collection, for showing single-threads:
-    collection = api.content.create(type='Topic', title='Thread', container=forum)
-    contenttype_criterion = collection.addCriterion('Type', 'ATPortalTypeCriterion')
-    contenttype_criterion.setValue('News Item')
-    collection.setSortCriterion('id', reversed=False)
-    # Set collection's default-view:
-    collection.setLayout('folder_full_view')
  
     # Import contentrule of profile 'forumail' 
     # (! If this is done before content-creation and no user is assigned to group,
@@ -64,11 +49,9 @@ def doOnInstall(site, addon_name):
     # Assign contentrule to forum:
     assign_rule(forum, forum_id)
 
-    #if site_domain != 'localhost.localdomain':
-    if site_domain == 'localhost.localdomain':
+    if site_domain != 'localhost.localdomain':
         
         user_mail = user_id + '@' + site_domain
-        user_mail = 'forumailer@ida-ebkes.eu'
 
         # Add user, we need at least one, so collective.contentrule.mailtogroup  will not complain:
         api.user.create(username=user_id, password=user_id, email=user_mail, properties=dict(fullname=user_name))
