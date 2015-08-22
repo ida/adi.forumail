@@ -137,6 +137,16 @@ Update build
     ./bin/instance fg
 
 
+Log in site as admin
+--------------------
+
+In a browser open:
+
+    localhost:8080/Plone/forumail
+
+Login as 'admin', password is also 'admin'.
+
+
 Set sender-mailaccount
 ----------------------
 
@@ -165,13 +175,6 @@ You'll land back on the contentrule-form. To be on the sure side, also there cli
 right below the "Enabled"-field.
 
 
-Usage
-=====
-
-In a browser open 'example.org:8080/Plone/forumail'.
-
-Login as admin, or as any member of the group 'Forumailers'.
-
 Define allowed categories
 -------------------------
 
@@ -186,6 +189,28 @@ categories, too, or not.
 
 Users adding posts via the web-UI can only choose of categories you defined on the
 forum's folder.
+
+
+Create users for forumail-group
+-------------------------------
+
+Before adding posts, please add at a least one user to the forumail-group,
+otherwise the mailnotifica-contentrule will rightfully moan, there's no
+recipients available to send the noti to.
+
+Alternatively, disable the contentrule, if you only want to use the forum's web-UI.
+
+Create users via:
+
+    http://localhost:8080/Plone/@@new-user
+
+Enter at least the user-id, the user-mailaddress
+and make sure, to check the box at the group 'Forumailers'.
+Click save. Repeat as je belieeft.
+
+
+Usage
+=====
 
 
 Add post via Web-UI
