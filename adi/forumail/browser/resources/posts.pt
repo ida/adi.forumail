@@ -74,7 +74,7 @@ Text
          tal:define="
                      post_id post/id;
                      reply_id python: view.getNextId(post_id)"
-         tal:attributes="href string:./createObject?type_name=News+Item&id=${reply_id}&Title='yippi';
+         tal:attributes="href string:./createObject?type_name=News+Item&Title=${post_id};
                          alt string:Reply to ${post_id};">
 Reply
         </a>
