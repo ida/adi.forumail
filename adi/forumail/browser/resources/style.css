@@ -86,6 +86,7 @@ a[alt="communication"] { background:
     height: 1.27em;
     width: 1.27em; 
 }
+/* Borders */
 .forumail .post {
     border-top: 1px solid darkblue;
 }
@@ -107,21 +108,19 @@ a[alt="communication"] { background:
     position: absolute;
     right: 0;
 }
-/* Borders */
-
-
-
-
-
+.section-forumail.template-atct_edit #fieldset-categorization {display:block}
+.section-forumail.template-atct_edit #content ul.formTabs,
+.section-forumail.template-atct_edit #content> div:nth-child(1),
+.section-forumail.template-atct_edit #content > div:nth-child(2),
+.section-forumail #cmfeditions_version_comment_block,
+.section-forumail #archetypes-fieldname-imageCaption,
+.section-forumail #archetypes-fieldname-image,
+.section-forumail .fieldTextFormat,
+.section-forumail #archetypes-fieldname-description,
+.section-forumail #archetypes-fieldname-title .formQuestion, /* .formQuestion = Labels */
+.section-forumail #archetypes-fieldname-text .formQuestion,
 /*
+DEV
 */
-.section-forumail:not(.template-folder_contents) #content a.managePortletsFallback,
-.section-forumail:not(.template-folder_contents) div a.managePortletsFallback,
-.section-forumail:not(.template-folder_contents) div.managePortletsLink,
-#breadcrumbs-you-are-here,
-#portal-logo,
-#portal-searchbox,
-#portal-globalnav,
-#portal-footer,
-#portal-siteactions,
-#portal-colophon{display:none}
+#breadcrumbs-you-are-here 
+{display:none}

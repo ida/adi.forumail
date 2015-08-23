@@ -4,6 +4,10 @@
       metal:use-macro="context/main_template/macros/master"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 <metal:block fill-slot="content">
+<span tal:replace="nothing">
+- #category and .link-category are used to inherit Plone-styles (SunburstTheme).
+- .creation-date was choosen instead of more convenient .date, to *not* inherit Plone-styles (jq-ui).
+</span>
 <div class="forumail"
      tal:define="mtool nocall: context/portal_membership;">
     <div class="header">
@@ -47,7 +51,8 @@ Id
            alt string:Go to all posts of user '${author}';">
            <img class="avatar"
                 tal:define="portrait python: mtool.getPersonalPortrait(author);
-                            portrait_url portrait/absolute_url"
+                            portrait_url portrait/absolute_url;
+                            portrait_url string:logo.png;"
                 tal:attributes="src string:${portrait_url}; alt string:
 Avatar">
         </a>
@@ -60,9 +65,6 @@ Avatar">
 Author
         </a>
         <span class="creation-date" tal:content="post/CreationDate">
-            <span tal:replace="nothing">
-                .creation-date is used instead of .date, to *not* inherit plone-styles (jq-ui)
-            </span>
 Date
         </span>
 
@@ -73,8 +75,13 @@ Text
         <a class="reply"
          tal:define="
                      post_id post/id;
-                     reply_id python: view.getNextId(post_id)"
-         tal:attributes="href string:./createObject?type_name=News+Item&Title=${post_id};
+                     post_url post/absolute_url;
+                     forum_url python: '/'.join(post_url.split('/')[:-1]);
+                     reply_url string:${forum_url}?reply_to_title=${post_id};
+                     reply_url string:${forum_url}/createObject?type_name=News%20Item&Title=${post_id};
+                     "
+        tal:content="reply_url"
+         tal:attributes="href reply_url;
                          alt string:Reply to ${post_id};">
 Reply
         </a>

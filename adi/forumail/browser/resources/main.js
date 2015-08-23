@@ -1,12 +1,7 @@
 (function($) { $(document).ready(function() {
 function isNr(chara) {
-    IS_NR = '0'
-    var nrs = ['1','2','3','4','5','6','7','8','9','0']
-    for(var i=0;i<nrs.length;i++) {
-        if(chara == nrs[i]) {
-            IS_NR = '1'
-        }
-    }
+    var IS_NR = '0'; var nrs = ['1','2','3','4','5','6','7','8','9','0']
+    for(var i=0;i<nrs.length;i++) { if(chara == nrs[i]) { IS_NR = '1' } }
     return IS_NR
 }
 function indentReply(post_link) {
@@ -32,9 +27,11 @@ function adjustReplyToPath(reply_to_link) {
     // so reply will be created in container, not in collection:
     reply_to_link.attr('href', '.' + reply_to_link.attr('href'))
 }
-function setTitleOfUrlHash() {
-    // Get hashtag of url:
-    var title = window.location.href.split('#')[1]
+function setTitleOfUrlPara() {
+    // Get everything after 'Title='
+    var title = document.referrer.split('Title=')[1]
+    // If there's more paras following, get everything until next para:
+    if(document.referrer.indexOf('&') != -1) { title = title.split('&')[0] }
     // Set hashtag as title:
     $('#title').val(title)
     // Hide field, so user cannot damage auto-title:
@@ -52,21 +49,35 @@ function checkTinyMCELoaded () {
     $('#text_ifr').contents().find(".mceContentBody").get(0).focus()
 }
 function manipulateReplyEditform() {
-    setTitleOfUrlHash()
+    setTitleOfUrlPara()
     setTimeout(checkTinyMCELoaded, 100); // sets focus on body-text-field
+}
+function setBrowserUrlWithoutReload(url) {
+    window.history.pushState(null, '', url)
+}
+function removeAllUrlParas() {
+    var browser_url = window.location.href
+    if(browser_url.indexOf('?') != -1) { browser_url = browser_url.split('?')[0] }
+    return browser_url
+}
+function clickReply(link, eve) {
+    var link_url = $(link).attr('href')
+    setBrowserUrlWithoutReload(link_url)
 }
 function main() {
 
-    // Is listview:
-    if($('.section-forumail.portaltype-topic').length > 0) {
-        $('.item #portlets-below a').each(function() { adjustReplyToPath($(this)) });
-        $('.headline a').each(function() { indentReply($(this)) });
+    if($('.template-forumail_view').length > 0) {
+        $('.reply').click(function(eve) {
+            clickReply($(this), eve)
+        });
     }
 
-    // Is editview and a reply, because url contains a hash:
-    if($('.section-forumail.template-atct_edit').length > 0 && window.location.href.indexOf('#') != -1) {
-        manipulateReplyEditform()
+    if($('.template-atct_edit.section-forumail').length > 0) {
+        var title = document.referrer.split('&Title=')[1]
+        $('#title').val(title).hide()
+        setTimeout(checkTinyMCELoaded, 100); // sets focus on body-text-field
     }
+
 
 } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
