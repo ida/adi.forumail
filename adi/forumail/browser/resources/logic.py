@@ -48,14 +48,17 @@ class View(BrowserView):
         If self is a forum, returns all posts in forum,
         if self is a post, returns all posts of thread.
         """
+        sort_order = 'reverse'
         posts = []
+
         thread_id = None
         context = aq_inner(self.context)
         if context.Type() == 'News Item':
             post_id = context.getId()
             thread_id = self.getThreadId(post_id)
             context = aq_parent(context)
-        posts_brain = api.content.find(context=context, portal_type='News Item', sort_on='created')
+            sort_order = 'ascending'
+        posts_brain = api.content.find(context=context, portal_type='News Item', sort_on='created', sort_order=sort_order)
         for post in posts_brain:
             post = post.getObject()
             post_id = post.getId()
