@@ -21,6 +21,25 @@
     <div class="post" tal:repeat="post posts">
 
      <div class="head">
+        <div class="thread"
+             tal:define="is_first repeat/post/start;
+                         show_thread_head python: is_first and is_thread or not is_thread"
+             tal:condition="show_thread_head">
+
+            <a class="title" tal:content="post/Title" tal:attributes="href string: ${post/absolute_url}/forumail_view">
+Title
+            </a>
+            <div id="category" class="categories" tal:define="categories post/Subject">
+                <a class="link-category category link"
+                   tal:repeat="cat categories"
+                   tal:content="cat"
+                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?Subject%3Alist=${cat};
+                                   title string:Click to 
+                                   alt string:${cat};">
+Category
+                </a>
+            </div>
+        </div><!-- thread -->
         <a class="id" tal:content="post/id" tal:attributes="href string:./${post/id}/forumail_view; alt string:${post/id}">
 Id
         </a>
@@ -49,25 +68,6 @@ Author
         </a>
 
 
-        <div class="thread"
-             tal:define="is_first repeat/post/start;
-                         show_thread_head python: is_first and is_thread or not is_thread"
-             tal:condition="show_thread_head">
-
-            <a class="title" tal:content="post/Title" tal:attributes="href string: ${post/absolute_url}/forumail_view">
-Title
-            </a>
-            <div id="category" class="categories" tal:define="categories post/Subject">
-                <a class="link-category category link"
-                   tal:repeat="cat categories"
-                   tal:content="cat"
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?Subject%3Alist=${cat};
-                                   title string:Click to 
-                                   alt string:${cat};">
-Category
-                </a>
-            </div>
-        </div><!-- thread -->
         </div><!-- head -->
         <div tal:content="structure post/getText" class="body text">
 Text

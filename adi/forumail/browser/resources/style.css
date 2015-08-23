@@ -98,24 +98,18 @@ a[alt="communication"] { background:
 }
 .forumail .title {
     border-bottom: 1px solid darkblue;
+float:left
 }
-.forumail .head,
-.forumail .foot {
+.forumail .post .head,
+.forumail .post .foot {
     text-align: right;
 }
-.forumail .thread {
+.forumail .post .head .thread {
     text-align: left;
 }
-/* Structure */
+.forumail .categories {
+}
 /*
-.forumail {
-    position: relative;
-}
-.forumail .categories,
-.forumail .creation-date {
-    position: absolute;
-    right: 0;
-}
 DEV
 .section-forumail.template-atct_edit #fieldset-categorization {display:block}
 */
