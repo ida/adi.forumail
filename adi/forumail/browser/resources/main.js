@@ -73,7 +73,7 @@ function main() {
     }
 
     if($('.template-atct_edit.section-forumail').length > 0
-       && document.referrer.indexOf('&Title=') != -1 {
+       && document.referrer.indexOf('&Title=') != -1 ) {
         var title = document.referrer.split('&Title=')[1]
         $('#title').val(title).hide()
         setTimeout(checkTinyMCELoaded, 100); // sets focus on body-text-field

@@ -111,11 +111,11 @@ float:left
 }
 /*
 DEV
-.section-forumail.template-atct_edit #fieldset-categorization {display:block}
 */
+.section-forumail.template-atct_edit #fieldset-categorization {display:block!important}
+.section-forumail.template-atct_edit #content ul.formTabs,
 .section-forumail .id,
 .section-forumail .author.name,
-.section-forumail.template-atct_edit #content ul.formTabs,
 .section-forumail.template-atct_edit #content> div:nth-child(1),
 .section-forumail.template-atct_edit #content > div:nth-child(2),
 .section-forumail #cmfeditions_version_comment_block,
