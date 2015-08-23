@@ -99,7 +99,15 @@ a[alt="communication"] { background:
 .forumail .title {
     border-bottom: 1px solid darkblue;
 }
+.forumail .head,
+.forumail .foot {
+    text-align: right;
+}
+.forumail .thread {
+    text-align: left;
+}
 /* Structure */
+/*
 .forumail {
     position: relative;
 }
@@ -108,7 +116,11 @@ a[alt="communication"] { background:
     position: absolute;
     right: 0;
 }
+DEV
 .section-forumail.template-atct_edit #fieldset-categorization {display:block}
+*/
+.section-forumail .id,
+.section-forumail .author.name,
 .section-forumail.template-atct_edit #content ul.formTabs,
 .section-forumail.template-atct_edit #content> div:nth-child(1),
 .section-forumail.template-atct_edit #content > div:nth-child(2),
@@ -119,8 +131,5 @@ a[alt="communication"] { background:
 .section-forumail #archetypes-fieldname-description,
 .section-forumail #archetypes-fieldname-title .formQuestion, /* .formQuestion = Labels */
 .section-forumail #archetypes-fieldname-text .formQuestion,
-/*
-DEV
-*/
-#breadcrumbs-you-are-here 
+.section-forumail #breadcrumbs-you-are-here 
 {display:none}
