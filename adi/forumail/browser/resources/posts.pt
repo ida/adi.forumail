@@ -5,8 +5,9 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 <metal:block fill-slot="content">
 <span tal:replace="nothing">
-- #category and .link-category are used to inherit Plone-styles (SunburstTheme).
-- .creation-date was choosen instead of more convenient .date, to *not* inherit Plone-styles (jq-ui).
+- '#category' and '.link-category' are used to inherit Plone-styles (SunburstTheme).
+- .creation-date was choosen instead of more convenient '.date', 
+  to *not* inherit Plone-styles (of jq-ui).
 </span>
 <div class="forumail"
      tal:define="mtool nocall: context/portal_membership;">
@@ -19,17 +20,15 @@
                                    is_thread python: context.Type() == 'News Item';
                                    mtool nocall: context/portal_membership;">
     <div class="post" tal:repeat="post posts">
-
-     <div class="head">
-        <div class="thread"
+        <div class="thread-head"
              tal:define="is_first repeat/post/start;
                          show_thread_head python: is_first and is_thread or not is_thread"
              tal:condition="show_thread_head">
 
-            <a class="title" tal:content="post/Title" tal:attributes="href string: ${post/absolute_url}/forumail_view">
+            <a class="field title" tal:content="post/Title" tal:attributes="href string: ${post/absolute_url}/forumail_view">
 Title
             </a>
-            <div id="category" class="categories" tal:define="categories post/Subject">
+            <div id="category" class="field categories" tal:define="categories post/Subject">
                 <a class="link-category category link"
                    tal:repeat="cat categories"
                    tal:content="cat"
@@ -39,41 +38,42 @@ Title
 Category
                 </a>
             </div>
-        </div><!-- thread -->
-        <a class="id" tal:content="post/id" tal:attributes="href string:./${post/id}/forumail_view; alt string:${post/id}">
-Id
-        </a>
-        <span class="creation-date" tal:content="post/CreationDate">
-Date
-        </span>
-        <a class="author home"
-           tal:define="author post/Creator;"
-           tal:attributes="title string:See all posts of ${author};
-           href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
-           alt string:Go to all posts of user '${author}';">
-           <img class="avatar"
-                tal:define="portrait python: mtool.getPersonalPortrait(author);
-                            portrait_url portrait/absolute_url;
-                            portrait_url string:logo.png;"
-                tal:attributes="src string:${portrait_url}; alt string:
-Avatar">
-        </a>
-        <a class="author name"
-           tal:define="author post/Creator;"
-           tal:content="author"
-           tal:attributes="title string:See all posts of ${author};
-           href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
-           alt string:Go to all posts of user '${author}';">
-Author
-        </a>
+        </div><!-- .thread-head -->
+        <div class="head">
+            <a class="field id" tal:content="post/id" tal:attributes="href string:./${post/id}/forumail_view; alt string:${post/id}">
+    Id
+            </a>
+            <span class="field creation-date" tal:content="post/CreationDate">
+    Date
+            </span>
+            <a class="author link"
+               tal:define="author post/Creator;"
+               tal:attributes="title string:See all posts of ${author};
+               href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
+               alt string:Go to all posts of user '${author}';">
+               <img class="avatar"
+                    tal:define="portrait python: mtool.getPersonalPortrait(author);
+                                portrait_url portrait/absolute_url;
+                                portrait_url string:logo.png;"
+                    tal:attributes="src string:${portrait_url}; alt string:
+    Avatar">
+            </a>
+            <a class="field author name"
+               tal:define="author post/Creator;"
+               tal:content="author"
+               tal:attributes="title string:See all posts of ${author};
+               href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
+               alt string:Go to all posts of user '${author}';">
+    Author
+            </a>
 
 
-        </div><!-- head -->
+        </div><!-- .head -->
         <div tal:content="structure post/getText" class="body text">
 Text
-        </div><!-- body -->
+        </div><!-- .body -->
         <div class="foot">
-            <a class="reply"
+            <a class="reply-to link"
              tal:define="
                          post_id post/id;
                          post_url post/absolute_url;
