@@ -78,8 +78,10 @@ a[alt="communication"] { background:
 !important; }
 /* General */
 .forumail {
+/*
     padding: 2.7em;
     margin: 2.7em;
+*/
 }
 .forumail .title {
     font-size: 1.27em;
@@ -95,6 +97,7 @@ a[alt="communication"] { background:
 .forumail .post {
     border: 1px dotted lightblue;
 }
+.foot,
 .forumail .post .title {
     border-bottom: 1px solid darkblue;
 }
@@ -105,38 +108,15 @@ a[alt="communication"] { background:
 .forumail .post .head {
     clear: both;
 }
+.forumail .head,
 .forumail .post .head,
 .forumail .post .foot {
     text-align: right;
 }
+/*
 .forumail .post .thread-head {
     text-align: left;
 }
-/*
 DEV
 */
-.section-forumail.template-atct_edit 
-#fieldset-categorization{
-    display:block!important}
-.section-forumail.template-atct_edit #content ul.formTabs,
-.section-forumail:not(.userrole-manager).newTagsSection,
-.section-forumail.selectedTagsSection,
-.section-forumail #archetypes-fieldname-location,
-.section-forumail #archetypes-fieldname-language,
-.section-forumail #archetypes-fieldname-relatedItems,
-.section-forumail #archetypes-fieldname-description,
-.section-forumail #cmfeditions_version_comment_block,
-.section-forumail #archetypes-fieldname-imageCaption,
-.section-forumail #archetypes-fieldname-image,
-.section-forumail .fieldTextFormat,
-/* .formQuestion = field-labels/helptexts : */
-.section-forumail #archetypes-fieldname-keywords .formQuestion,
-.section-forumail #archetypes-fieldname-title .formQuestion, 
-.section-forumail #archetypes-fieldname-text .formQuestion,
-/* "Edit News Item" : */
-.section-forumail.template-atct_edit #content> div:nth-child(1),
-/* "An announcement that will show up in news listings." : */
-.section-forumail.template-atct_edit #content > div:nth-child(2), 
-.section-forumail .id,
-.section-forumail .author.name,
 .section-forumail #breadcrumbs-you-are-here{display:none}

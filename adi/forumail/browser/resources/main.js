@@ -1,4 +1,7 @@
 (function($) { $(document).ready(function() {
+
+var body = $('body')
+
 function isNr(chara) {
     var IS_NR = '0'; var nrs = ['1','2','3','4','5','6','7','8','9','0']
     for(var i=0;i<nrs.length;i++) { if(chara == nrs[i]) { IS_NR = '1' } }
@@ -40,45 +43,90 @@ function setTitleOfUrlPara() {
 function checkTinyMCELoaded () {
     // This snippet was kindly shared by Luca Fabbri a.k.a. 'keul' on:
     // stackoverflow.com/questions/32088348/how-to-set-focus-on-rich-text-field-in-edit-mode-of-a-contenttype
-    // Make sure to check out his blog, too: http://blog.keul.it/
     if (window.tinymce==undefined || !tinymce.editors.length) {
         setTimeout(checkTinyMCELoaded, 100)
         return
     }
     // Now we checked TinyMCE is loaded, set focus on its body-text-field:
-    $('#text_ifr').contents().find(".mceContentBody").get(0).focus()
+    var richtext_body = $('#text_ifr').contents().find(".mceContentBody").get(0)
+//tinyMCE.getInstanceById('text').focus();
 }
-function manipulateReplyEditform() {
-    setTitleOfUrlPara()
-    setTimeout(checkTinyMCELoaded, 100); // sets focus on body-text-field
-}
-function setBrowserUrlWithoutReload(url) {
-    window.history.pushState(null, '', url)
-}
-function removeAllUrlParas() {
-    var browser_url = window.location.href
-    if(browser_url.indexOf('?') != -1) { browser_url = browser_url.split('?')[0] }
-    return browser_url
-}
-function clickReply(link, eve) {
-    var link_url = $(link).attr('href')
-    setBrowserUrlWithoutReload(link_url)
+function replyEdit() {
+    var title = document.referrer.split('&Title=')[1]
+    $('#title').val(title).hide()
+    setTimeout(checkTinyMCELoaded, 100);
 }
 function main() {
-
     if($('.template-forumail_view').length > 0) {
-        $('.reply').click(function(eve) {
-            clickReply($(this), eve)
-        });
+        $('.reply-to.link').click(function(eve) {
+            eve.preventDefault()
+            var eles_to_hide = [
+'#portal-top',
+'#portal-breadcrumbs',
+'#content \
+> div:nth-child(1)\
+',
+'#content \
+> div:nth-child(2)\
+',
+'\
+.fieldTextFormat\
+',
+'\
+#cmfeditions_version_comment_block\
+',
+'#archetypes-fieldname-\
+description\
+',
+'#archetypes-fieldname-\
+location\
+',
+'#archetypes-fieldname-\
+language\
+',
+'#archetypes-fieldname-\
+relatedItems\
+',
+'#archetypes-fieldname-\
+image-caption\
+',
+'#archetypes-fieldname-\
+image\
+',
+'#archetypes-fieldname-\
+imageCaption\
+',
+'#archetypes-fieldname-\
+title .formQuestion\
+',
+'#archetypes-fieldname-\
+text .formQuestion\
+',
+'#archetypes-fieldname-\
+subject .formQuestion\
+',
+'#fieldset-\
+dates\
+',
+'#fieldset-\
+creators\
+',
+'#fieldset-\
+settings\
+',
+]
+            var reply_form = $('<div id="reply-form" style="height: 0;">Reply form\
+<style>\
+#content-core ul.formTabs { display: none }\
+</style>\
+</div>').insertAfter($(this).parent())
+            reply_form.load(window.location.href + '/createObject?type_name=News+Item', function() {
+                    for(var i=0;i<eles_to_hide.length;i++){
+                        reply_form.find(eles_to_hide[i]).hide()
+                    }
+                    $('#fieldset-categorization').css('display','block!important')
+            });
+        }); // click .reply-to
     }
-
-    if($('.template-atct_edit.section-forumail').length > 0
-       && document.referrer.indexOf('&Title=') != -1 ) {
-        var title = document.referrer.split('&Title=')[1]
-        $('#title').val(title).hide()
-        setTimeout(checkTinyMCELoaded, 100); // sets focus on body-text-field
-    }
-
-
 } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
