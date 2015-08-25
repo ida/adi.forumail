@@ -71,7 +71,8 @@ function replyEditmode() {
     $('#title').val(title).hide()
     setTimeout(checkTinyMCELoaded, 100);
 }
-function replyClicked() {
+function replyClicked(eve) {
+    eve.preventDefault()
     var hide_eles = getHideEles()
     var reply_form = $('<div id="reply-form" style="height: 0;">Reply form\</div>').insertAfter($(this).parent())
     reply_form.load(window.location.href + '/createObject?type_name=News+Item', function() {
@@ -80,9 +81,6 @@ function replyClicked() {
             }
             $('#fieldset-categorization').css('display','block!important')
     });
-}
-function replyClicked() {
-    eve.preventDefault()
 }
 function main() {
 if($('.template-forumail_view').length > 0) {
