@@ -71,23 +71,30 @@ function replyEditmode() {
     $('#title').val(title).hide()
     setTimeout(checkTinyMCELoaded, 100);
 }
-function replyClicked(eve) {
+function rrreplyClicked(eve) {
     eve.preventDefault()
     var hide_eles = getHideEles()
     var reply_form = $('<div id="reply-form" style="height: 0;">Reply form\</div>').insertAfter($(this).parent())
     reply_form.load(window.location.href + '/createObject?type_name=News+Item', function() {
-            for(var i=0;i<eles_to_hide.length;i++){
-                reply_form.find(eles_to_hide[i]).hide()
-            }
-            $('#fieldset-categorization').css('display','block!important')
-    });
+                        for(var i=0;i<eles_to_hide.length;i++){
+                            reply_form.find(eles_to_hide[i]).hide()
+                        }
+                    });
+}
+function replyClicked(eve) {
+    eve.preventDefault()
+    window.history.pushState($(this).attr('href'))
 }
 function main() {
+$('body').prepend(document.referrer)
 if($('.template-forumail_view').length > 0) {
-    $('.reply-to.link').click(function(eve) { replyClicked(eve) });
+    $('.reply-to.link').click(function(eve) {
+        history.pushState({}, '', $(this).attr("href"));
+    });
+}
+if($('.template-atct_edit').length > 0) {
 }
 /* DEV:
-$('body').prepend(document.referrer)
 */
 } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
