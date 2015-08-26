@@ -34,43 +34,43 @@
 #272727
 The last color (#272727) is actually a very dark shade of grey, used for 
 text-color, for btter readability, when necessary. */
-a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=announcement"],
+a[href$="http://localhost:8080/Plone/@@search?Subject%3Alist=announcement"],
 a[alt="announcement"] { background:
 #e3faea
 !important; color:
 #00a4a2
 !important; }
-a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=general"],
+a[href$="http://localhost:8080/Plone/@@search?Subject%3Alist=general"],
 a[alt="general"] { background:
 #a9e6e5
 !important; color:
 #272727
 !important; }
-a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=users"],
+a[href$="Subject%3Alist=users"],
 a[alt="users"] { background:
 #00d2ff
 !important; color:
 #272727
 !important; }
-a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=developers"],
+a[href$="Subject%3Alist=developers"],
 a[alt="developers"] { background:
 #7cbdca
 !important; color:
 #272727
 !important; }
-a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=core-developers"],
+a[href$="Subject%3Alist=core-developers"],
 a[alt="core-developers"] { background:
 #00a4a2
 !important; color:
 #e3faea
 !important; }
-a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=documentation"],
+a[href$="Subject%3Alist=documentation"],
 a[alt="documentation"] { background:
 #006057
 !important; color:
 #e3faea
 !important; }
-a[href="http://localhost:8080/Plone/@@search?Subject%3Alist=communication"],
+a[href$="Subject%3Alist=communication"],
 a[alt="communication"] { background:
 #272727
 !important; color:
@@ -114,9 +114,6 @@ a[alt="communication"] { background:
     text-align: right;
 }
 /*
-.forumail .post .thread-head {
-    text-align: left;
-}
 DEV
 */
 .section-forumail #breadcrumbs-you-are-here{display:none}

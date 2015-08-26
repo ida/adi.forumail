@@ -1,5 +1,5 @@
 (function($) { $(document).ready(function() {
-function getHideEles() {
+function hideEditEles(parent_ele) {
     var hide_eles = [
 '#portal-top',
 '#portal-breadcrumbs',
@@ -20,7 +20,7 @@ function getHideEles() {
 '#fieldset-dates',
 '#fieldset-creators',
 '#fieldset-settings',]
-    return hide_eles
+    parent_ele.find(hide_eles).hide()
 }
 function isNr(chara) {
     var IS_NR = '0'; var nrs = ['1','2','3','4','5','6','7','8','9','0']
@@ -76,14 +76,8 @@ function rrreplyClicked(eve) {
     var hide_eles = getHideEles()
     var reply_form = $('<div id="reply-form" style="height: 0;">Reply form\</div>').insertAfter($(this).parent())
     reply_form.load(window.location.href + '/createObject?type_name=News+Item', function() {
-                        for(var i=0;i<eles_to_hide.length;i++){
-                            reply_form.find(eles_to_hide[i]).hide()
-                        }
-                    });
-}
-function replyClicked(eve) {
-    eve.preventDefault()
-    window.history.pushState($(this).attr('href'))
+        hideEditEles()
+    });
 }
 function main() {
 $('body').prepend(document.referrer)

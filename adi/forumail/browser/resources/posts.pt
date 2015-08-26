@@ -19,20 +19,21 @@
     <div class="posts" tal:define="posts nocall: view/getPosts;
                                    is_thread python: context.Type() == 'News Item';
                                    mtool nocall: context/portal_membership;">
-    <div class="post" tal:repeat="post posts">
+    <div class="post"  tal:repeat="post posts">
         <div class="thread-head"
-             tal:define="is_first repeat/post/start;
+                tal:define="is_first repeat/post/start;
                          show_thread_head python: is_first and is_thread or not is_thread"
-             tal:condition="show_thread_head">
-
-            <a class="field title" tal:content="post/Title" tal:attributes="href string: ${post/absolute_url}/forumail_view">
+                tal:condition="show_thread_head">
+            <a class="field title"
+                tal:content="post/Title"
+                tal:attributes="href string: ${post/absolute_url}/forumail_view">
 Title
             </a>
             <div id="category" class="field categories" tal:define="categories post/Subject">
                 <a class="link-category category link"
-                   tal:repeat="cat categories"
-                   tal:content="cat"
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?Subject%3Alist=${cat};
+                    tal:repeat="cat categories"
+                    tal:content="cat"
+                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@search?Subject%3Alist=${cat};
                                    title string:Click to 
                                    alt string:${cat};">
 Category
@@ -40,7 +41,9 @@ Category
             </div>
         </div><!-- .thread-head -->
         <div class="head">
-            <a class="field id" tal:content="post/id" tal:attributes="href string:./${post/id}/forumail_view; alt string:${post/id}">
+            <a class="field id"
+                tal:content="post/id"
+                tal:attributes="href string:./${post/id}/forumail_view; alt string:${post/id}">
 Id
             </a>
             <span class="field creation-date"
@@ -49,18 +52,31 @@ Id
                   tal:content="date">
 Date
             </span>
-            <a class="author link"
-               tal:define="author post/Creator;"
-               tal:attributes="title string:See all posts of ${author};
-               href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
-               alt string:Go to all posts of user '${author}';">
-               <img class="avatar"
-                    tal:define="portrait python: mtool.getPersonalPortrait(author);
-                                portrait_url portrait/absolute_url;
-                                portrait_url string:logo.png;"
+            <a class="
+                    author link;
+                "
+                tal:define="
+                    author post/Creator;
+                "
+                tal:attributes="
+                    title string:See all posts of ${author};
+                    href string:${context/@@plone_portal_state/navigation_root_url}/@@search?sort_on=Date&sort_order=reverse&Creator=${author};
+                    alt string:Go to all posts of user '${author}';
+                ">
+                <img class="avatar"
+                    tal:define="
+                        portrait python: mtool.getPersonalPortrait(author);
+                        portrait_url portrait/absolute_url;
+                        portrait_url string:logo.png;"
                     tal:attributes="src string:${portrait_url}; alt string:
 Avatar">
+                <!-- DEV
+                <div tal:content="author">
+Author
+                </div>
+                -->
             </a>
+            <!-- DEV
             <a class="field author name"
                tal:define="author post/Creator;"
                tal:content="author"
@@ -69,6 +85,7 @@ Avatar">
                alt string:Go to all posts of user '${author}';">
 Author
             </a>
+            -->
 
 
         </div><!-- .head -->
@@ -84,8 +101,8 @@ Text
                          reply_url string:${forum_url}?reply_to_title=${post_id};
                          reply_url string:${forum_url}/createObject?type_name=News%20Item&Title=${post_id};
                          "
-             tal:attributes="href reply_url;
-                             alt string:Reply to ${post_id};">
+             tal:attributes='href reply_url;
+                             title string:Reply to "${post_id}";'>
 Reply
             </a>
         </div><!-- .foot -->
