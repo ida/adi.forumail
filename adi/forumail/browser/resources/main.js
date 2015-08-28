@@ -20,7 +20,9 @@ function hideEditEles(parent_ele) {
 '#fieldset-dates',
 '#fieldset-creators',
 '#fieldset-settings',]
-    parent_ele.find(hide_eles).hide()
+    for(var i=0;i<hide_eles.length; i++) {
+        parent_ele.find(hide_eles[i]).hide()
+    }
 }
 function isNr(chara) {
     var IS_NR = '0'; var nrs = ['1','2','3','4','5','6','7','8','9','0']
@@ -71,19 +73,22 @@ function replyEditmode() {
     $('#title').val(title).hide()
     setTimeout(checkTinyMCELoaded, 100);
 }
-function rrreplyClicked(eve) {
+function replyClicked(link, eve) {
+    var title = link.attr("href").split('&Title=')[1]
     eve.preventDefault()
-    var hide_eles = getHideEles()
-    var reply_form = $('<div id="reply-form" style="height: 0;">Reply form\</div>').insertAfter($(this).parent())
+    var reply_form = $('<div id="reply-form" style="height: 0; overflow: hidden;">Reply form\</div>').insertAfter(link.parent())
     reply_form.load(window.location.href + '/createObject?type_name=News+Item', function() {
-        hideEditEles()
+        hideEditEles(reply_form)
+        $(this).css('height', 'auto')
+        var title_field = reply_form.find('#title')
+        title_field.val(title).hide()
     });
 }
 function main() {
 $('body').prepend(document.referrer)
 if($('.template-forumail_view').length > 0) {
     $('.reply-to.link').click(function(eve) {
-        history.pushState({}, '', $(this).attr("href"));
+        replyClicked($(this), eve)
     });
 }
 if($('.template-atct_edit').length > 0) {
