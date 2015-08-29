@@ -24,15 +24,30 @@ function replyFormHideEles(parent_ele) {
         parent_ele.find(hide_eles[i]).hide()
     }
 }
+function checkTinyMCELoaded() {
+// Thanks to Luca Fabbri for this snippet:
+// http://stackoverflow.com/questions/32088348
+    if (window.tinymce==undefined || !tinymce.editors.length) {
+        setTimeout(checkTinyMCELoaded, 100)
+        return
+    }
+    doAfterTinyMCELoaded()
+}
+function doAfterTinyMCELoaded() {
+    tinyMCE.getInstanceById('text').focus()
+    $('ul.formTabs').hide()
+    $('.reply.link').remove()
+}
 function replyClicked(link, eve) {
     eve.preventDefault()
     var title = link.attr("href").split('&Title=')[1]
-    var reply_form = $('<div id="reply-form">Reply form\</div>').insertAfter(link.parent()).css({'border':'1px solid red','height':'0','overflow':'hidden'})
+    var reply_form = $('<div id="reply-form">Reply form\</div>').insertAfter(link.parent()).css({'height':'0','overflow':'hidden'})
     reply_form.load(window.location.href + '/createObject?type_name=News+Item', function() {
         replyFormHideEles(reply_form)
         reply_form.find('#title').val(title).hide()
         reply_form.css('height', 'auto')
     });
+    setTimeout(checkTinyMCELoaded(), 100)
 }
 function main() {
     $('.reply.link').click(function(eve) {
