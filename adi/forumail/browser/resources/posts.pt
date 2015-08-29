@@ -93,7 +93,7 @@ Author
 Text
         </div><!-- .body -->
         <div class="foot">
-            <a class="reply-to link"
+            <a class="reply link"
              tal:define="
                          post_id post/id;
                          post_url post/absolute_url;

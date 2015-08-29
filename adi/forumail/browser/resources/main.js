@@ -1,5 +1,5 @@
 (function($) { $(document).ready(function() {
-function hideEditEles(parent_ele) {
+function replyFormHideEles(parent_ele) {
     var hide_eles = [
 '#portal-top',
 '#portal-breadcrumbs',
@@ -24,76 +24,19 @@ function hideEditEles(parent_ele) {
         parent_ele.find(hide_eles[i]).hide()
     }
 }
-function isNr(chara) {
-    var IS_NR = '0'; var nrs = ['1','2','3','4','5','6','7','8','9','0']
-    for(var i=0;i<nrs.length;i++) { if(chara == nrs[i]) { IS_NR = '1' } }
-    return IS_NR
-}
-function indentReply(post_link) {
-    var url = post_link.attr('href')
-    var indent_depth = 0
-    var i = url.length-1
-    var chara = url[i]
-    // Get indent-depth:
-    while(i > -1 && isNr(chara) == '1' || chara == '-') {
-        if(chara == '-') {
-            indent_depth += 1
-        }
-        i -= 1
-        chara = url[i]
-    } // while is nr or minus
-    // Set indent:
-    if(indent_depth > 0) {
-        post_link.parent().parent().css('margin-left', indent_depth + 'em')
-    }
-}
-function setTitleOfUrlPara() {
-    // Get everything after 'Title='
-    var title = document.referrer.split('Title=')[1]
-    // If there's more paras following, get everything until next para:
-    if(document.referrer.indexOf('&') != -1) { title = title.split('&')[0] }
-    // Set hashtag as title:
-    $('#title').val(title)
-    // Hide field, so user cannot damage auto-title:
-    $('#title').parent().hide()
-}
-function checkTinyMCELoaded () {
-    // This snippet was kindly shared by Luca Fabbri a.k.a. 'keul' on:
-    // stackoverflow.com/questions/32088348/how-to-set-focus-on-rich-text-field-in-edit-mode-of-a-contenttype
-    if (window.tinymce==undefined || !tinymce.editors.length) {
-        setTimeout(checkTinyMCELoaded, 100)
-        return
-    }
-    // Now we checked TinyMCE is loaded, set focus on its body-text-field:
-    var richtext_body = $('#text_ifr').contents().find(".mceContentBody").get(0)
-//tinyMCE.getInstanceById('text').focus();
-}
-function replyEditmode() {
-    var title = document.referrer.split('&Title=')[1]
-    $('#title').val(title).hide()
-    setTimeout(checkTinyMCELoaded, 100);
-}
 function replyClicked(link, eve) {
-    var title = link.attr("href").split('&Title=')[1]
     eve.preventDefault()
-    var reply_form = $('<div id="reply-form" style="height: 0; overflow: hidden;">Reply form\</div>').insertAfter(link.parent())
+    var title = link.attr("href").split('&Title=')[1]
+    var reply_form = $('<div id="reply-form">Reply form\</div>').insertAfter(link.parent()).css({'border':'1px solid red','height':'0','overflow':'hidden'})
     reply_form.load(window.location.href + '/createObject?type_name=News+Item', function() {
-        hideEditEles(reply_form)
-        $(this).css('height', 'auto')
-        var title_field = reply_form.find('#title')
-        title_field.val(title).hide()
+        replyFormHideEles(reply_form)
+        reply_form.find('#title').val(title).hide()
+        reply_form.css('height', 'auto')
     });
 }
 function main() {
-$('body').prepend(document.referrer)
-if($('.template-forumail_view').length > 0) {
-    $('.reply-to.link').click(function(eve) {
+    $('.reply.link').click(function(eve) {
         replyClicked($(this), eve)
     });
-}
-if($('.template-atct_edit').length > 0) {
-}
-/* DEV:
-*/
 } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
