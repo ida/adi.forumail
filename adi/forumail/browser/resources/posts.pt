@@ -98,7 +98,6 @@ Text
                          post_id post/id;
                          post_url post/absolute_url;
                          forum_url python: '/'.join(post_url.split('/')[:-1]);
-                         reply_url string:${forum_url}?reply_to_title=${post_id};
                          reply_url string:${forum_url}/createObject?type_name=News%20Item&Title=${post_id};
                          "
              tal:attributes='href reply_url;
