@@ -53,7 +53,7 @@ Post
                     </a>
                 </div>
             </div>
-        </div><!-- .sorting -->
+        </div><tal:comment tal:replace="nothing">EO .sorting</tal:comment>
     </div>
     <div class="posts" tal:repeat="post posts">
     <div class="post" tal:define="id post/id;
