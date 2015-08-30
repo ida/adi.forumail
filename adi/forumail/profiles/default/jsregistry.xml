@@ -1,5 +1,5 @@
 <object name="portal_javascripts">
  <javascript authenticated="False" cacheable="True" compression="none"
     conditionalcomment="" cookable="True" enabled="True" expression=""
-    id="++resource++adi.forumail.resources/main.js" inline="False"/>
+    id="++resource++adi.forumail.resources/magic.js" inline="False"/>
 </object>
