@@ -15,6 +15,36 @@
         <a class="add" href="./createObject?type_name=News%20Item">
 + Add new post
         </a>
+        <div class="sorting">
+            <div class="type">
+                <a class="threads" href="#">
+Threads
+                </a>
+                <a class="posts selected" href="#">
+Posts
+                </a>
+            </div>
+            <div class="criterion">
+                <div class="newest selected">
+Newest
+                    <a class="thread" href="#">
+Thread
+                    </a>
+                    <a class="post selected" href="#">
+Post
+                    </a>
+                </div>
+                <div class="author">
+Author
+                    <a class="thread" href="#">
+Thread
+                    </a>
+                    <a class="post" href="#">
+Post
+                    </a>
+                </div>
+            </div>
+        </div><!-- .sorting -->
     </div>
     <div class="posts" tal:define="posts nocall: view/getPosts;
                                    is_thread python: context.Type() == 'News Item';

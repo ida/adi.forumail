@@ -1,11 +1,16 @@
 /* BASE */
-.forumail p,
 .forumail { 
     font: 14px, Helvetica, Arial, FreeSans, sans-serif;
     line-height: 1.5em;
     background: lightyellow;
     color: #272727;
     border-color: #272727;
+}
+.forumail p { 
+    line-height: 1.5em;
+}
+.forumail .selected { 
+    border: 1px solid red;
 }
 .forumail #content a:link,
 .forumail dl.portlet a:link,
