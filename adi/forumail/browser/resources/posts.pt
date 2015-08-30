@@ -1,4 +1,3 @@
-<div tal:replace="structure request/form" />
 <div class="posts" tal:define="mtool nocall: context/portal_membership;
 posts nocall: view/getPostsResult" tal:repeat="post posts">
     <div class="post" tal:define="
