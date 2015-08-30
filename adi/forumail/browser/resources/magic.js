@@ -54,5 +54,19 @@ function main() {
     $('.reply.link').click(function(eve) {
         replyClicked($(this), eve)
     });
+    /*
+    $('.forumail > .head .sorting').click(function(eve) {
+        eve.preventDefault()
+        var link = $(eve.target)
+        var link_url = link.attr('href')
+        if(link.parent().hasClass('resultsType')) {
+            if(link.hasClass('threads')) {
+                window.history.pushState(null, null, link_url)
+               $('#forumail-posts').load(link_url+' #forumail-posts') 
+            }
+            
+        }
+    });
+    */
 } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 

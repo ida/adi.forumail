@@ -9,13 +9,14 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 class View(BrowserView):
 
-    post_type = 'News Item'
-
     index = ViewPageTemplateFile("forum.pt")
 
     forum_head = ViewPageTemplateFile("forum_head.pt")
 
     posts_template = ViewPageTemplateFile("posts.pt")
+
+    def getPortalType(self):
+        return 'News Item'
 
     def render(self):
         return self.index()
@@ -30,26 +31,24 @@ class View(BrowserView):
         return self.posts_template()
 
     def getForumUrl(self):
-        forum_url = None
+        forum_url = self.request["ACTUAL_URL"]
         context = aq_inner(self.context)
-        if context.Type() == self.post_type:
-            context = aq_parent(context)
-        forum_url = context.absolute_url()
+        if context.Type() == self.getPortalType():
+            forum_url = '/'.join(forum_url.split('/')[:-1])
         return forum_url
 
     def getForumPath(self):
-        forum_path = None
-        forum_url = self.getForumUrl()
-        if forum_url:
-            splitted_forum_url = forum_url.split('/');
-            forum_path = splitted_forum_url[-2] + '/' + splitted_forum_url[-1];
+        forum_path = self.request["ACTUAL_URL"]
+        context = aq_inner(self.context)
+        if context.Type() == self.getPortalType():
+            forum_path = '/'.join(forum_path.split('/')[:-1])
         return forum_path
 
     def getAddUrl(self):
         add_url = None
         forum_url = self.getForumUrl()
         if forum_url:
-            add_url = forum_url + '/createObject?type_name=' + self.post_type
+            add_url = forum_url + '/createObject?type_name=' + self.getPortalType()
         return add_url
 
     def getUrlParas(self):
@@ -69,6 +68,7 @@ class View(BrowserView):
         return results_type
 
     def getPostsResult(self):
+        """ Main function to return list of posts to view."""
         results = None
         results_type = self.getResultsType()
         if results_type == 'singles':
@@ -86,13 +86,12 @@ class View(BrowserView):
         If self is a forum, returns all posts in forum,
         if self is a post, returns all posts of thread.
         """
-        portal_type = 'News Item'
         posts = []
         thread_id = None
         context = aq_inner(self.context)
-        if context.Type() == 'News Item':
+        if context.Type() == self.getPortalType():
             context = aq_parent(context)
-        posts = api.content.find(context=context, portal_type=portal_type, sort_on=sort_on, sort_order=sort_order)
+        posts = api.content.find(context=context, portal_type=self.getPortalType(), sort_on=sort_on, sort_order=sort_order)
         return posts
 
     def getPostsIds(self):
@@ -146,8 +145,10 @@ class View(BrowserView):
         """
         Sorted by newest ini-post.
         """
-        threads = []
+        threads_flat = []   # endresult
+        threads_nested = [] # [ [threadposts], ]
         thread = None
+        thread_ids = []
         threads_ids = self.getThreadsIds()
         posts = self.getPosts()
 
@@ -160,17 +161,26 @@ class View(BrowserView):
                 post = posts[i]
                 post_id = post['id']
                 
-                if post_id == thread_id:
-                    threads.append(posts[i])
+
+                if post_id == thread_id: # found threadstarter
+                    thread = [posts[i]]
+
             
-                    i = -1
+                    i = -1 # start searching from start for replies
                     while i < len(posts)-1:
                         i += 1
             
                         post = posts[i]
                         post_id = post['id']
-                        # TODO: make this sharper:
+                        # TODO: make this sharper (endswith numbers sep by minus...):
                         if post_id.startswith(thread_id) and post_id != thread_id:
-                            threads.append(posts[i])
-        return threads
+                            thread.append(posts[i]) # found reply
+            
+                    threads_nested.append(thread)
+            
+        for thread in threads_nested:
+            #thn.sort() # sort ascending alphabetical (lowest first)
+            for post in thread:
+                print post
+        return threads_flat
 

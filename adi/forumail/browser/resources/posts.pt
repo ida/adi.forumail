@@ -1,4 +1,4 @@
-<div class="posts" tal:define="mtool nocall: context/portal_membership;
+<div id="forumail-posts" class="posts" tal:define="mtool nocall: context/portal_membership;
 posts nocall: view/getPostsResult" tal:repeat="post posts">
     <div class="post" tal:define="
         navroot_url string:${context/@@plone_portal_state/navigation_root_url};
@@ -27,7 +27,7 @@ posts nocall: view/getPostsResult" tal:repeat="post posts">
 Category
                 </a>
             </div>
-            <a tal:attributes="class string:field title; href string:${url}/forumail_view">
+            <a tal:attributes="class string:field title; href string:${url}">
                 <span tal:condition="INI" tal:replace="title">
 Title
                 </span>
