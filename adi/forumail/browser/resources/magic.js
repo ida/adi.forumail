@@ -9,7 +9,6 @@ function hideReplyFormEles(parent_ele) {
 '#archetypes-fieldname-location',
 '#archetypes-fieldname-language',
 '#archetypes-fieldname-relatedItems',
-'#archetypes-fieldname-image-caption',
 '#archetypes-fieldname-image',
 '#archetypes-fieldname-imageCaption',
 '#archetypes-fieldname-title .formQuestion',
@@ -24,6 +23,11 @@ function hideReplyFormEles(parent_ele) {
         parent_ele.find(hide_eles[i]).hide()
     }
 }
+function doAfterTinyMCELoaded() {
+    tinyMCE.getInstanceById('text').focus()
+    $('ul.formTabs').hide()
+    $('.reply.link').remove()
+}
 function checkTinyMCELoaded() {
 // Thanks to Luca Fabbri, a.k.a. for kindly sharing this snippet:
 // http://stackoverflow.com/questions/32088348
@@ -32,11 +36,6 @@ function checkTinyMCELoaded() {
         return
     }
     doAfterTinyMCELoaded()
-}
-function doAfterTinyMCELoaded() {
-    tinyMCE.getInstanceById('text').focus()
-    $('ul.formTabs').hide()
-    $('.reply.link').remove()
 }
 function replyClicked(link, eve) {
     eve.preventDefault()
