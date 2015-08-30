@@ -80,8 +80,6 @@ class View(BrowserView):
         return results
 
     def getPosts(self, sort_order='reverse', sort_on='created'):
-
-    def getPosts(self, sort_order='reverse', sort_on='created'):
         """
         Expects forum-(Folder)- or post-(News Item)-object,
         returns post-objects.
@@ -93,6 +91,9 @@ class View(BrowserView):
         if context.Type() == self.getPortalType():
             context = aq_parent(context)
         posts = api.content.find(context=context, portal_type=self.getPortalType(), sort_on=sort_on, sort_order=sort_order)
+        posts_tuple = ()
+        for post in posts:
+            post_tuple = (post['id'], )
         return posts
 
     def getPostsIds(self):
@@ -151,7 +152,7 @@ class View(BrowserView):
                     thread = [posts[i]]
 
             
-                    i = -1 # start searching from start for replies
+                    i = -1 # start searching from begin of list for replies
                     while i < len(posts)-1:
                         i += 1
             
@@ -162,9 +163,8 @@ class View(BrowserView):
                             thread.append(posts[i]) # found reply
             
                     threads_nested.append(thread)
-            
+        # Sort a thread's posts alphabetical: 
         for thread in threads_nested:
-            #thn.sort() # sort ascending alphabetical (lowest first)
             for post in thread:
                 print post
         return threads_flat
