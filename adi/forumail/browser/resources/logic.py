@@ -80,13 +80,15 @@ class View(BrowserView):
         return results
 
     def getPosts(self, sort_order='reverse', sort_on='created'):
+
+    def getPosts(self, sort_order='reverse', sort_on='created'):
         """
         Expects forum-(Folder)- or post-(News Item)-object,
         returns post-objects.
         If self is a forum, returns all posts in forum,
         if self is a post, returns all posts of thread.
         """
-        post = []
+        posts = []
         context = aq_inner(self.context)
         if context.Type() == self.getPortalType():
             context = aq_parent(context)
