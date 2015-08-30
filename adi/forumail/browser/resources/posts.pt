@@ -45,7 +45,6 @@ Date
                     tal:define="portrait python: mtool.getPersonalPortrait(author);
                                 portrait_url portrait/absolute_url;
                                 is_default_img python: portrait_url.endswith('/defaultUser.png');">
-                                DEF IMG
                 <tal:exchangeDefaultPortrait tal:condition="is_default_img" tal:define="portrait_url string:${navroot_url}/logo.png">
                 <img class="avatar"
                     tal:attributes="src string:${portrait_url}; alt string:\

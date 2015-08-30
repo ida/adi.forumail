@@ -58,7 +58,10 @@ class View(BrowserView):
         if forum_url:
             search_url = forum_url + ''
         return search_url
-         
+
+    def getUrlParas(self):
+         pass
+
     def getPosts(self, sort_order='reverse', sort_on='created'):
         """
         Expects forum-(Folder)- or post-(News Item)-object,
