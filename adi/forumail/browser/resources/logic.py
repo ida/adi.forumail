@@ -52,15 +52,31 @@ class View(BrowserView):
             add_url = forum_url + '/createObject?type_name=' + self.post_type
         return add_url
 
-    def getSearchUrl(self):
-        search_url = None
-        forum_url = self.getForumUrl()
-        if forum_url:
-            search_url = forum_url + ''
-        return search_url
-
     def getUrlParas(self):
-         pass
+        pairs = self.request.form.keys()
+        return pairs
+
+    def getUrlParaVal(self, para):
+        val = self.request.form[para]
+        return val
+
+    def getResultsType(self):
+        para = 'results_type'
+        results_type = 'single'
+        paras = self.getUrlParas()
+        if para in paras:
+            results_type = self.getUrlParaVal(para)
+        print results_type
+        return results_type
+
+    def getPostsResult(self):
+        results = None
+        results_type = self.getResultsType()
+        if results_type == 'single':
+            results = self.getPosts()
+        else:
+            results = self.getThreads()
+        return results
 
     def getPosts(self, sort_order='reverse', sort_on='created'):
         """
@@ -144,7 +160,7 @@ class View(BrowserView):
                 post_id = post['id']
                 
                 if post_id == thread_id:
-                    threads.append(posts.pop(i))
+                    threads.append(posts[i])
             
                     i = -1
                     while i < len(posts)-1:
@@ -154,6 +170,6 @@ class View(BrowserView):
                         post_id = post['id']
             
                         if post_id.startswith(thread_id):
-                            threads.append(posts.pop(i))
+                            threads.append(posts[i])
         return threads
 
