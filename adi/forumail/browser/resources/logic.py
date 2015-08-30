@@ -62,7 +62,7 @@ class View(BrowserView):
 
     def getResultsType(self):
         para = 'results_type'
-        results_type = 'single'
+        results_type = 'singles' # default
         paras = self.getUrlParas()
         if para in paras:
             results_type = self.getUrlParaVal(para)
@@ -71,10 +71,12 @@ class View(BrowserView):
     def getPostsResult(self):
         results = None
         results_type = self.getResultsType()
-        if results_type == 'single':
+        if results_type == 'singles':
             results = self.getPosts()
-        else:
+        elif results_type == 'threaded':
             results = self.getThreads()
+        else:
+            raise Exception, 'Results-type "' + results_type + '" is not available'
         return results
 
     def getPosts(self, sort_order='reverse', sort_on='created'):

@@ -1,13 +1,13 @@
-<div class="head">
+<div class="head" tal:define="forum_url view/getForumUrl">
     <a class="add" tal:attributes="href view/getAddUrl">
 + Add new post
     </a>
     <div class="sorting">
         <div class="type">
-            <a class="threads" href="#">
+            <a class="threads" tal:attributes="href string:${forum_url}?results_type=threaded">
 Threads
             </a>
-            <a class="posts selected" href="#">
+            <a class="posts selected" tal:attributes="href forum_url">
 Posts
             </a>
         </div>
