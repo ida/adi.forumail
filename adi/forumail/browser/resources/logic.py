@@ -87,7 +87,6 @@ class View(BrowserView):
         if self is a post, returns all posts of thread.
         """
         post = []
-        posts = () # (post, )
         context = aq_inner(self.context)
         if context.Type() == self.getPortalType():
             context = aq_parent(context)
