@@ -5,13 +5,14 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 <metal:block fill-slot="content">
 <tal:comment tal:replace="nothing">
-'#category' and '.link-category' are used to inherit Plone-styles (SunburstTheme).
-'.creation-date' was choosen instead of more convenient '.date', to *not* inherit Plone-styles (of jq-ui).
+The class '.creation-date' was choosen instead of more convenient '.date', to *not* inherit Plone-styles (of jq-ui).
 </tal:comment>
 <div tal:define="portal_type context/Type;
      mtool nocall: context/portal_membership;
      search_url string:${context/@@plone_portal_state/navigation_root_url}/@@search;
      forum_url context/absolute_url;
+     splitted_forum_url python: forum_url.split('/');
+     forum_path python: splitted_forum_url[-2] + '/' + splitted_forum_url[-1];
      add_url string:${forum_url}/createObject?type_name=News%20Item;
      posts nocall: view/getPosts;
      isIniPost nocall: view/isIniPost;"
@@ -20,6 +21,8 @@
         tal:condition="python: portal_type == 'News Item'"
         tal:define="forum_url python: '/'.join(forum_url.split('/')[:-1])">
     </tal:redefineForumUrlIfContextIsPost>
+    <tal:defineForumPath tal:define="forum_path python: '/'.join(forum_url.split('/')[-1:])">
+    </tal:defineForumPath>
     <div class="head">
         <a class="add" href="./createObject?type_name=News%20Item">
 + Add new post
@@ -54,7 +57,7 @@ Post
                 </div>
             </div>
         </div><tal:comment tal:replace="nothing">EO .sorting</tal:comment>
-    </div>
+    </div><tal:comment tal:replace="nothing">EO .head</tal:comment>
     <div class="posts" tal:repeat="post posts">
     <div class="post" tal:define="id post/id;
         title post/Title;
@@ -66,29 +69,30 @@ Post
         reply_url string:${add_url}&Title=${id};
         INI python: isIniPost(id);
         text python: post.getObject().getText();">
-        <a tal:attributes="class string:field title; href string:${url}/forumail_view">
-            <span tal:condition="INI" tal:replace="title">
-Title
-            </span>
-            <span tal:condition="not: INI" tal:replace="id">
-Id
-            </span>
-        </a>
-        <div id="category" class="field categories" tal:condition="INI">
-            <a class="link-category category link"
-                tal:repeat="cat categories"
-                tal:content="cat"
-                tal:attributes="href string:${search_url}?Subject%3Alist=${cat};
-                                title string:Go to all posts tagged with '${cat}';">
+        <div class="head">
+            <div class="field categories" tal:condition="INI">
+                <a class="category link"
+                    tal:repeat="cat categories"
+                    tal:content="cat"
+                    tal:attributes="href string:${search_url}?Subject%3Alist=${cat};
+                                    title string:Go to all posts tagged with '${cat}';">
 Category
+                </a>
+            </div>
+            <a tal:attributes="class string:field title; href string:${url}/forumail_view">
+                <span tal:condition="INI" tal:replace="title">
+Title
+                </span>
+                <span tal:condition="not: INI" tal:replace="id">
+Id
+                </span>
             </a>
-        </div>
-        <span class="field creation-date" tal:content="date">
+            <span class="field creation-date" tal:content="date">
 Date
-        </span>
+            </span>
             <a class="author link;"
-                tal:attributes="title string:Go to all posts of ${author};
-                                href string:${search_url}?sort_on=Date&sort_order=reverse&Creator=${author};">
+                tal:attributes='title string:Go to all posts of "${author}";
+                                href string:${search_url}?sort_on=Date&sort_order=reverse&Creator=${author}&path=${forum_path}&Type=News%20Item;'>
                 <img class="avatar"
                     tal:define="portrait python: mtool.getPersonalPortrait(author);
                                 portrait_url portrait/absolute_url;
@@ -99,9 +103,11 @@ Avatar of ${author}">
 Author
                 </div>
             </a>
+        </div><tal:comment tal:replace="nothing">EO .head</tal:comment>
         <div class="body text" tal:replace="structure text">
 Text
         </div>
+        <div class="foot">
         <a class="reply link"
          tal:define="
                      post_id post/id;
@@ -111,6 +117,7 @@ Text
                          title string:Reply to "${post_id}";'>
 Reply
         </a>
+        </div><tal:comment tal:replace="nothing">EO .foot</tal:comment>
     </div><tal:comment tal:replace="nothing">EO .post</tal:comment>
     </div><tal:comment tal:replace="nothing">EO .posts</tal:comment>
 </div><tal:comment tal:replace="nothing">EO .forum</tal:comment>

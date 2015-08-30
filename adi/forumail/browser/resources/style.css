@@ -9,6 +9,7 @@
 .forumail p { 
     line-height: 1.5em;
 }
+/* LINKS */ 
 .forumail .selected { 
     border: 1px solid red;
 }
@@ -25,10 +26,7 @@
 .forumail a.state-private {
     color: #00d2ff !important;
 }
-/* 
- * LINKS
- *
- * Example colorpalette for categories(tags),
+/* Colorpalette for categories(tags),
  * green-turquise from bright to dark:
 #e3faea
 #a9e6e5
@@ -81,7 +79,7 @@ a[alt="communication"] { background:
 !important; color:
 #e3faea
 !important; }
-/* General */
+/* GENERAL */
 .forumail {
 /*
     padding: 2.7em;
@@ -95,30 +93,20 @@ a[alt="communication"] { background:
     height: 1.27em;
     width: 1.27em; 
 }
-/* Borders */
+/* BORDERS */
 .forumail {
     border: 1px dotted lightgreen;
 }
+.forumail > .head,
 .forumail .post {
-    border: 1px dotted lightblue;
-}
-.foot,
-.forumail .post .title {
     border-bottom: 1px solid darkblue;
 }
-/* Positioning: */
-.forumail .post .categories {
-    float: right;
+/* POSITIONING: */ 
+.forumail .post .title {
+    float: left;
 }
-.forumail .post .head {
-    clear: both;
-}
-.forumail .head,
-.forumail .post .head,
-.forumail .post .foot {
+
+.forumail .head {
     text-align: right;
 }
-/*
-DEV
-*/
-.section-forumail #breadcrumbs-you-are-here{display:none}
+/* DEV */ .categories {display: none}
