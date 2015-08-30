@@ -3,28 +3,15 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       metal:use-macro="context/main_template/macros/master"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n">
-<metal:block fill-slot="content">
-<div tal:define="portal_type context/Type;
-     mtool nocall: context/portal_membership;
-     search_url string:${context/@@plone_portal_state/navigation_root_url}/@@search;
-     forum_url context/absolute_url;
-     splitted_forum_url python: forum_url.split('/');
-     forum_path python: splitted_forum_url[-2] + '/' + splitted_forum_url[-1];
-     add_url string:${forum_url}/createObject?type_name=News%20Item;
-     posts nocall: view/getPosts;
-     isIniPost nocall: view/isIniPost;"
-     tal:attributes="class string:forumail forum ${portal_type}">
-    <tal:redefineForumUrlIfContextIsPost
-        tal:condition="python: portal_type == 'News Item'"
-        tal:define="forum_url python: '/'.join(forum_url.split('/')[:-1])">
-    </tal:redefineForumUrlIfContextIsPost>
-    <tal:defineForumPath tal:define="forum_path python: '/'.join(forum_url.split('/')[-1:])">
-    </tal:defineForumPath>
-    
-    <tal:forum-head tal:replace="structure view/renderForumHead" />
-    <tal:posts tal:replace="structure view/renderPosts" />
+    <metal:block fill-slot="content">
+        <div tal:define="portal_type context/Type;"
+             tal:attributes="class string:forumail forum ${portal_type}">
+            
+            <tal:forum-head tal:replace="structure view/renderForumHead" />
 
-</div><tal:comment tal:replace="nothing">EO .forum</tal:comment>
-</metal:block>
+            <tal:posts tal:replace="structure view/renderPosts" />
+
+        </div>
+    </metal:block>
 </html>
 
