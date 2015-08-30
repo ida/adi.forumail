@@ -66,7 +66,6 @@ class View(BrowserView):
         paras = self.getUrlParas()
         if para in paras:
             results_type = self.getUrlParaVal(para)
-        print results_type
         return results_type
 
     def getPostsResult(self):
@@ -168,8 +167,8 @@ class View(BrowserView):
             
                         post = posts[i]
                         post_id = post['id']
-            
-                        if post_id.startswith(thread_id):
+                        # TODO: make this sharper:
+                        if post_id.startswith(thread_id) and post_id != thread_id:
                             threads.append(posts[i])
         return threads
 
