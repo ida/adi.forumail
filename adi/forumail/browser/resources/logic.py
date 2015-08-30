@@ -9,13 +9,40 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 class View(BrowserView):
 
+    post_type = 'News Item'
+
     index = ViewPageTemplateFile("forum.pt")
+
+    forum_head = ViewPageTemplateFile("forum_head.pt")
+
+    posts_template = ViewPageTemplateFile("posts.pt")
 
     def render(self):
         return self.index()
 
     def __call__(self):
         return self.render()
+
+    def renderForumHead(self):
+        return self.forum_head()
+
+    def renderPosts(self):
+        return self.posts_template()
+
+    def getForumUrl(self):
+        forum_url = None
+        context = aq_inner(self.context)
+        if context.Type() == self.post_type:
+            context = aq_parent(context)
+        forum_url = context.absolute_url()
+        return forum_url
+
+    def getAddUrl(self):
+        add_url = None
+        forum_url = self.getForumUrl()
+        if forum_url:
+            add_url = forum_url + '/createObject?type_name=' + self.post_type
+        return add_url
 
     def getPosts(self, sort_order='reverse', sort_on='created'):
         """
