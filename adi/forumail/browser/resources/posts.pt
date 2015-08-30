@@ -9,8 +9,9 @@
 - .creation-date was choosen instead of more convenient '.date', 
   to *not* inherit Plone-styles (of jq-ui).
 </span>
-<div class="forumail"
-     tal:define="mtool nocall: context/portal_membership;">
+<div tal:attributes="class string:forumail ${context/Type}"
+     tal:define="portal_type context/Type;
+                 mtool nocall: context/portal_membership;">
     <div class="head">
         <a class="add" href="./createObject?type_name=News%20Item">
 + Add new post
