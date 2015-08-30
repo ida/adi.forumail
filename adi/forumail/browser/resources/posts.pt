@@ -1,7 +1,8 @@
-    <div class="posts" tal:define="mtool nocall: context/portal_membership;
-    posts nocall: view/getPosts" tal:repeat="post posts">
+<div class="posts" tal:define="mtool nocall: context/portal_membership;
+posts nocall: view/getPosts" tal:repeat="post posts">
     <div class="post" tal:define="
-        search_url string:${context/@@plone_portal_state/navigation_root_url}/@@search;
+        navroot_url string:${context/@@plone_portal_state/navigation_root_url};
+        search_url string:${navroot_url}/@@search;
         isIniPost nocall: view/isIniPost;
         forum_path view/getForumPath;
         forum_url view/getForumUrl;
@@ -40,13 +41,16 @@ Date
             </span>
             <a class="author link;"
                 tal:attributes='title string:Go to all posts of "${author}";
-                                href string:${search_url}?sort_on=Date&sort_order=reverse&Creator=${author}&path=${forum_path}&Type=News%20Item;'>
-                <img class="avatar"
+                                href string:${search_url}?sort_on=Date&sort_order=reverse&Creator=${author}&path=${forum_path}&Type=News%20Item;'
                     tal:define="portrait python: mtool.getPersonalPortrait(author);
                                 portrait_url portrait/absolute_url;
-                                is_default_img python: portrait_url.endswith('/defaultUser.png');"
+                                is_default_img python: portrait_url.endswith('/defaultUser.png');">
+                                DEF IMG
+                <tal:exchangeDefaultPortrait tal:condition="is_default_img" tal:define="portrait_url string:${navroot_url}/logo.png">
+                <img class="avatar"
                     tal:attributes="src string:${portrait_url}; alt string:\
-Avatar of ${author}">
+Avatar">
+                </tal:exchangeDefaultPortrait>
                 <div tal:content="author">
 Author
                 </div>
@@ -65,7 +69,8 @@ Text
                          title string:Reply to "${post_id}";'>
 Reply
         </a>
-        </div><tal:comment tal:replace="nothing">EO .foot</tal:comment>
-    </div><tal:comment tal:replace="nothing">EO .post</tal:comment>
-    </div><tal:comment tal:replace="nothing">EO .posts</tal:comment>
+        </div>
+    </div>
+</div>
+<tal:comment tal:replace="nothing">EO .posts</tal:comment>
 
