@@ -9,7 +9,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 class View(BrowserView):
 
-    index = ViewPageTemplateFile("posts.pt")
+    index = ViewPageTemplateFile("forum.pt")
 
     def render(self):
         return self.index()
@@ -33,6 +33,14 @@ class View(BrowserView):
         posts = api.content.find(context=context, portal_type=portal_type, sort_on=sort_on, sort_order=sort_order)
         return posts
 
+    def getPostsIds(self):
+        post_ids = []
+        posts = self.getPosts()
+        for post in posts:
+            post_id = post['id']
+            post_ids.append(post_id)
+        return post_ids
+
     def getThreadId(self, post_id):
         thread_id = None
         nrs = ['0','1','2','3','4','5','6','7','8','9']
@@ -46,14 +54,6 @@ class View(BrowserView):
         else:
             thread_id = post_id
         return thread_id
-
-    def getPostsIds(self):
-        post_ids = []
-        posts = self.getPosts()
-        for post in posts:
-            post_id = post['id']
-            post_ids.append(post_id)
-        return post_ids
 
     def getThreadsIds(self):
         threads_ids = []
@@ -72,6 +72,13 @@ class View(BrowserView):
         and post_id[len(thread_id) + 1] in nrs:
             IS_REPLY =  True
         return IS_REPLY 
+
+    def isIniPost(self, post_id):
+        IS_INI_POST = False
+        thread_id = self.getThreadId(post_id)
+        IS_REPLY = self.isReply(post_id, thread_id)
+        if not IS_REPLY: IS_INI_POST = True
+        return IS_INI_POST
 
     def getThreads(self):
         """
