@@ -22,70 +22,8 @@
     </tal:defineForumPath>
     
     <tal:forum-head tal:replace="structure view/renderForumHead" />
+    <tal:posts tal:replace="structure view/renderPosts" />
 
-    <div class="posts" tal:repeat="post posts">
-    <div class="post" tal:define="id post/id;
-        title post/Title;
-        categories post/Subject;
-        author post/Creator;
-        date post/CreationDate;
-        date python: date[:10] + ' ' + date[12:16];
-        url string:${forum_url}/${id};
-        reply_url string:${add_url}&Title=${id};
-        INI python: isIniPost(id);
-        text python: post.getObject().getText();">
-        <div class="head">
-            <div class="field categories" tal:condition="INI">
-                <a class="category link"
-                    tal:repeat="cat categories"
-                    tal:content="cat"
-                    tal:attributes="href string:${search_url}?Subject%3Alist=${cat};
-                                    title string:Go to all posts tagged with '${cat}';">
-Category
-                </a>
-            </div>
-            <a tal:attributes="class string:field title; href string:${url}/forumail_view">
-                <span tal:condition="INI" tal:replace="title">
-Title
-                </span>
-                <span tal:condition="not: INI" tal:replace="id">
-Id
-                </span>
-            </a>
-            <span class="field creation-date" tal:content="date"><tal:comment tal:replace="nothing">
-            The class '.creation-date' was choosen instead of more convenient '.date', to *not* inherit Plone-styles (of jq-ui).</tal:comment>
-Date
-            </span>
-            <a class="author link;"
-                tal:attributes='title string:Go to all posts of "${author}";
-                                href string:${search_url}?sort_on=Date&sort_order=reverse&Creator=${author}&path=${forum_path}&Type=News%20Item;'>
-                <img class="avatar"
-                    tal:define="portrait python: mtool.getPersonalPortrait(author);
-                                portrait_url portrait/absolute_url;
-                                is_default_img python: portrait_url.endswith('/defaultUser.png');"
-                    tal:attributes="src string:${portrait_url}; alt string:\
-Avatar of ${author}">
-                <div tal:content="author">
-Author
-                </div>
-            </a>
-        </div><tal:comment tal:replace="nothing">EO .head</tal:comment>
-        <div class="body text" tal:replace="structure text">
-Text
-        </div>
-        <div class="foot">
-        <a class="reply link"
-         tal:define="
-                     post_id post/id;
-                     post_url string:${forum_url}/${post_id};
-                     "
-         tal:attributes='href reply_url;
-                         title string:Reply to "${post_id}";'>
-Reply
-        </a>
-        </div><tal:comment tal:replace="nothing">EO .foot</tal:comment>
-    </div><tal:comment tal:replace="nothing">EO .post</tal:comment>
-    </div><tal:comment tal:replace="nothing">EO .posts</tal:comment>
 </div><tal:comment tal:replace="nothing">EO .forum</tal:comment>
 </metal:block>
 </html>

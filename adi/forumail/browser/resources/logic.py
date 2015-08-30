@@ -37,6 +37,14 @@ class View(BrowserView):
         forum_url = context.absolute_url()
         return forum_url
 
+    def getForumPath(self):
+        forum_path = None
+        forum_url = self.getForumUrl()
+        if forum_url:
+            splitted_forum_url = forum_url.split('/');
+            forum_path = splitted_forum_url[-2] + '/' + splitted_forum_url[-1];
+        return forum_path
+
     def getAddUrl(self):
         add_url = None
         forum_url = self.getForumUrl()
@@ -44,6 +52,13 @@ class View(BrowserView):
             add_url = forum_url + '/createObject?type_name=' + self.post_type
         return add_url
 
+    def getSearchUrl(self):
+        search_url = None
+        forum_url = self.getForumUrl()
+        if forum_url:
+            search_url = forum_url + ''
+        return search_url
+         
     def getPosts(self, sort_order='reverse', sort_on='created'):
         """
         Expects forum-(Folder)- or post-(News Item)-object,
