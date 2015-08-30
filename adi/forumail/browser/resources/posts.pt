@@ -119,7 +119,9 @@ Author
 
 
         </div><!-- .head -->
-        <div tal:content="structure post/getText" class="body text">
+        <div class="body text"
+             tal:define="text python: post.getObject().getText()"
+             tal:content="structure text">
 Text
         </div><!-- .body -->
         <div class="foot">

@@ -17,32 +17,20 @@ class View(BrowserView):
     def __call__(self):
         return self.render()
 
-    def getPosts(self):
+    def getPosts(self, sort_order='reverse', sort_on='created'):
         """
         Expects forum-(Folder)- or post-(News Item)-object,
         returns post-objects.
         If self is a forum, returns all posts in forum,
         if self is a post, returns all posts of thread.
         """
-        sort_order = 'reverse'
+        portal_type = 'News Item'
         posts = []
-
         thread_id = None
         context = aq_inner(self.context)
         if context.Type() == 'News Item':
-            post_id = context.getId()
-            thread_id = self.getThreadId(post_id)
             context = aq_parent(context)
-            sort_order = 'ascending'
-        posts_brain = api.content.find(context=context, portal_type='News Item', sort_on='created', sort_order=sort_order)
-        for post in posts_brain:
-            post = post.getObject()
-            post_id = post.getId()
-            if thread_id:
-                if post.getId().startswith(thread_id):
-                    posts.append(post)
-            else:
-                    posts.append(post)
+        posts = api.content.find(context=context, portal_type=portal_type, sort_on=sort_on, sort_order=sort_order)
         return posts
 
     def getThreadId(self, post_id):
