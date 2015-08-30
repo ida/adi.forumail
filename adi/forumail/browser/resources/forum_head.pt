@@ -1,4 +1,6 @@
+<!--
 <span tal:replace="structure request" />
+-->
 <div class="head" tal:define="forum_url view/getForumUrl">
     <a class="add" tal:attributes="href view/getAddUrl">
 + Add new post

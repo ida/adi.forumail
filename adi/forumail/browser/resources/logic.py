@@ -86,8 +86,8 @@ class View(BrowserView):
         If self is a forum, returns all posts in forum,
         if self is a post, returns all posts of thread.
         """
-        posts = []
-        thread_id = None
+        post = []
+        posts = () # (post, )
         context = aq_inner(self.context)
         if context.Type() == self.getPortalType():
             context = aq_parent(context)
@@ -124,22 +124,6 @@ class View(BrowserView):
             if thread_id not in threads_ids:
                 threads_ids.append(thread_id)
         return threads_ids
-
-    def isReply(self, post_id, thread_id):
-        IS_REPLY = False
-        nrs = ['1','2','3','4','5','6','7','8','9','0']
-        if len(post_id) >= len(thread_id) + 1 \
-        and post_id.startswith(thread_id + '-')\
-        and post_id[len(thread_id) + 1] in nrs:
-            IS_REPLY =  True
-        return IS_REPLY 
-
-    def isIniPost(self, post_id):
-        IS_INI_POST = False
-        thread_id = self.getThreadId(post_id)
-        IS_REPLY = self.isReply(post_id, thread_id)
-        if not IS_REPLY: IS_INI_POST = True
-        return IS_INI_POST
 
     def getThreads(self):
         """
@@ -184,3 +168,20 @@ class View(BrowserView):
                 print post
         return threads_flat
 
+    def isReply(self, post_id, thread_id):
+        IS_REPLY = False
+        nrs = ['1','2','3','4','5','6','7','8','9','0']
+        if len(post_id) >= len(thread_id) + 1 \
+        and post_id.startswith(thread_id + '-')\
+        and post_id[len(thread_id) + 1] in nrs:
+            IS_REPLY =  True
+        return IS_REPLY
+
+    def isIniPost(self, post_id):
+        IS_INI_POST = False
+        thread_id = self.getThreadId(post_id)
+        IS_REPLY = self.isReply(post_id, thread_id)
+        if not IS_REPLY: IS_INI_POST = True
+        return IS_INI_POST
+
+#EOF
