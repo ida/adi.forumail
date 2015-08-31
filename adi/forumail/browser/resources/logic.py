@@ -161,12 +161,13 @@ class View(BrowserView):
                         # TODO: make this sharper (endswith numbers sep by minus...):
                         if post_id.startswith(thread_id) and post_id != thread_id:
                             thread.append(posts[i]) # found reply
-            
+#                    print ', '.join([str(post['id']) for post in thread])
                     threads_nested.append(thread)
-        # Sort a thread's posts alphabetical: 
+        # Sort a thread alphabetically by id: 
         for thread in threads_nested:
-            for post in thread:
-                print post
+            thread_new = self.sortById(thread)
+            for post in thread_new:
+                threads_flat.append(post)
         return threads_flat
 
     def isReply(self, post_id, thread_id):
@@ -184,5 +185,17 @@ class View(BrowserView):
         IS_REPLY = self.isReply(post_id, thread_id)
         if not IS_REPLY: IS_INI_POST = True
         return IS_INI_POST
+
+    def sortById(self, posts):
+        new_posts = []
+        posts_ids = [] #self.getPostsIds()
+        for post in posts:
+            posts_ids.append(post['id'])
+        posts_ids.sort()
+        for post_id in posts_ids:
+            for i, post in enumerate(posts):
+                if post['id'] == post_id:
+                    new_posts.append(post)
+        return new_posts
 
 #EOF
