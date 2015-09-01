@@ -9,7 +9,7 @@
             
             <tal:forum-head tal:replace="structure view/renderForumHead" />
 
-            <tal:posts tal:replace="structure view/renderPosts" />
+            <tal:posts tal:replace="structure view/renderForumBody" />
 
         </div>
     </metal:block>

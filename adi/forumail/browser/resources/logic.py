@@ -9,13 +9,13 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 class View(BrowserView):
 
-    index = ViewPageTemplateFile("forum.pt")
+    index = ViewPageTemplateFile("forum_main.pt")
 
     forum_head = ViewPageTemplateFile("forum_head.pt")
 
-    posts_template = ViewPageTemplateFile("posts.pt")
+    posts_template = ViewPageTemplateFile("forum_body.pt")
 
-    def getPortalType(self):
+    def getPostPortalType(self):
         return 'News Item'
 
     def render(self):
@@ -27,20 +27,20 @@ class View(BrowserView):
     def renderForumHead(self):
         return self.forum_head()
 
-    def renderPosts(self):
+    def renderForumBody(self):
         return self.posts_template()
 
     def getForumUrl(self):
         forum_url = self.request["ACTUAL_URL"]
         context = aq_inner(self.context)
-        if context.Type() == self.getPortalType():
+        if context.Type() == self.getPostPortalType():
             forum_url = '/'.join(forum_url.split('/')[:-1])
         return forum_url
 
     def getForumPath(self):
         forum_path = self.request["ACTUAL_URL"]
         context = aq_inner(self.context)
-        if context.Type() == self.getPortalType():
+        if context.Type() == self.getPostPortalType():
             forum_path = '/'.join(forum_path.split('/')[:-1])
         return forum_path
 
@@ -48,7 +48,7 @@ class View(BrowserView):
         add_url = None
         forum_url = self.getForumUrl()
         if forum_url:
-            add_url = forum_url + '/createObject?type_name=' + self.getPortalType()
+            add_url = forum_url + '/createObject?type_name=' + self.getPostPortalType()
         return add_url
 
     def getUrlParas(self):
@@ -80,20 +80,10 @@ class View(BrowserView):
         return results
 
     def getPosts(self, sort_order='reverse', sort_on='created'):
-        """
-        Expects forum-(Folder)- or post-(News Item)-object,
-        returns post-objects.
-        If self is a forum, returns all posts in forum,
-        if self is a post, returns all posts of thread.
-        """
-        posts = []
         context = aq_inner(self.context)
-        if context.Type() == self.getPortalType():
+        if context.Type() == self.getPostPortalType():
             context = aq_parent(context)
-        posts = api.content.find(context=context, portal_type=self.getPortalType(), sort_on=sort_on, sort_order=sort_order)
-        posts_tuple = ()
-        for post in posts:
-            posts_tuple = (post['id'], )
+        posts = api.content.find(context=context, portal_type=self.getPostPortalType(), sort_on=sort_on, sort_order=sort_order)
         return posts
 
     def getPostsIds(self):
@@ -129,7 +119,7 @@ class View(BrowserView):
 
     def getThreads(self):
         """
-        Sorted by newest ini-post.
+        Sorted by containing newest post.
         """
         threads_flat = []   # endresult
         threads_nested = [] # [ [threadposts], ]
@@ -188,12 +178,12 @@ class View(BrowserView):
 
     def sortById(self, posts):
         new_posts = []
-        posts_ids = [] #self.getPostsIds()
+        posts_ids = []
         for post in posts:
             posts_ids.append(post['id'])
         posts_ids.sort()
         for post_id in posts_ids:
-            for i, post in enumerate(posts):
+            for post in posts:
                 if post['id'] == post_id:
                     new_posts.append(post)
         return new_posts
