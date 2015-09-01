@@ -80,10 +80,19 @@ class View(BrowserView):
         return results
 
     def getPosts(self, sort_order='reverse', sort_on='created'):
+        """
+        Expects forum-container-folder or one of its first-children, : A post.
+        Returns all posts of forum, as a catalog-brain-dict, not as objects.
+        """
         context = aq_inner(self.context)
         if context.Type() == self.getPostPortalType():
             context = aq_parent(context)
-        posts = api.content.find(context=context, portal_type=self.getPostPortalType(), sort_on=sort_on, sort_order=sort_order)
+        elif context.Type() != 'Folder':
+            raise Exception, context.Type() + " is not considered to be a forum's child, yet."
+        posts = api.content.find(context=context,
+                                 portal_type=self.getPostPortalType(),
+                                 sort_on=sort_on,
+                                 sort_order=sort_order)
         return posts
 
     def getPostsIds(self):
