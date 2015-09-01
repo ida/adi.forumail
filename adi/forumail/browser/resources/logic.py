@@ -93,7 +93,7 @@ class View(BrowserView):
         posts = api.content.find(context=context, portal_type=self.getPortalType(), sort_on=sort_on, sort_order=sort_order)
         posts_tuple = ()
         for post in posts:
-            post_tuple = (post['id'], )
+            posts_tuple = (post['id'], )
         return posts
 
     def getPostsIds(self):
