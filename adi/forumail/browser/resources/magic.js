@@ -41,7 +41,7 @@ function replyClicked(link, eve) {
     eve.preventDefault()
     var title = link.attr("href").split('&Title=')[1]
     var reply_form = $('<div id="reply-form">Reply form\</div>').insertAfter(link.parent()).css({'height':'0','overflow':'hidden'})
-    reply_form.load(window.location.href + '/createObject?type_name=News+Item', function() {
+    reply_form.load(window.location.href.split('?')[0] + '/createObject?type_name=News+Item', function() {
         hideReplyFormEles(reply_form)
         reply_form.find('#title').val(title).hide()
         reply_form.css('height', 'auto')
@@ -50,23 +50,21 @@ function replyClicked(link, eve) {
     // which will execute doAfterTinyMCELoaded(), afterwards:
     setTimeout(checkTinyMCELoaded(), 100)
 }
+function loadResults(eve) {
+    eve.preventDefault()
+    var link = $(eve.target)
+    var link_url = link.attr('href')
+    if(link.parent().hasClass('resultsType')) {
+        window.history.pushState(null, null, link_url)
+       $('#forumail-posts').load(link_url +' #forumail-posts') 
+    }
+}
 function main() {
     $('.reply.link').click(function(eve) {
         replyClicked($(this), eve)
     });
-    /*
     $('.forumail > .head .sorting').click(function(eve) {
-        eve.preventDefault()
-        var link = $(eve.target)
-        var link_url = link.attr('href')
-        if(link.parent().hasClass('resultsType')) {
-            if(link.hasClass('threads')) {
-                window.history.pushState(null, null, link_url)
-               $('#forumail-posts').load(link_url+' #forumail-posts') 
-            }
-            
-        }
+        loadResults(eve)
     });
-    */
 } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 

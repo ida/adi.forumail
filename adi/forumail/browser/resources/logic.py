@@ -38,8 +38,8 @@ class View(BrowserView):
         return forum_url
 
     def getForumPath(self):
-        forum_path = self.request["ACTUAL_URL"]
         context = aq_inner(self.context)
+        forum_path = self.request["ACTUAL_URL"]
         if context.Type() == self.getPostPortalType():
             forum_path = '/'.join(forum_path.split('/')[:-1])
         return forum_path

@@ -81,10 +81,13 @@ a[alt="communication"] { background:
 !important; }
 /* GENERAL */
 .forumail {
-/*
-    padding: 2.7em;
-    margin: 2.7em;
-*/
+    padding: 1.27em;
+}
+.forumail .add {
+    font-weight: bold;
+}
+.forumail .post {
+    padding: .5em 0;
 }
 .forumail .title {
     font-size: 1.27em;
@@ -106,6 +109,7 @@ a[alt="communication"] { background:
     float: left;
 }
 
+.forumail .foot,
 .forumail .head {
     text-align: right;
 }

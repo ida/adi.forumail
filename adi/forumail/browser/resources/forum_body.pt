@@ -60,12 +60,8 @@ Text
         </div>
         <div class="foot">
         <a class="reply link"
-         tal:define="
-                     post_id post/id;
-                     post_url string:${forum_url}/${post_id};
-                     "
          tal:attributes='href reply_url;
-                         title string:Reply to "${post_id}";'>
+                         title string:Reply to "${id}";'>
 Reply
         </a>
         </div>
