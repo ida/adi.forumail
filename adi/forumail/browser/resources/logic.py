@@ -197,4 +197,49 @@ class View(BrowserView):
                     new_posts.append(post)
         return new_posts
 
+    def getPostsMarkup(self):
+        """DEV: Experimental."""
+        posts = ()
+        post = ()
+        reply_id = None
+        field_names = ['id', 'Title', 'Subject', 'created', 'Creator']
+        result = self.getPostsResult()
+        for item in result:
+            post = '<div class="post">'
+            post += '<div class="head">'
+            for field_name in field_names:
+                value = item[field_name]
+                if field_name == 'id':
+                    thread_id = self.getThreadId(value)
+                    reply_id = value[len(thread_id):]
+                    #if reply_id == '': reply_id  = '-'
+                    reply_id = '0' + reply_id
+                    post += '<span class="' + field_name.lower() + '">' + reply_id + '</span>'
+                elif field_name == 'Title':
+                    if reply_id == '0':
+                        post += '<a class="' + field_name.lower() + '" href="' + value + '">' + value + '</a>'
+                elif field_name == 'created':
+                    creation_date = str(value)[:16]
+                    post += '<span class="' + field_name.lower() + '">' + creation_date + '</span>'
+
+                else:
+                    post += '<span class="' + field_name.lower() + '">'
+                    if type(value) is tuple: #keywords, a.k.a. tags/categories of field_name 'Subject'
+                        for val in value:
+                            post += '<span class="' +  str(val) + '">'
+                            post += val
+                            post += '</span>'
+                    else:
+                        post += str(value)
+                    post += '</span>'
+
+            post += '</div>' # .post .head
+            post += '<div class="body">'
+            post += item.getObject().getText()
+            post += '</div>' # .post .body
+            post += '</div>' # .post
+            posts += (post,)
+        return posts
+
+
 #EOF
