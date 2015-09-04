@@ -68,8 +68,10 @@ function loadResults(eve, results_selector) {
     $('#' + results_selector).load(link_url + ' #' + results_selector) 
 }
 function main() {
+if($('.section-forumail').length != -1) {
     var results_id = 'forum-body'
     var results_types_class = 'resultsTypes'
+
     getAndSetSelection(results_types_class)
     $('.' + results_types_class + ' a').click(function(eve) {
         loadResults(eve, results_id)
@@ -78,5 +80,10 @@ function main() {
     $('.reply.link').click(function(eve) {
         replyClicked(eve)
     });
-} /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
+    // DEV:
+    if($("dd").text() == 'Changes saved.') {
+        setTimeout($('#breadcrumbs-1 a').click(), 7777)
+        
+    }
+} /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
