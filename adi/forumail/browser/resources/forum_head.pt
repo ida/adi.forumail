@@ -1,19 +1,25 @@
 <!--
 <span tal:replace="structure request" />
 -->
-<div class="head" tal:define="forum_url view/getForumUrl">
+<div class="head" tal:define="forum_url view/getForumUrl" xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="plone">
     <a class="add" tal:attributes="href view/getAddUrl">
 + Add new post
     </a>
     <div class="sorting">
-        <div class="resultsType">
-            <a class="threads" tal:attributes="href string:${forum_url}?results_type=threaded">
-Threads
-            </a>
+        <div class="resultsTypes">
+            <span i18n:translate="sort_by">
+Sort by
+            </span><tal:colon tal:replace="string::">
+:
+            </tal:colon>
             <a class="posts selected" tal:attributes="href forum_url">
 Posts
             </a>
+            <a class="threads" tal:attributes="href string:${forum_url}?results_type=threads">
+Threads
+            </a>
         </div>
+        <!--
         <div class="criterion">
             <div class="newest selected">
 Newest
@@ -34,6 +40,7 @@ Post
                 </a>
             </div>
         </div>
+        -->
     </div>
 </div>
 

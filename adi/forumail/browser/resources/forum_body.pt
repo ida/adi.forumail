@@ -1,71 +1,74 @@
-<div id="forumail-posts" class="posts" tal:define="mtool nocall: context/portal_membership;
-posts nocall: view/getPostsResult" tal:repeat="post posts">
-    <div class="post" tal:define="
-        navroot_url string:${context/@@plone_portal_state/navigation_root_url};
-        search_url string:${navroot_url}/@@search;
-        isIniPost nocall: view/isIniPost;
-        forum_path view/getForumPath;
-        forum_url view/getForumUrl;
-        add_url view/getAddUrl;
-        id post/id;
-        title post/Title;
-        categories post/Subject;
-        author post/Creator;
-        date post/CreationDate;
-        date python: date[:10] + ' ' + date[12:16];
-        url string:${forum_url}/${id};
-        reply_url string:${add_url}&Title=${id};
-        INI python: isIniPost(id);
-        text python: post.getObject().getText();">
-        <div class="head">
-            <div class="field categories" tal:condition="INI">
-                <a class="category link"
-                    tal:repeat="cat categories"
-                    tal:content="cat"
-                    tal:attributes="href string:${search_url}?Subject%3Alist=${cat};
-                                    title string:Go to all posts tagged with '${cat}';">
+<tal:comment tal:replace="nothing">Exceptionally we use an id here, to be able to use jQ's .load(), see: './magic.js'.</tal:comment>
+<div id="forum-body" class="body posts" tal:define="
+    mtool nocall: context/portal_membership;
+    navroot_url string:${context/@@plone_portal_state/navigation_root_url};
+    search_url string:${navroot_url}/@@search;
+    forum_path view/getForumPath;
+    forum_url view/getForumUrl;
+    add_post_url view/getAddUrl;
+    posts nocall: view/getPostsResult">
+    <tal:repetitor tal:repeat="post posts">
+        <div class="post" tal:define="
+            isIniPost nocall: view/isIniPost;
+            id post/id;
+            title post/Title;
+            categories post/Subject;
+            author post/Creator;
+            date post/CreationDate;
+            date python: date[:10] + ' ' + date[12:16];
+            url string:${forum_url}/${id};
+            reply_url string:${add_post_url}&Title=${id};
+            INI python: isIniPost(id);
+            text python: post.getObject().getText();">
+            <div class="head">
+                <div class="field categories" tal:condition="INI">
+                    <a class="category link"
+                        tal:repeat="cat categories"
+                        tal:content="cat"
+                        tal:attributes="href string:${search_url}?Subject%3Alist=${cat};
+                                        title string:Go to all posts tagged with '${cat}';">
 Category
-                </a>
-            </div>
-            <a tal:attributes="class string:field title; href string:${url}">
-                <span tal:condition="INI" tal:replace="title">
-Title
-                </span>
-                <span tal:condition="not: INI" tal:replace="id">
-Id
-                </span>
-            </a>
-            <span class="field creation-date" tal:content="date"><tal:comment tal:replace="nothing">
-            The class '.creation-date' was choosen instead of more convenient '.date', to *not* inherit Plone-styles (of jq-ui).</tal:comment>
-Date
-            </span>
-            <a class="author link;"
-                tal:attributes='title string:Go to all posts of "${author}";
-                                href string:${search_url}?sort_on=Date&sort_order=reverse&Creator=${author}&path=${forum_path}&Type=News%20Item;'
-                    tal:define="portrait python: mtool.getPersonalPortrait(author);
-                                portrait_url portrait/absolute_url;
-                                is_default_img python: portrait_url.endswith('/defaultUser.png');">
-                <tal:exchangeDefaultPortrait tal:condition="is_default_img" tal:define="portrait_url string:${navroot_url}/logo.png">
-                <img class="avatar"
-                    tal:attributes="src string:${portrait_url}; alt string:\
-Avatar">
-                </tal:exchangeDefaultPortrait>
-                <div tal:content="author">
-Author
+                    </a>
                 </div>
-            </a>
-        </div><tal:comment tal:replace="nothing">EO .head</tal:comment>
-        <div class="body text" tal:replace="structure text">
+                <a tal:attributes="class string:field title; href string:${url}">
+                    <span tal:condition="INI" tal:replace="title">
+Title
+                    </span>
+                    <span tal:condition="not: INI" tal:replace="id">
+Id
+                    </span>
+                </a>
+                <span class="field creation-date" tal:content="date"><tal:comment tal:replace="nothing">
+                The class '.creation-date' was choosen instead of more convenient '.date', to *not* inherit Plone-styles (of jq-ui).</tal:comment>
+Date
+                </span>
+                <a class="author link;"
+                    tal:attributes='title string:Go to all posts of "${author}";
+                                    href string:${search_url}?sort_on=Date&sort_order=reverse&Creator=${author}&path=${forum_path}&Type=News%20Item;'
+                        tal:define="portrait python: mtool.getPersonalPortrait(author);
+                                    portrait_url portrait/absolute_url;
+                                    is_default_img python: portrait_url.endswith('/defaultUser.png');">
+                    <tal:exchangeDefaultPortrait tal:condition="is_default_img" tal:define="portrait_url string:${navroot_url}/logo.png">
+                    <img class="avatar"
+                        tal:attributes="src string:${portrait_url}; alt string:\
+Avatar">
+                    </tal:exchangeDefaultPortrait>
+                    <div tal:content="author">
+Author
+                    </div>
+                </a>
+            </div><tal:comment tal:replace="nothing">EO .head</tal:comment>
+            <div class="body text" tal:replace="structure text">
 Text
-        </div>
-        <div class="foot">
-        <a class="reply link"
-         tal:attributes='href reply_url;
-                         title string:Reply to "${id}";'>
+            </div>
+            <div class="foot">
+            <a class="reply link"
+             tal:attributes='href reply_url;
+                             title string:Reply to "${id}";'>
 Reply
-        </a>
-        </div>
-    </div>
-</div>
-<tal:comment tal:replace="nothing">EO .posts</tal:comment>
+            </a>
+            </div>
+        </div><tal:comment tal:replace="nothing">EO .post</tal:comment>
+    </tal:repetitor>
+</div><tal:comment tal:replace="nothing">EO .posts</tal:comment>
 

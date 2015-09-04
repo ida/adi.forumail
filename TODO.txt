@@ -1,0 +1,29 @@
+Asap
+====
+
+
+Improve
+=======
+
+- When replying, don't pass id, but Title, use decodeURIComponent.
+
+- Ini-posts: Subject must have at least NN chars.
+
+- m2p.base causes on instance-rising:
+"zope/configuration/config.py:706: UserWarning: The set_schema option of the <require /> directive is not supported in Zope 2."
+
+
+Nicetohaves
+===========
+
+- username = fullname, if no fullname, take id
+
+- Send mail to address prefixed with category, e.g. 'developers@plone.org', contentrule applies tag to it
+
+- Tags must be in last line, like: [tag1, tag2], optionallly regard quotes possibly out of habit included by user.
+
+- Dedicated CT for a forum? would be merely for binding configurations to it, instead of relying on path '/siteId/forumail'.
+
+- install-script: sett source-field (='To:'-address) in contenrule
+
+

@@ -104,6 +104,9 @@ a[alt="communication"] { background:
 .forumail .post {
     border-bottom: 1px solid darkblue;
 }
+.replyForm {
+    border-top: 1px solid darkblue;
+}
 /* POSITIONING: */ 
 .forumail .post .title {
     float: left;

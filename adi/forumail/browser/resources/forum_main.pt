@@ -2,7 +2,8 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       metal:use-macro="context/main_template/macros/master"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
     <metal:block fill-slot="content">
         <div tal:define="portal_type context/Type;"
              tal:attributes="class string:forumail forum ${portal_type}">

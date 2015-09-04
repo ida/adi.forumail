@@ -18,7 +18,8 @@ function hideReplyFormEles(parent_ele) {
 '.fieldTextFormat',
 '#fieldset-dates',
 '#fieldset-creators',
-'#fieldset-settings',]
+'#fieldset-settings',
+    ]
     for(var i=0;i<hide_eles.length; i++) {
         parent_ele.find(hide_eles[i]).hide()
     }
@@ -29,7 +30,7 @@ function doAfterTinyMCELoaded() {
     $('.reply.link').remove()
 }
 function checkTinyMCELoaded() {
-// Thanks to Luca Fabbri, a.k.a. for kindly sharing this snippet:
+// Thanks to Luca Fabbri, a.k.a. 'keul, for kindly sharing this snippet on:
 // http://stackoverflow.com/questions/32088348
     if (window.tinymce==undefined || !tinymce.editors.length) {
         setTimeout(checkTinyMCELoaded, 100)
@@ -37,34 +38,45 @@ function checkTinyMCELoaded() {
     }
     doAfterTinyMCELoaded()
 }
-function replyClicked(link, eve) {
+function replyClicked(eve) {
     eve.preventDefault()
+    var link = $(eve.target)
     var title = link.attr("href").split('&Title=')[1]
-    var reply_form = $('<div id="reply-form">Reply form\</div>').insertAfter(link.parent()).css({'height':'0','overflow':'hidden'})
+    var reply_form = $('<div class="reply-form">Reply form\</div>').insertAfter(link.parent()).css({'height':'0','overflow':'hidden'})
     reply_form.load(window.location.href.split('?')[0] + '/createObject?type_name=News+Item', function() {
         hideReplyFormEles(reply_form)
         reply_form.find('#title').val(title).hide()
         reply_form.css('height', 'auto')
     });
-    // Trigger waiting for TinyMCEeditor to be loaded, 
+    // Trigger waiting for TinyMCEditor to be loaded, 
     // which will execute doAfterTinyMCELoaded(), afterwards:
     setTimeout(checkTinyMCELoaded(), 100)
 }
-function loadResults(eve) {
-    eve.preventDefault()
-    var link = $(eve.target)
-    var link_url = link.attr('href')
-    if(link.parent().hasClass('resultsType')) {
-        window.history.pushState(null, null, link_url)
-       $('#forumail-posts').load(link_url +' #forumail-posts') 
+function getAndSetSelection(results_types_class) {
+    var results_types_links = $('.' + results_types_class + ' a')
+    var selection = window.location.search.split('results_type=')[1]
+    results_types_links.removeClass('selected')
+    if(selection === undefined) {
+        var selection = $(results_types_links[0]).attr('class')
     }
+    $('.' + results_types_class + ' a.' + selection).addClass('selected')
+}
+function loadResults(eve, results_selector) {
+    eve.preventDefault()
+    var link_url = $(eve.target).attr('href')
+    window.history.pushState(null, null, link_url)
+    $('#' + results_selector).load(link_url + ' #' + results_selector) 
 }
 function main() {
-    $('.reply.link').click(function(eve) {
-        replyClicked($(this), eve)
+    var results_id = 'forum-body'
+    var results_types_class = 'resultsTypes'
+    getAndSetSelection(results_types_class)
+    $('.' + results_types_class + ' a').click(function(eve) {
+        loadResults(eve, results_id)
+        getAndSetSelection(results_types_class)
     });
-    $('.forumail > .head .sorting').click(function(eve) {
-        loadResults(eve)
+    $('.reply.link').click(function(eve) {
+        replyClicked(eve)
     });
 } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 

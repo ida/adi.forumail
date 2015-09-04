@@ -15,6 +15,9 @@ class View(BrowserView):
 
     posts_template = ViewPageTemplateFile("forum_body.pt")
 
+    def getResultsTypes(self):
+        return ['posts', 'threads']
+
     def getPostPortalType(self):
         return 'News Item'
 
@@ -61,7 +64,7 @@ class View(BrowserView):
 
     def getResultsType(self):
         para = 'results_type'
-        results_type = 'singles' # default
+        results_type = self.getResultsTypes()[0] # default
         paras = self.getUrlParas()
         if para in paras:
             results_type = self.getUrlParaVal(para)
@@ -71,9 +74,9 @@ class View(BrowserView):
         """ Main function to return list of posts to view."""
         results = None
         results_type = self.getResultsType()
-        if results_type == 'singles':
+        if results_type == 'posts':
             results = self.getPosts()
-        elif results_type == 'threaded':
+        elif results_type == 'threads':
             results = self.getThreads()
         else:
             raise Exception, 'Results-type "' + results_type + '" is not available'
