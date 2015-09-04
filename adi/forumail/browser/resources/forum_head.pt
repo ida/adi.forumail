@@ -8,10 +8,8 @@
     <div class="sorting">
         <div class="resultsTypes">
             <span i18n:translate="sort_by">
-Sort by
-            </span><tal:colon tal:replace="string::">
-:
-            </tal:colon>
+Sort by <span i18n:translate="">newest</span><span class="colon">:</span>
+        </span>
             <a class="posts selected" tal:attributes="href forum_url">
 Posts
             </a>

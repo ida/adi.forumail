@@ -18,10 +18,10 @@
             date python: date[:10] + ' ' + date[12:16];
             url string:${forum_url}/${id};
             reply_url string:${add_post_url}&Title=${id};
-            INI python: isIniPost(id);
+            is_thread_ini python: isIniPost(id);
             text python: post.getObject().getText();">
             <div class="head">
-                <div class="field categories" tal:condition="INI">
+                <div class="field categories"> <!-- tal:condition="is_thread_ini"> -->
                     <a class="category link"
                         tal:repeat="cat categories"
                         tal:content="cat"
@@ -30,16 +30,22 @@
 Category
                     </a>
                 </div>
-                <a tal:attributes="class string:field title; href string:${url}">
-                    <span tal:condition="INI" tal:replace="title">
+                <a tal:content    = "title"
+                   tal:condition  = "is_thread_ini"
+                   tal:attributes = "class string:title;
+                                     href string:${url}">
 Title
-                    </span>
-                    <span tal:condition="not: INI" tal:replace="id">
-Id
-                    </span>
                 </a>
-                <span class="field creation-date" tal:content="date"><tal:comment tal:replace="nothing">
-                The class '.creation-date' was choosen instead of more convenient '.date', to *not* inherit Plone-styles (of jq-ui).</tal:comment>
+                <a tal:content    = "id"
+                   tal:condition  = "not: is_thread_ini"
+                   tal:attributes = "class string:id;
+                                     href string:${url}">
+Id
+                </a>
+                <span tal:content="date" class="creation-date">
+                <tal:comment tal:replace="nothing">The class '.creation-date'
+                was choosen instead of more convenient '.date', to *not*
+                inherit Plone-styles (of jq-ui).</tal:comment>
 Date
                 </span>
                 <a class="author link;"

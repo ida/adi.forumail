@@ -10,9 +10,6 @@
     line-height: 1.5em;
 }
 /* LINKS */ 
-.forumail .selected { 
-    border: 1px solid red;
-}
 .forumail #content a:link,
 .forumail dl.portlet a:link,
 .forumail a:link,
@@ -26,8 +23,11 @@
 .forumail a.state-private {
     color: #00d2ff !important;
 }
-/* Colorpalette for categories(tags),
- * green-turquise from bright to dark:
+.forumail .selected { 
+    border: 1px solid red;
+}
+/* CATEGORIES - tags, keywords, fieldname 'Subject'.
+ * Colorpalette green-turquise from bright to dark:
 #e3faea
 #a9e6e5
 #00d2ff
@@ -108,6 +108,7 @@ a[alt="communication"] { background:
     border-top: 1px solid darkblue;
 }
 /* POSITIONING: */ 
+.forumail .post .id,
 .forumail .post .title {
     float: left;
 }
@@ -116,4 +117,4 @@ a[alt="communication"] { background:
 .forumail .head {
     text-align: right;
 }
-/* DEV */ .categories {display: none}
+

@@ -1,13 +1,17 @@
 Asap
 ====
 
+- Redirect to forum/post, after saving editform.
+
+- Add view 'forumail_view' to choosen post-type's profile (News Item) and set it as default-view via eventlistener on creation.
+
 
 Improve
 =======
 
 - When replying, don't pass id, but Title, use JS'ses encodeUriComponent and decodeUriComponent.
 
-- Ini-posts: Subject must have at least NN chars.
+- Ini-posts: Subject must have at least N chars.
 
 - m2p.base causes on instance-rising:
 "zope/configuration/config.py:706: UserWarning: The set_schema option of the <require /> directive is not supported in Zope 2."
@@ -27,5 +31,4 @@ Nicetohaves
 - Regard categories set in a mail could possibly be wrapped into quotes, out of habit, by user.
 
 - install-script: Set source-field (='To:'-address) in contenrule.
-
 
