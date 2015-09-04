@@ -19,7 +19,7 @@ class View(BrowserView):
 
     forum_head = ViewPageTemplateFile("forum_head.pt")
 
-    posts_template = ViewPageTemplateFile("forum_body.pt")
+    forum_body = ViewPageTemplateFile("forum_body.pt")
 
     def render(self):
         return self.index()
@@ -31,7 +31,7 @@ class View(BrowserView):
         return self.forum_head()
 
     def renderForumBody(self):
-        return self.posts_template()
+        return self.forum_body()
 
     def getForumUrl(self):
         forum_url = self.request["ACTUAL_URL"]
