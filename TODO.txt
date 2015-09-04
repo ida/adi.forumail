@@ -5,7 +5,7 @@ Asap
 Improve
 =======
 
-- When replying, don't pass id, but Title, use decodeURIComponent.
+- When replying, don't pass id, but Title, use JS'ses encodeUriComponent and decodeUriComponent.
 
 - Ini-posts: Subject must have at least NN chars.
 
@@ -16,14 +16,16 @@ Improve
 Nicetohaves
 ===========
 
-- username = fullname, if no fullname, take id
+- Provide dedicated view for user-profile, collecting all posts of user and personal-info, at once.
 
-- Send mail to address prefixed with category, e.g. 'developers@plone.org', contentrule applies tag to it
+- Prefill a reply's text-field with the text of the post replied to, wrapped in a quotation-div and also wrap mail quotations into a quotation-div.
 
-- Tags must be in last line, like: [tag1, tag2], optionallly regard quotes possibly out of habit included by user.
+- Use user' fullname, if available, otherwise fallback to user-id.
 
-- Dedicated CT for a forum? would be merely for binding configurations to it, instead of relying on path '/siteId/forumail'.
+- Send mail to address prefixed with category, e.g. 'developers@plone.org', need to be aliases of send-to-address, add tag before pushing mail.
 
-- install-script: sett source-field (='To:'-address) in contenrule
+- Regard categories set in a mail could possibly be wrapped into quotes, out of habit, by user.
+
+- install-script: Set source-field (='To:'-address) in contenrule.
 
 
