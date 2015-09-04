@@ -7,38 +7,18 @@
     </a>
     <div class="sorting">
         <div class="resultsTypes">
+            <!--
             <span i18n:translate="sort_by">
-Sort by <span i18n:translate="">newest</span><span class="colon">:</span>
-        </span>
+Sort by <span class="colon">:</span>
+            </span>
+            -->
             <a class="posts selected" tal:attributes="href forum_url">
-Posts
+Newest post
             </a>
             <a class="threads" tal:attributes="href string:${forum_url}?results_type=threads">
-Threads
+Last active thread
             </a>
         </div>
-        <!--
-        <div class="criterion">
-            <div class="newest selected">
-Newest
-                <a class="thread" href="#" disabled>
-Thread
-                </a>
-                <a class="post selected" href="#">
-Post
-                </a>
-            </div>
-            <div class="author">
-Author
-                <a class="thread" href="#">
-Thread
-                </a>
-                <a class="post" href="#">
-Post
-                </a>
-            </div>
-        </div>
-        -->
     </div>
 </div>
 
