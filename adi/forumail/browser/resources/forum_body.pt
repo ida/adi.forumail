@@ -49,14 +49,14 @@ Id
 Date
                 </span>
                 <a class="author link;"
-                    tal:attributes='title string:Go to all posts of "${author}";
-                                    href string:${search_url}?sort_on=Date&sort_order=reverse&Creator=${author}&path=${forum_path}&Type=News%20Item;'
+                    tal:attributes='title string:See profile of "${author}";
+                                    href string:${navroot_url}/author/${author};'
                         tal:define="portrait python: mtool.getPersonalPortrait(author);
                                     portrait_url portrait/absolute_url;
                                     is_default_img python: portrait_url.endswith('/defaultUser.png');">
                     <tal:exchangeDefaultPortrait tal:condition="is_default_img" tal:define="portrait_url string:${navroot_url}/logo.png">
-                    <img class="avatar"
-                        tal:attributes="src string:${portrait_url}; alt string:\
+                        <img class="avatar"
+                            tal:attributes="src string:${portrait_url}; alt string:\
 Avatar">
                     </tal:exchangeDefaultPortrait>
                     <div tal:content="author">

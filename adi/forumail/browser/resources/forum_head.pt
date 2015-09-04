@@ -7,16 +7,14 @@
     </a>
     <div class="sorting">
         <div class="resultsTypes">
-            <!--
             <span i18n:translate="sort_by">
-Sort by <span class="colon">:</span>
+Sort by newest<span class="colon">:</span>
             </span>
-            -->
             <a class="posts selected" tal:attributes="href forum_url">
-Newest post
+Post
             </a>
             <a class="threads" tal:attributes="href string:${forum_url}?results_type=threads">
-Last active thread
+Thread
             </a>
         </div>
     </div>

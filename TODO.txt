@@ -1,3 +1,8 @@
+Bug
+===
+
+- Click on author path-crit's wrong
+
 Asap
 ====
 
