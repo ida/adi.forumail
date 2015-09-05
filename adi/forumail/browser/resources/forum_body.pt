@@ -6,10 +6,10 @@
     add_post_url view/getAddUrl;
     threaded view/isThreaded;
     posts nocall: view/getResults">
-    <tal:repetitor tal:repeat="post posts"><!-- We fon't repeat in parent-ele, to not redefine vars in it for each loop. -->
+    <tal:repetitor tal:repeat="post posts"><!-- We don't repeat in parent-ele, to not redefine vars in it, for each loop, just once. -->
         <div class="post" tal:define="
-            getReplyIdAndDepth nocall: view/getReplyIdAndDepth;
             isIniPost nocall: view/isIniPost;
+            getReplyDepthIter nocall: view/getReplyDepthIter;
             id post/id;
             title post/Title;
             categories post/Subject;
@@ -18,9 +18,7 @@
             date python: date[:10] + ' ' + date[12:16];
             url string:${forum_url}/${id};
             reply_url string:${add_post_url}&Title=${id};
-            reply_id_and_depth python: getReplyIdAndDepth(id);
-            reply_id python: reply_id_and_depth[0];
-            reply_depth python: reply_id_and_depth[1];
+            reply_depth_iter python: getReplyDepthIter(id);
             is_thread_ini python: isIniPost(id);
             text python: post.getObject().getText();">
             <div class="head">
@@ -43,7 +41,6 @@ Avatar">
                 <span class="creation-date" tal:content="date">
 2015-09-04 1:52
                 </span>
-                <span class="replyId" tal:content="reply_id" />
                 <a tal:content    = "title"
                    tal:condition  = "is_thread_ini"
                    tal:attributes = "class string:title;
@@ -58,22 +55,21 @@ Title
 Id
                     </a>
                 </tal:notThreaded>
+                <span class="categories"
+                    tal:content="categories">
+Category
+                </span>
                 <a class="reply link"
                  tal:attributes='href reply_url;
                                  title string:Reply to "${id}";'>
 Reply
                 </a>
-                <a class="category link"
-                    tal:repeat="cat categories"
-                    tal:content="cat"
-                    tal:attributes="href string:${search_url}?Subject%3Alist=${cat};
-                                    title string:Go to all posts tagged with '${cat}';">
-Category
-                </a>
             </div>
+            <tal:vizReplyDepth tal:repeat="i reply_depth_iter" tal:define="opening_div string:&lt;div&gt;" tal:content="structure opening_div"/>
             <div class="text" tal:content="structure text">
 Text
             </div>
+            <tal:vizReplyDepth tal:repeat="i reply_depth_iter" tal:define="closing_div string:&lt;/div&gt;" tal:content="structure closing_div"/>
         </div>
     </tal:repetitor>
 </div>

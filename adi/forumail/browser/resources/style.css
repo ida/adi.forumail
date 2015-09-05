@@ -16,6 +16,10 @@ max-width: 444px;
     height: 1em;
     width: 1em;
 }
+.forumail .post .head {
+    color: #999;
+    font-size: 0.81em;
+}
 /*
 .forumail .post .head,
 .forumail .post .foot {
