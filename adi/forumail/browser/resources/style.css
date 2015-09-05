@@ -1,41 +1,25 @@
+.forumail {
+outline: 1px dotted lightgreen;
+/*
+max-width: 444px;
+*/
+}
 .forumail * {
-padding:0;
-margin:0;
-line-height: 1.5em;
+    padding:0;
+    margin:0;
+    line-height: 1.5em;
 }
 .forumail .selected {
     outline: 1px dotted red;
-}
-.forumail {
-    outline: 1px dotted lightgreen;
-}
-.forumail .post .head {
-    position: relative;
-}
-.forumail .post .body {
-}
-.forumail .reply,
-.forumail .categories {
-    float: right;
-    margin-left: 0.81em;
-}
-.forumail .category {
-    margin-left: 0.5em;
-}
-.forumail .creation-date {
-    font-size: 80%;
-    color: #888;
-}
-.forumail .id,
-.forumail .title {
-    position: absolute;
-    left: 10em;
-}
-.forumail .text {
-    margin-left: 10em;
 }
 .forumail img.avatar {
     height: 1em;
     width: 1em;
 }
-
+/*
+.forumail .post .head,
+.forumail .post .foot {
+    text-align: right;
+}
+*/
+body{ background:#111;color:#e2e2e2;}

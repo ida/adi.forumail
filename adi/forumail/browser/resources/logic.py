@@ -87,8 +87,6 @@ class View(BrowserView):
 
     def getThreads(self):
         posts = self.getPosts()
-        print 'posts'
-        print posts
         posts_ids = ()
         for post in posts:
             posts_ids += (post['id'],)
@@ -123,20 +121,6 @@ class View(BrowserView):
             thread_posts = sorted(thread_posts, key = lambda post: (post.id))
         return thread_posts
 
-    def getThreadIds(self, posts_ids, thread_id):
-        thread_ids = ()
-        for post_id in posts_ids:
-            if post_id == thread_id or self.isReply(post_id, thread_id):
-                thread_ids += (post_id,)
-        return thread_ids
-
-    def getThreadsIds(self, posts_ids):
-        threads_ids = ()
-        for post_id in posts_ids:
-            if self.getThreadId(post_id) not in threads_ids:
-                threads_ids += (self.getThreadId(post_id),)
-        return threads_ids
-
     def getThreadId(self, post_id):
         thread_id = None
         nrs = ['0','1','2','3','4','5','6','7','8','9']
@@ -151,6 +135,47 @@ class View(BrowserView):
             thread_id = post_id
         return thread_id
 
+    def getThreadIds(self, posts_ids, thread_id):
+        thread_ids = ()
+        for post_id in posts_ids:
+            if post_id == thread_id or self.isReply(post_id, thread_id):
+                thread_ids += (post_id,)
+        return thread_ids
+
+    def getThreadsIds(self, posts_ids):
+        threads_ids = ()
+        for post_id in posts_ids:
+            if self.getThreadId(post_id) not in threads_ids:
+                threads_ids += (self.getThreadId(post_id),)
+        return threads_ids
+
+    def getReplyIdAndDepth(self, post_id):
+        reply_id = None
+        reply_depth = 0
+        nrs = ['1','2','3','4','5','6','7','8','9','0']
+        i = len(post_id)
+        while i > 0:
+            i -= 1
+            if post_id[i] in nrs:
+                while post_id[i] in nrs or post_id[i] == '-':
+                    if post_id[i] == '-':
+                        reply_depth += 1
+                    i -= 1
+                reply_id = post_id[i+1:]
+            else:
+                break
+        if reply_id:
+             reply_id = '1' + reply_id
+        else:
+            reply_id = '1'
+        return reply_id, reply_depth
+
+    def getReplyId(self, post_id):
+        return self.getReplyIdAndDepth(post_id)[0]
+
+    def getReplyDepth(self, post_id):
+        return self.getReplyIdAndDepth(post_id)[1]
+
     def isReply(self, post_id, thread_id):
         IS_REPLY = False
         nrs = ['1','2','3','4','5','6','7','8','9','0']
@@ -159,13 +184,6 @@ class View(BrowserView):
         and post_id[len(thread_id) + 1] in nrs:
             IS_REPLY =  True
         return IS_REPLY
-
-    def isIniPost(self, post_id):
-        IS_INI_POST = False
-        thread_id = self.getThreadId(post_id)
-        IS_REPLY = self.isReply(post_id, thread_id)
-        if not IS_REPLY: IS_INI_POST = True
-        return IS_INI_POST
 
     def isThreaded(self):
         if self.getResultsType() == 'threaded': return True

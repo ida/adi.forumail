@@ -1,4 +1,3 @@
-<tal:comment tal:replace="nothing">Exceptionally we use an id here, to be able to use jQ's .load(), see: './magic.js'.</tal:comment>
 <div id="forum-body" class="body posts" tal:define="
     mtool nocall: context/portal_membership;
     navroot_url string:${context/@@plone_portal_state/navigation_root_url};
@@ -7,8 +6,9 @@
     add_post_url view/getAddUrl;
     threaded view/isThreaded;
     posts nocall: view/getResults">
-    <tal:repetitor tal:repeat="post posts">
+    <tal:repetitor tal:repeat="post posts"><!-- We fon't repeat in parent-ele, to not redefine vars in it for each loop. -->
         <div class="post" tal:define="
+            getReplyIdAndDepth nocall: view/getReplyIdAndDepth;
             isIniPost nocall: view/isIniPost;
             id post/id;
             title post/Title;
@@ -18,18 +18,12 @@
             date python: date[:10] + ' ' + date[12:16];
             url string:${forum_url}/${id};
             reply_url string:${add_post_url}&Title=${id};
+            reply_id_and_depth python: getReplyIdAndDepth(id);
+            reply_id python: reply_id_and_depth[0];
+            reply_depth python: reply_id_and_depth[1];
             is_thread_ini python: isIniPost(id);
             text python: post.getObject().getText();">
             <div class="head">
-                <div class="categories">
-                    <a class="category link"
-                        tal:repeat="cat categories"
-                        tal:content="cat"
-                        tal:attributes="href string:${search_url}?Subject%3Alist=${cat};
-                                        title string:Go to all posts tagged with '${cat}';">
-Category
-                    </a>
-                </div>
                 <a
                     tal:attributes='title string:See profile of "${author}";
                                     href string:${navroot_url}/author/${author};'
@@ -49,36 +43,38 @@ Avatar">
                 <span class="creation-date" tal:content="date">
 2015-09-04 1:52
                 </span>
+                <span class="replyId" tal:content="reply_id" />
                 <a tal:content    = "title"
                    tal:condition  = "is_thread_ini"
                    tal:attributes = "class string:title;
                                      href string:${url}">
 Title
                 </a>
-<!--
                 <tal:notThreaded tal:condition="not: threaded">
--->
                     <a tal:content    = "id"
                        tal:condition  = "not: is_thread_ini"
                        tal:attributes = "class string:id;
                                          href string:${url}">
 Id
                     </a>
-<!--
                 </tal:notThreaded>
--->
-            </div><tal:comment tal:replace="nothing">EO .post .head</tal:comment>
-            <div class="body text" tal:content="structure text">
-Text
-            </div>
-            <div class="foot">
                 <a class="reply link"
                  tal:attributes='href reply_url;
                                  title string:Reply to "${id}";'>
 Reply
                 </a>
+                <a class="category link"
+                    tal:repeat="cat categories"
+                    tal:content="cat"
+                    tal:attributes="href string:${search_url}?Subject%3Alist=${cat};
+                                    title string:Go to all posts tagged with '${cat}';">
+Category
+                </a>
             </div>
-        </div><tal:comment tal:replace="nothing">EO .post</tal:comment>
+            <div class="text" tal:content="structure text">
+Text
+            </div>
+        </div>
     </tal:repetitor>
-</div><tal:comment tal:replace="nothing">EO .posts</tal:comment>
+</div>
 
