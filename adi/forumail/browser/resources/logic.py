@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from adi.forumail import post_portal_type
+
 from plone import api
 
 from Acquisition import aq_inner, aq_parent
@@ -8,9 +10,6 @@ from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 class View(BrowserView):
-
-    def getPostPortalType(self):
-        return 'News Item'
 
     def getResultsTypes(self):
         return ('posts', 'threads')
@@ -36,22 +35,15 @@ class View(BrowserView):
     def getForumUrl(self):
         forum_url = self.request["ACTUAL_URL"]
         context = aq_inner(self.context)
-        if context.Type() == self.getPostPortalType():
+        if context.Type() == post_portal_type:
             forum_url = '/'.join(forum_url.split('/')[:-1])
         return forum_url
-
-    def getForumPath(self):
-        context = aq_inner(self.context)
-        forum_path = self.request["ACTUAL_URL"]
-        if context.Type() == self.getPostPortalType():
-            forum_path = '/'.join(forum_path.split('/')[:-1])
-        return forum_path
 
     def getAddUrl(self):
         add_url = None
         forum_url = self.getForumUrl()
         if forum_url:
-            add_url = forum_url + '/createObject?type_name=' + self.getPostPortalType()
+            add_url = forum_url + '/createObject?type_name=' + post_portal_type
         return add_url
 
     def getUrlParas(self):
@@ -77,12 +69,12 @@ class View(BrowserView):
         context = aq_inner(self.context)
         results_type = self.getResultsType()
         if results_type == 'posts':
-            if context.Type() == self.getPostPortalType():
+            if context.Type() == post_portal_type:
                 posts = self.getThread(context.getId(), results_type)
             else:
                 posts = self.getPosts()
         elif results_type == 'threads':
-            if context.Type() == self.getPostPortalType():
+            if context.Type() == post_portal_type:
                 posts = self.getThread(context.getId(), results_type)
             else:
                 posts = self.getThreads()
@@ -90,9 +82,9 @@ class View(BrowserView):
 
     def getPosts(self):
         context = aq_inner(self.context)
-        if context.Type() == self.getPostPortalType():
+        if context.Type() == post_portal_type:
             context = aq_parent(self.context)
-        posts = api.content.find(context=context, portal_type=self.getPostPortalType(), sort_on='created', sort_order='reverse')
+        posts = api.content.find(context=context, portal_type=post_portal_type, sort_on='created', sort_order='reverse')
         return posts
 
     def getThreads(self):

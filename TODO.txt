@@ -6,7 +6,7 @@ Bug
 Asap
 ====
 
-- Batching
+- Batchin
 
 - Redirect to forum/post, after saving editform.
 
