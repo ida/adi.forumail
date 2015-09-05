@@ -167,4 +167,8 @@ class View(BrowserView):
         if not IS_REPLY: IS_INI_POST = True
         return IS_INI_POST
 
+    def isThreaded(self):
+        if self.getResultsType() == 'threaded': return True
+        else: return False
+
 #EOF

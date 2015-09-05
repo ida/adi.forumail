@@ -3,6 +3,9 @@ padding:0;
 margin:0;
 line-height: 1.5em;
 }
+.forumail .selected {
+    outline: 1px dotted red;
+}
 .forumail {
     outline: 1px dotted lightgreen;
 }
@@ -18,6 +21,10 @@ line-height: 1.5em;
 }
 .forumail .category {
     margin-left: 0.5em;
+}
+.forumail .creation-date {
+    font-size: 80%;
+    color: #888;
 }
 .forumail .id,
 .forumail .title {

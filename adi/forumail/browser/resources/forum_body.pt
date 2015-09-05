@@ -46,7 +46,9 @@ FallbackAvatar">
                         tal:attributes="src string:${portrait_url}; alt string:\
 Avatar">
                 </a>
-                <span tal:content="date" />
+                <span class="creation-date" tal:content="date">
+2015-09-04 1:52
+                </span>
                 <a tal:content    = "title"
                    tal:condition  = "is_thread_ini"
                    tal:attributes = "class string:title;
