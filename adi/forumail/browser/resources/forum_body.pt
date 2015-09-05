@@ -64,7 +64,7 @@ Author
                     </div>
                 </a>
             </div><tal:comment tal:replace="nothing">EO .head</tal:comment>
-            <div class="body text" tal:replace="structure text">
+            <div class="body text" tal:content="structure text">
 Text
             </div>
             <div class="foot">
