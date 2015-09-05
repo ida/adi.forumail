@@ -6,6 +6,8 @@ Bug
 Asap
 ====
 
+- Batching
+
 - Redirect to forum/post, after saving editform.
 
 - Add view 'forumail_view' to choosen post-type's profile (News Item) and set it as default-view via eventlistener on creation.

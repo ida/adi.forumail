@@ -13,7 +13,7 @@ class View(BrowserView):
         return 'News Item'
 
     def getResultsTypes(self):
-        return ['posts', 'threads']
+        return ('posts', 'threads')
 
     index = ViewPageTemplateFile("forum_main.pt")
 
@@ -70,42 +70,58 @@ class View(BrowserView):
             results_type = self.getUrlParaVal(para)
         return results_type
 
-    def getPostsResults(self):
+    def getResults(self):
         """ Main function to return list of posts to view, depending on user's selection via URL-para."""
-        results = None
-        results_types = self.getResultsTypes()
-        results_type = self.getResultsType()
-        if results_type in results_types:
-            if results_type == 'threads':
-                results = self.getThreads()
-            elif results_type == 'posts':
-                results = self.getPosts()
-        else:
-            raise Exception, 'Resultss-type "' + results_type + '" is not available, choose of:: %s'%results_types
-        return results
+        if self.getResultsType() == 'posts':
+            posts = self.getPosts()
+        elif self.getResultsType() == 'threads':
+            posts = self.getThreads()
+        return posts
 
-    def getPosts(self, sort_order='reverse', sort_on='created'):
-        """
-        Expects forum-container-folder or one of its first-children(=post).
-        Returns all posts of forum, as a catalog-brain-dict, not as objects.
-        """
+    def getPosts(self):
         context = aq_inner(self.context)
         if context.Type() == self.getPostPortalType():
-            context = aq_parent(context)
-        elif context.Type() != 'Folder':
-            raise Exception, context.Type() + " is not considered to be a forum's child, yet."
-        posts = api.content.find(context=context,
-                                 portal_type=self.getPostPortalType(),
-                                 sort_on=sort_on,
-                                 sort_order=sort_order)
+            context = aq_parent(self.context)
+        posts = api.content.find(context=context, portal_type=self.getPostPortalType(), sort_on='created', sort_order='reverse')
         return posts
 
     def getThreads(self):
-        context = aq_inner(self.context)
-        posts = api.content.find(context=context,
-                                 portal_type=self.getPostPortalType())
-        posts = sorted(posts, key=lambda post: (post.created, post.id))
-        return posts
+        posts = self.getPosts()
+        posts_ids = ()
+        for post in posts:
+            posts_ids += (post['id'],)
+
+        new_ids = ()
+        new_posts = ()
+
+        threads_ids = self.getThreadsIds(posts_ids)
+
+        for thread_id in threads_ids:
+            thread_ids = self.getThreadIds(posts_ids, thread_id)
+            thread_ids = sorted(thread_ids)
+            for thread_id in thread_ids:
+                new_ids += (thread_id,)
+
+        for new_id in new_ids:
+            for post in posts:
+                if post['id'] == new_id:
+                    new_posts += (post,)
+        
+        return new_posts
+
+    def getThreadIds(self, posts_ids, thread_id):
+        thread_ids = ()
+        for post_id in posts_ids:
+            if post_id == thread_id or self.isReply(post_id, thread_id):
+                thread_ids += (post_id,)
+        return thread_ids
+
+    def getThreadsIds(self, posts_ids):
+        threads_ids = ()
+        for post_id in posts_ids:
+            if self.getThreadId(post_id) not in threads_ids:
+                threads_ids += (self.getThreadId(post_id),)
+        return threads_ids
 
     def getThreadId(self, post_id):
         thread_id = None
