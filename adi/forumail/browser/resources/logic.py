@@ -176,6 +176,17 @@ class View(BrowserView):
     def getReplyDepth(self, post_id):
         return self.getReplyIdAndDepth(post_id)[1]
 
+    def getReplyDepthAsStr(self, post_id):
+        return self.getReplyIdAndDepth(post_id)[1]
+
+    def getReplyDepthIter(self, post_id):
+        reply_iters = ()
+        i = self.getReplyDepth(post_id) + 1
+        for j in range(i):
+            reply_iters += ('i',)
+            print reply_iters
+        return reply_iters
+
     def isReply(self, post_id, thread_id):
         IS_REPLY = False
         nrs = ['1','2','3','4','5','6','7','8','9','0']
