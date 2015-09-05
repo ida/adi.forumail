@@ -72,7 +72,12 @@ class View(BrowserView):
 
     def getResults(self):
         """ Main function to return list of posts to view, depending on user's selection via URL-para."""
-        if self.getResultsType() == 'posts':
+
+        posts = None
+        context = aq_inner(self.context)
+        if context.Type() == self.getPostPortalType():
+            posts = self.getThread(context.getId())
+        elif self.getResultsType() == 'posts':
             posts = self.getPosts()
         elif self.getResultsType() == 'threads':
             posts = self.getThreads()
@@ -108,6 +113,17 @@ class View(BrowserView):
                     new_posts += (post,)
         
         return new_posts
+
+    def getThread(self, post_id):
+        thread_posts = ()
+        posts = self.getPosts()
+        thread_id = self.getThreadId(post_id)
+        for post in posts:
+            post_id = post['id']
+            if post_id == thread_id or self.isReply(post_id, thread_id):
+                thread_posts += (post,)
+        thread_posts = sorted(thread_posts, key = lambda post: (post.id))
+        return thread_posts
 
     def getThreadIds(self, posts_ids, thread_id):
         thread_ids = ()
