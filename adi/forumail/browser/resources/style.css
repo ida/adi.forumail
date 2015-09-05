@@ -1,120 +1,34 @@
-/* BASE */
-.forumail { 
-    font: 14px, Helvetica, Arial, FreeSans, sans-serif;
-    line-height: 1.5em;
-    background: lightyellow;
-    color: #272727;
-    border-color: #272727;
+.forumail * {
+padding:0;
+margin:0;
+line-height: 1.5em;
 }
-.forumail p { 
-    line-height: 1.5em;
-}
-/* LINKS */ 
-.forumail #content a:link,
-.forumail dl.portlet a:link,
-.forumail a:link,
-.forumail a:active,
-.forumail a:visited{
-    color: #00d2ff;
-    background: transparent;
-    text-decoration: none;
-    border-bottom: none !important;
-}
-.forumail a.state-private {
-    color: #00d2ff !important;
-}
-.forumail .selected { 
-    border: 1px solid red;
-}
-/* CATEGORIES - tags, keywords, fieldname 'Subject'.
- * Colorpalette green-turquise from bright to dark:
-#e3faea
-#a9e6e5
-#00d2ff
-#7cbdca
-#00a4a2
-#006057
-#272727
-The last color (#272727) is actually a very dark shade of grey, used for 
-text-color, for btter readability, when necessary. */
-a[href$="http://localhost:8080/Plone/@@search?Subject%3Alist=announcement"],
-a[alt="announcement"] { background:
-#e3faea
-!important; color:
-#00a4a2
-!important; }
-a[href$="http://localhost:8080/Plone/@@search?Subject%3Alist=general"],
-a[alt="general"] { background:
-#a9e6e5
-!important; color:
-#272727
-!important; }
-a[href$="Subject%3Alist=users"],
-a[alt="users"] { background:
-#00d2ff
-!important; color:
-#272727
-!important; }
-a[href$="Subject%3Alist=developers"],
-a[alt="developers"] { background:
-#7cbdca
-!important; color:
-#272727
-!important; }
-a[href$="Subject%3Alist=core-developers"],
-a[alt="core-developers"] { background:
-#00a4a2
-!important; color:
-#e3faea
-!important; }
-a[href$="Subject%3Alist=documentation"],
-a[alt="documentation"] { background:
-#006057
-!important; color:
-#e3faea
-!important; }
-a[href$="Subject%3Alist=communication"],
-a[alt="communication"] { background:
-#272727
-!important; color:
-#e3faea
-!important; }
-/* GENERAL */
 .forumail {
-    padding: 1.27em;
+    outline: 1px dotted lightgreen;
 }
-.forumail .add {
-    font-weight: bold;
+.forumail .post .head {
+    position: relative;
 }
-.forumail .post {
-    padding: .5em 0;
+.forumail .post .body {
 }
+.forumail .reply,
+.forumail .categories {
+    float: right;
+    margin-left: 0.81em;
+}
+.forumail .category {
+    margin-left: 0.5em;
+}
+.forumail .id,
 .forumail .title {
-    font-size: 1.27em;
+    position: absolute;
+    left: 10em;
+}
+.forumail .text {
+    margin-left: 10em;
 }
 .forumail img.avatar {
-    height: 1.27em;
-    width: 1.27em; 
-}
-/* BORDERS */
-.forumail {
-    border: 1px dotted lightgreen;
-}
-.forumail > .head,
-.forumail .post {
-    border-bottom: 1px solid darkblue;
-}
-#reply-form {
-    border-top: 1px solid darkblue;
-}
-/* POSITIONING: */ 
-.forumail .post .id,
-.forumail .post .title {
-    float: left;
-}
-
-.forumail .foot,
-.forumail .head {
-    text-align: right;
+    height: 1em;
+    width: 1em;
 }
 

@@ -86,10 +86,9 @@ function main() { if($('.section-forumail').length != -1) {
 
     applyEventListeners(results_id, results_types_class)
 
-    $('.post .body').hide()
-    
-
-
+/* DEV
+    $('.post .body').hide()  
+*/
 
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 

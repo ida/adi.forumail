@@ -5,6 +5,7 @@
     search_url string:${navroot_url}/@@search;
     forum_url view/getForumUrl;
     add_post_url view/getAddUrl;
+    threaded view/isThreaded;
     posts nocall: view/getResults">
     <tal:repetitor tal:repeat="post posts">
         <div class="post" tal:define="
@@ -20,7 +21,7 @@
             is_thread_ini python: isIniPost(id);
             text python: post.getObject().getText();">
             <div class="head">
-                <div class="field categories"> <!-- tal:condition="is_thread_ini"> -->
+                <div class="categories">
                     <a class="category link"
                         tal:repeat="cat categories"
                         tal:content="cat"
@@ -29,49 +30,51 @@
 Category
                     </a>
                 </div>
+                <a
+                    tal:attributes='title string:See profile of "${author}";
+                                    href string:${navroot_url}/author/${author};'
+                        tal:define="portrait python: mtool.getPersonalPortrait(author);
+                                    portrait_url portrait/absolute_url;
+                                    default_img python: portrait_url.endswith('/defaultUser.png');">
+                    <tal:exchangeDefaultPortrait tal:condition="default_img" tal:define="portrait_url string:${navroot_url}/logo.png">
+                        <img class="avatar"
+                            tal:attributes="src string:${portrait_url}; alt string:\
+FallbackAvatar">
+                    </tal:exchangeDefaultPortrait>
+                    <img class="avatar"
+                        tal:condition="not: default_img"
+                        tal:attributes="src string:${portrait_url}; alt string:\
+Avatar">
+                </a>
+                <span tal:content="date" />
                 <a tal:content    = "title"
                    tal:condition  = "is_thread_ini"
                    tal:attributes = "class string:title;
                                      href string:${url}">
 Title
                 </a>
-                <a tal:content    = "id"
-                   tal:condition  = "not: is_thread_ini"
-                   tal:attributes = "class string:id;
-                                     href string:${url}">
+<!--
+                <tal:notThreaded tal:condition="not: threaded">
+-->
+                    <a tal:content    = "id"
+                       tal:condition  = "not: is_thread_ini"
+                       tal:attributes = "class string:id;
+                                         href string:${url}">
 Id
-                </a>
-                <span tal:content="date" class="creation-date">
-                <tal:comment tal:replace="nothing">The class '.creation-date'
-                was choosen instead of more convenient '.date', to *not*
-                inherit Plone-styles (of jq-ui).</tal:comment>
-Date
-                </span>
-                <a class="author link;"
-                    tal:attributes='title string:See profile of "${author}";
-                                    href string:${navroot_url}/author/${author};'
-                        tal:define="portrait python: mtool.getPersonalPortrait(author);
-                                    portrait_url portrait/absolute_url;
-                                    is_default_img python: portrait_url.endswith('/defaultUser.png');">
-                    <tal:exchangeDefaultPortrait tal:condition="is_default_img" tal:define="portrait_url string:${navroot_url}/logo.png">
-                        <img class="avatar"
-                            tal:attributes="src string:${portrait_url}; alt string:\
-Avatar">
-                    </tal:exchangeDefaultPortrait>
-                    <div tal:content="author">
-Author
-                    </div>
-                </a>
-            </div><tal:comment tal:replace="nothing">EO .head</tal:comment>
+                    </a>
+<!--
+                </tal:notThreaded>
+-->
+            </div><tal:comment tal:replace="nothing">EO .post .head</tal:comment>
             <div class="body text" tal:content="structure text">
 Text
             </div>
             <div class="foot">
-            <a class="reply link"
-             tal:attributes='href reply_url;
-                             title string:Reply to "${id}";'>
+                <a class="reply link"
+                 tal:attributes='href reply_url;
+                                 title string:Reply to "${id}";'>
 Reply
-            </a>
+                </a>
             </div>
         </div><tal:comment tal:replace="nothing">EO .post</tal:comment>
     </tal:repetitor>
