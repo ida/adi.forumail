@@ -11,9 +11,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 class View(BrowserView):
 
-    def getResultsTypes(self):
-        return ('posts', 'threads')
-
     index = ViewPageTemplateFile("forum_main.pt")
 
     forum_head = ViewPageTemplateFile("forum_head.pt")
@@ -33,10 +30,11 @@ class View(BrowserView):
         return self.forum_body()
 
     def getForumUrl(self):
-        forum_url = self.request["ACTUAL_URL"]
+        forum_url = None
         context = aq_inner(self.context)
         if context.Type() == post_portal_type:
-            forum_url = '/'.join(forum_url.split('/')[:-1])
+            context = aq_parent(self.context)
+        forum_url = context.absolute_url()
         return forum_url
 
     def getAddUrl(self):
@@ -56,7 +54,7 @@ class View(BrowserView):
 
     def getResultsType(self, url_para='results_type'):
         para = 'results_type'
-        results_type = self.getResultsTypes()[0] # default
+        results_type = 'list'
         paras = self.getUrlParas()
         if para in paras:
             results_type = self.getUrlParaVal(para)
@@ -68,12 +66,12 @@ class View(BrowserView):
         posts = None
         context = aq_inner(self.context)
         results_type = self.getResultsType()
-        if results_type == 'posts':
+        if results_type == 'list':
             if context.Type() == post_portal_type:
                 posts = self.getThread(context.getId(), results_type)
             else:
                 posts = self.getPosts()
-        elif results_type == 'threads':
+        elif results_type == 'threaded':
             if context.Type() == post_portal_type:
                 posts = self.getThread(context.getId(), results_type)
             else:
@@ -89,6 +87,8 @@ class View(BrowserView):
 
     def getThreads(self):
         posts = self.getPosts()
+        print 'posts'
+        print posts
         posts_ids = ()
         for post in posts:
             posts_ids += (post['id'],)
@@ -119,7 +119,7 @@ class View(BrowserView):
             post_id = post['id']
             if post_id == thread_id or self.isReply(post_id, thread_id):
                 thread_posts += (post,)
-        if results_type == 'threads':
+        if results_type == 'threaded':
             thread_posts = sorted(thread_posts, key = lambda post: (post.id))
         return thread_posts
 

@@ -3,10 +3,10 @@
     mtool nocall: context/portal_membership;
     navroot_url string:${context/@@plone_portal_state/navigation_root_url};
     search_url string:${navroot_url}/@@search;
-    forum_path view/getForumPath;
     forum_url view/getForumUrl;
     add_post_url view/getAddUrl;
     posts nocall: view/getResults">
+    <span tal:content="forum_url" />
     <tal:repetitor tal:repeat="post posts">
         <div class="post" tal:define="
             isIniPost nocall: view/isIniPost;
