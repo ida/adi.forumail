@@ -187,6 +187,11 @@ class View(BrowserView):
             print reply_iters
         return reply_iters
 
+    def isIniPost(self, post_id):
+        reply_depth = self.getReplyDepth(post_id)
+        if reply_depth == 0: return True
+        else: return False
+
     def isReply(self, post_id, thread_id):
         IS_REPLY = False
         nrs = ['1','2','3','4','5','6','7','8','9','0']

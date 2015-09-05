@@ -34,7 +34,7 @@
 
     <subscriber
         for="Products.ATContentTypes.content.newsitem.ATNewsItem
-             zope.lifecycleevent.IObjectModifiedEvent"
+             Products.Archetypes.interfaces.IObjectInitializedEvent"
         handler=".subscriber.setView"
         />
 
