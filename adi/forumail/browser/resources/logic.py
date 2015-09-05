@@ -75,12 +75,17 @@ class View(BrowserView):
 
         posts = None
         context = aq_inner(self.context)
-        if context.Type() == self.getPostPortalType():
-            posts = self.getThread(context.getId())
-        elif self.getResultsType() == 'posts':
-            posts = self.getPosts()
-        elif self.getResultsType() == 'threads':
-            posts = self.getThreads()
+        results_type = self.getResultsType()
+        if results_type == 'posts':
+            if context.Type() == self.getPostPortalType():
+                posts = self.getThread(context.getId(), results_type)
+            else:
+                posts = self.getPosts()
+        elif results_type == 'threads':
+            if context.Type() == self.getPostPortalType():
+                posts = self.getThread(context.getId(), results_type)
+            else:
+                posts = self.getThreads()
         return posts
 
     def getPosts(self):
@@ -114,7 +119,7 @@ class View(BrowserView):
         
         return new_posts
 
-    def getThread(self, post_id):
+    def getThread(self, post_id, results_type):
         thread_posts = ()
         posts = self.getPosts()
         thread_id = self.getThreadId(post_id)
@@ -122,7 +127,8 @@ class View(BrowserView):
             post_id = post['id']
             if post_id == thread_id or self.isReply(post_id, thread_id):
                 thread_posts += (post,)
-        thread_posts = sorted(thread_posts, key = lambda post: (post.id))
+        if results_type == 'threads':
+            thread_posts = sorted(thread_posts, key = lambda post: (post.id))
         return thread_posts
 
     def getThreadIds(self, posts_ids, thread_id):
