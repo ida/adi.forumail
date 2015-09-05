@@ -6,7 +6,6 @@
     forum_url view/getForumUrl;
     add_post_url view/getAddUrl;
     posts nocall: view/getResults">
-    <span tal:content="forum_url" />
     <tal:repetitor tal:repeat="post posts">
         <div class="post" tal:define="
             isIniPost nocall: view/isIniPost;
