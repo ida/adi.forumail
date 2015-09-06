@@ -6,7 +6,7 @@
       i18n:domain="plone">
     <metal:block fill-slot="content">
         <div class="forumail">
-            
+
             <tal:forum-head tal:replace="structure view/renderForumHead" />
 
             <tal:posts tal:replace="structure view/renderForumBody" />
