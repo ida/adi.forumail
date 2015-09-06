@@ -22,7 +22,8 @@ Repetitor-ele avoids defining vars in parent-ele for each loop. Better define on
     reply_url string:${add_post_url}&Title=${id};
     reply_depth_iter python: getReplyDepthIter(id);
     is_thread_ini python: isIniPost(id);
-    text python: post.getObject().getText();">
+    text python: post.getObject().getText();"
+    tal:attributes="class string:post ini${is_thread_ini}">
     <div class="head">
         <span class="categories" tal:condition="python: len(categories) != 0" tal:content="categories">
 Categories
@@ -50,19 +51,19 @@ Fallback avatar">
 Avatar">
         </a>
     </div><tal:comment tal:replace="nothing">.post .head</tal:comment>
-    <div class="header" tal:condition="is_thread_ini">
-        <a tal:content="title" tal:attributes = "class string:title; href string:${post_url}">
+    <div class="header">
+        <a tal:content="title"  tal:condition="is_thread_ini" tal:attributes="class string:title; href string:${post_url}">
 Title
         </a>
-    </div><tal:comment tal:replace="nothing">EO .post .header</tal:comment>
-    <div class="header" tal:condition="not: threaded">
-            <a tal:content="id" tal:condition  = "not: is_thread_ini"
-               tal:attributes = "class string:id; href string:${post_url}">
+        <tal:secondCondition tal:condition="not: threaded">
+            <a tal:content="id" tal:condition="not: is_thread_ini" tal:attributes="class string:id; href string:${post_url}">
 Id
             </a>
+        </tal:secondCondition>
     </div><tal:comment tal:replace="nothing">EO .post .header</tal:comment>
     <div class="text">
-        <tal:indentator tal:condition="threaded" tal:repeat="i reply_depth_iter" tal:define='opening_div string:&lt;div class="indentator"&gt;' tal:content="structure opening_div"/>
+        <tal:indentator tal:condition="threaded" tal:repeat="i reply_depth_iter"
+         tal:define='opening_div string:&lt;div class="indentator"&gt;' tal:content="structure opening_div"/>
         <div tal:replace="structure text">
 Text
         </div>
