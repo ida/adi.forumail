@@ -66,16 +66,19 @@ function loadResults(eve, results_selector) {
     var link_url = $(eve.target).attr('href')
     window.history.pushState(null, null, link_url)
     $('#' + results_selector).load(link_url + ' #' + results_selector) 
+    applyReplyListener()
+}
+function applyReplyListener() {
+    $('.reply.link').click(function(eve) {
+        replyClicked(eve)
+    });
 }
 function applyEventListeners(results_id, results_types_class) {
     $('.' + results_types_class + ' a').click(function(eve) {
         loadResults(eve, results_id)
         getAndSetSelection(results_types_class)
     });
-
-    $('.reply.link').click(function(eve) {
-        replyClicked(eve)
-    });
+    applyReplyListener()
 }
 function main() { if($('.section-forumail').length != -1) {
 
@@ -87,8 +90,9 @@ function main() { if($('.section-forumail').length != -1) {
     applyEventListeners(results_id, results_types_class)
 
 /* DEV
-    $('.post .body').hide()  
+    $('.post .text').hide()  
 */
+    $('.post .text').css({'height':'1.5em','overflow':'hidden'})  
 
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 

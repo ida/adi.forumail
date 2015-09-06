@@ -54,7 +54,7 @@ class View(BrowserView):
 
     def getResultsType(self, url_para='results_type'):
         para = 'results_type'
-        results_type = 'list'
+        results_type = 'listed' # default, if no para present
         paras = self.getUrlParas()
         if para in paras:
             results_type = self.getUrlParaVal(para)
@@ -66,7 +66,7 @@ class View(BrowserView):
         posts = None
         context = aq_inner(self.context)
         results_type = self.getResultsType()
-        if results_type == 'list':
+        if results_type == 'listed':
             if context.Type() == post_portal_type:
                 posts = self.getThread(context.getId(), results_type)
             else:
@@ -182,9 +182,8 @@ class View(BrowserView):
     def getReplyDepthIter(self, post_id):
         reply_iters = ()
         i = self.getReplyDepth(post_id) + 1
-        for j in range(i):
+        for j in range(i-1): # minus one to exclude first div
             reply_iters += ('i',)
-            print reply_iters
         return reply_iters
 
     def isIniPost(self, post_id):

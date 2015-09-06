@@ -4,8 +4,8 @@
     </a>
     <div class="sorting">
         <div class="resultsTypes">
-            <a class="list selected" tal:attributes="href url">
-List
+            <a class="listed selected" tal:attributes="href url">
+Listed
             </a>
             <a class="threaded" tal:attributes="href string:${url}?results_type=threaded">
 Threaded

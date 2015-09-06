@@ -5,8 +5,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="plone">
     <metal:block fill-slot="content">
-        <div tal:define="portal_type context/Type;"
-             tal:attributes="class string:forumail forum ${portal_type}">
+        <div class="forumail">
             
             <tal:forum-head tal:replace="structure view/renderForumHead" />
 
