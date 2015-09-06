@@ -61,11 +61,11 @@ function getAndSetSelection(results_types_class) {
     }
     $('.' + results_types_class + ' a.' + selection).addClass('selected')
 }
-function loadResults(eve, results_selector) {
+function loadResults(eve, results_id) {
     eve.preventDefault()
     var link_url = $(eve.target).attr('href')
     window.history.pushState(null, null, link_url)
-    $('#' + results_selector).load(link_url + ' #' + results_selector) 
+    $('#' + results_id).load(link_url + ' #' + results_id + '-loader') 
     applyReplyListener()
 }
 function applyReplyListener() {

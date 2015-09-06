@@ -1,84 +1,80 @@
-<div id="forum-body" class="body" tal:define="
+<div id="forum-body" class="body"><div id="forum-body-loader" tal:define="
     mtool nocall: context/portal_membership;
     navroot_url string:${context/@@plone_portal_state/navigation_root_url};
     search_url string:${navroot_url}/@@search;
     forum_url nocall: view/getForumUrl;
     add_post_url nocall: view/getAddUrl;
     threaded nocall: view/isThreaded;
-    posts nocall: view/getResults;
-    url context/absolute_url">
-    <tal:repetitor tal:repeat="post posts"><tal:comment tal:replace="nothing">
-    Repetitor-ele avoids defining vars in parent-ele for each loop. Better define once, then loop.</tal:comment>
-        <div class="post" tal:define="
-            isIniPost nocall: view/isIniPost;
-            getReplyDepthIter nocall: view/getReplyDepthIter;
-            id post/id;
-            title post/Title;
-            categories post/Subject;
-            author post/Creator;
-            date post/CreationDate;
-            date python: date[:10] + ' ' + date[12:16];
-            post_url string:${forum_url}/${id};
-            reply_url string:${add_post_url}&Title=${id};
-            reply_depth_iter python: getReplyDepthIter(id);
-            is_thread_ini python: isIniPost(id);
-            text python: post.getObject().getText();">
-            <div class="head">
-                <a tal:content    = "title"
-                   tal:condition  = "is_thread_ini"
-                   tal:attributes = "class string:title;
-                                     href string:${post_url}">
-Title
-                </a>
-                <tal:notThreaded tal:condition="not: threaded">
-                    <a tal:content    = "id"
-                       tal:condition  = "not: is_thread_ini"
-                       tal:attributes = "class string:id;
-                                         href string:${post_url}">
-Id
-                    </a>
-                </tal:notThreaded>
-                <span class="categories" tal:content="categories">
+    posts nocall: view/getResults"
+    tal:attributes="class string:threaded-${threaded}">
+<tal:repetitor tal:repeat="post posts"><tal:comment tal:replace="nothing">
+Repetitor-ele avoids defining vars in parent-ele for each loop. Better define once, then loop.</tal:comment>
+<div class="post" tal:define="
+    isIniPost nocall: view/isIniPost;
+    getReplyDepthIter nocall: view/getReplyDepthIter;
+    id post/id;
+    title post/Title;
+    categories post/Subject;
+    author post/Creator;
+    date post/CreationDate;
+    date python: date[:10] + ' ' + date[12:16];
+    post_url string:${forum_url}/${id};
+    reply_url string:${add_post_url}&Title=${id};
+    reply_depth_iter python: getReplyDepthIter(id);
+    is_thread_ini python: isIniPost(id);
+    text python: post.getObject().getText();">
+    <div class="head">
+        <span class="categories" tal:condition="python: len(categories) != 0" tal:content="categories">
 Categories
-                </span>
-                <span class="author" tal:content="author">
+        </span>
+        <span class="author" tal:content="author">
 Author
-                </span>
-                <a
-                    tal:attributes='title string:See profile of "${author}";
-                                    href string:${navroot_url}/author/${author};'
-                        tal:define="portrait python: mtool.getPersonalPortrait(author);
-                                    portrait_url portrait/absolute_url;
-                                    default_img python: portrait_url.endswith('/defaultUser.png');">
-                    <tal:exchangeDefaultPortrait tal:condition="default_img" tal:define="portrait_url string:${navroot_url}/logo.png">
-                        <img class="avatar"
-                            tal:attributes="src string:${portrait_url}; alt string:\
-Fallback avatar">
-                    </tal:exchangeDefaultPortrait>
-                    <img class="avatar"
-                        tal:condition="not: default_img"
-                        tal:attributes="src string:${portrait_url}; alt string:\
-Avatar">
-                </a>
-                <span class="creation-date" tal:content="date">
+        </span>
+        <span class="creation-date" tal:content="date">
 Date
-                </span>
-            </div><tal:comment tal:replace="nothing">EO .post .head</tal:comment>
-            <div class="text">
-                <tal:vizReplyDepth tal:condition="threaded" tal:repeat="i reply_depth_iter" tal:define="opening_div string:&lt;div&gt;" tal:content="structure opening_div"/>
-                <div tal:replace="structure text">
+        </span>
+        <a
+            tal:attributes='title string:See profile of "${author}";
+                            href string:${navroot_url}/author/${author};'
+                tal:define="portrait python: mtool.getPersonalPortrait(author);
+                            portrait_url portrait/absolute_url;
+                            default_img python: portrait_url.endswith('/defaultUser.png');">
+            <tal:exchangeDefaultPortrait tal:condition="default_img" tal:define="portrait_url string:${navroot_url}/logo.png">
+                <img class="avatar"
+                    tal:attributes="src string:${portrait_url}; alt string:\
+Fallback avatar">
+            </tal:exchangeDefaultPortrait>
+            <img class="avatar"
+                tal:condition="not: default_img"
+                tal:attributes="src string:${portrait_url}; alt string:\
+Avatar">
+        </a>
+    </div><tal:comment tal:replace="nothing">.post .head</tal:comment>
+    <div class="header" tal:condition="is_thread_ini">
+        <a tal:content="title" tal:attributes = "class string:title; href string:${post_url}">
+Title
+        </a>
+    </div><tal:comment tal:replace="nothing">EO .post .header</tal:comment>
+    <div class="header" tal:condition="not: threaded">
+            <a tal:content="id" tal:condition  = "not: is_thread_ini"
+               tal:attributes = "class string:id; href string:${post_url}">
+Id
+            </a>
+    </div><tal:comment tal:replace="nothing">EO .post .header</tal:comment>
+    <div class="text">
+        <tal:indentator tal:condition="threaded" tal:repeat="i reply_depth_iter" tal:define='opening_div string:&lt;div class="indentator"&gt;' tal:content="structure opening_div"/>
+        <div tal:replace="structure text">
 Text
-                </div>
-                <tal:vizReplyDepth tal:condition="threaded" tal:repeat="i reply_depth_iter" tal:define="closing_div string:&lt;/div&gt;" tal:content="structure closing_div"/>
-            </div>
-            <div class="foot">
-                <a class="reply link" tal:attributes='href reply_url; title string:Reply to "${id}";'>
-Reply
-                </a>
-            </div>
-<!--
--->
         </div>
-    </tal:repetitor>
-</div>
+        <tal:indentator tal:condition="threaded" tal:repeat="i reply_depth_iter" tal:define="closing_div string:&lt;/div&gt;" tal:content="structure closing_div"/>
+    </div>
+    <div class="foot">
+        <a class="reply link" tal:attributes='href reply_url; title string:Reply to "${id}";'>
+Reply
+        </a>
+    </div>
+</div><tal:comment tal:replace="nothing">.post</tal:comment>
+</tal:repetitor>
+</div><tal:comment tal:replace="nothing">#forum-body-loader</tal:comment>
+</div><tal:comment tal:replace="nothing">#forum-body</tal:comment>
 
