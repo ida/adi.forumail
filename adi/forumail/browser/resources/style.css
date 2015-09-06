@@ -12,14 +12,15 @@ font-family:sans;
 letter-spacing: 0.0125em;
 font-family:Courier;
 letter-spacing: -0.075em;
+font-size: 1.27em;
     padding: 0.27em;
     max-width: 640px;
     margin: 0 auto;
     color: #444;
 background: #FDE19B; /*lightorange*/
 }
-.forumail .selected {
-    font-weight: bold;
+.forumail .sorting a:not(.selected) {
+    color: #E5F2F5; /*lightblue*/
 }
 .forumail .post {
     padding: 0.27em;
