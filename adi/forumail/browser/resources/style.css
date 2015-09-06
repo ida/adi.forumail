@@ -8,40 +8,37 @@
     margin-left: -100%;
 }
 .forumail {
+font-family:sans;
+letter-spacing: 0.0125em;
+font-family:Courier;
+letter-spacing: -0.075em;
     padding: 0.27em;
     max-width: 640px;
     margin: 0 auto;
-    background: #FDE19B; /*lightorange*/
-font-family:Courier;
-letter-spacing: -0.075em;
+    color: #444;
+background: #FDE19B; /*lightorange*/
 }
 .forumail .selected {
     font-weight: bold;
 }
 .forumail .post {
-    position: relative;
     padding: 0.27em;
     margin-top: 0.27em;
     background: #E5F2F5; /*lightblue*/
 }
-.forumail .post:first-child {
-    margin-top: 0;
-}
-.forumail .post:last-child {
+.forumail .post:last-child,
+.forumail .post .text,
+.forumail .post .head {
     margin-bottom: 0.27em;
 }
-.forumail .threadedTrue .post {
-    margin-top: 0;
-}
+.forumail .post .text,
 .forumail .threadedTrue .post.iniTrue {
     margin-top: 0.27em;
 }
+.forumail .post:first-child,
+.forumail .threadedTrue .post,
 .forumail .threadedTrue .post.iniTrue:first-child {
     margin-top: 0;
-}
-.forumail .foot,
-.forumail .head {
-    text-align: right;
 }
 .forumail .post .foot,
 .forumail .post .head {

@@ -25,21 +25,11 @@ Repetitor-ele avoids defining vars in parent-ele for each loop. Better define on
     text python: post.getObject().getText();"
     tal:attributes="class string:post ini${is_thread_ini}">
     <div class="head">
-        <span class="categories" tal:condition="python: len(categories) != 0" tal:content="categories">
-Categories
-        </span>
-        <span class="author" tal:content="author">
-Author
-        </span>
-        <span class="creation-date" tal:content="date">
-Date
-        </span>
-        <a
-            tal:attributes='title string:See profile of "${author}";
-                            href string:${navroot_url}/author/${author};'
-                tal:define="portrait python: mtool.getPersonalPortrait(author);
-                            portrait_url portrait/absolute_url;
-                            default_img python: portrait_url.endswith('/defaultUser.png');">
+        <a tal:attributes='title string:See profile of "${author}";
+                           href string:${navroot_url}/author/${author};'
+               tal:define="portrait python: mtool.getPersonalPortrait(author);
+                           portrait_url portrait/absolute_url;
+                           default_img python: portrait_url.endswith('/defaultUser.png');">
             <tal:exchangeDefaultPortrait tal:condition="default_img" tal:define="portrait_url string:${navroot_url}/++resource++adi.forumail.resources/plone_symbol.png">
                 <img class="avatar"
                     tal:attributes="src string:${portrait_url}; alt string:\
@@ -50,17 +40,26 @@ Fallback avatar">
                 tal:attributes="src string:${portrait_url}; alt string:\
 Avatar">
         </a>
+        <span class="creation-date" tal:content="date">
+Date
+        </span>
+        <span class="author" tal:content="author">
+Author
+        </span>
+        <span class="categories" tal:condition="python: len(categories) != 0" tal:content="categories">
+Categories
+        </span>
     </div><tal:comment tal:replace="nothing">.post .head</tal:comment>
     <div class="header">
         <a tal:content="title"  tal:condition="is_thread_ini" tal:attributes="class string:title; href string:${post_url}">
 Title
         </a>
-        <tal:secondCondition tal:condition="not: threaded">
-            <a tal:content="id" tal:condition="not: is_thread_ini" tal:attributes="class string:id; href string:${post_url}">
+    </div><tal:comment tal:replace="nothing">.post .header</tal:comment>
+    <div class="header" tal:condition="not: threaded">
+        <a tal:content="id" tal:condition="not: is_thread_ini" tal:attributes="class string:id; href string:${post_url}">
 Id
-            </a>
-        </tal:secondCondition>
-    </div><tal:comment tal:replace="nothing">EO .post .header</tal:comment>
+        </a>
+    </div><tal:comment tal:replace="nothing">.post .header</tal:comment>
     <div class="text">
         <tal:indentator tal:condition="threaded" tal:repeat="i reply_depth_iter"
          tal:define='opening_div string:&lt;div class="indentator"&gt;' tal:content="structure opening_div"/>
