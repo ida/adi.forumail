@@ -93,6 +93,8 @@ function main() { if($('.section-forumail').length != -1) {
     $('.post .text').hide()  
 */
     $('.post .text').css({'height':'1.5em','overflow':'hidden'})  
+    $('.post .head').attr('dir','rtl')
+    
 
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 

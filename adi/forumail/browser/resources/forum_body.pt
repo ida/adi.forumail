@@ -25,15 +25,6 @@ Repetitor-ele avoids defining vars in parent-ele for each loop. Better define on
     text python: post.getObject().getText();"
     tal:attributes="class string:post ini${is_thread_ini}">
     <div class="head">
-        <span class="categories" tal:condition="python: len(categories) != 0" tal:content="categories">
-Categories
-        </span>
-        <span class="author" tal:content="author">
-Author
-        </span>
-        <span class="creation-date" tal:content="date">
-Date
-        </span>
         <a tal:attributes='title string:See profile of "${author}";
                            href string:${navroot_url}/author/${author};'
                tal:define="portrait python: mtool.getPersonalPortrait(author);
@@ -49,6 +40,15 @@ Fallback avatar">
                 tal:attributes="src string:${portrait_url}; alt string:\
 Avatar">
         </a>
+        <span class="creation-date" tal:content="date">
+Date
+        </span>
+        <span class="author" tal:content="author">
+Author
+        </span>
+        <span class="categories" tal:condition="python: len(categories) != 0" tal:content="categories">
+Categories
+        </span>
     </div><tal:comment tal:replace="nothing">.post .head</tal:comment>
     <div class="header">
         <a tal:content="title"  tal:condition="is_thread_ini" tal:attributes="class string:title; href string:${post_url}">

@@ -57,10 +57,6 @@ background: #FDE19B; /*lightorange*/
 }
 .forumail .post .head > * {
 }
-.forumail .head,
-.forumail .foot {
-    text-align: right;
-}
 .forumail .post .header {
     font-size: 1.11em;
 }
