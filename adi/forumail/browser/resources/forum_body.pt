@@ -5,8 +5,10 @@
     forum_url nocall: view/getForumUrl;
     add_post_url nocall: view/getAddUrl;
     threaded nocall: view/isThreaded;
-    posts nocall: view/getResults">
-    <tal:repetitor tal:repeat="post posts"><!-- We don't repeat in parent-ele, to not redefine vars in it, for each loop, just once. -->
+    posts nocall: view/getResults;
+    url context/absolute_url">
+    <tal:repetitor tal:repeat="post posts"><tal:comment tal:replace="nothing">
+    Repetitor-ele avoids defining vars in parent-ele for each loop. Better define once, then loop.</tal:comment>
         <div class="post" tal:define="
             isIniPost nocall: view/isIniPost;
             getReplyDepthIter nocall: view/getReplyDepthIter;
@@ -16,7 +18,7 @@
             author post/Creator;
             date post/CreationDate;
             date python: date[:10] + ' ' + date[12:16];
-            url string:${forum_url}/${id};
+            post_url string:${forum_url}/${id};
             reply_url string:${add_post_url}&Title=${id};
             reply_depth_iter python: getReplyDepthIter(id);
             is_thread_ini python: isIniPost(id);
@@ -25,14 +27,14 @@
                 <a tal:content    = "title"
                    tal:condition  = "is_thread_ini"
                    tal:attributes = "class string:title;
-                                     href string:${url}">
+                                     href string:${post_url}">
 Title
                 </a>
                 <tal:notThreaded tal:condition="not: threaded">
                     <a tal:content    = "id"
                        tal:condition  = "not: is_thread_ini"
                        tal:attributes = "class string:id;
-                                         href string:${url}">
+                                         href string:${post_url}">
 Id
                     </a>
                 </tal:notThreaded>
