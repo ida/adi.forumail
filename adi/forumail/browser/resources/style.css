@@ -1,8 +1,6 @@
 .forumail {
     padding: 0 1.82em 1.82em 1.82em;
-        background: lightyellow;
-        border-color: darkblue;
-        border-color: transparent;
+    background: lightgreen;
 font-family:Courier;
 letter-spacing: -0.075em;
 }
@@ -11,12 +9,13 @@ letter-spacing: -0.075em;
 }
 .forumail .post {
     position: relative;
-        background: lightblue;
-        border-bottom: 1px dotted;
-        margin-bottom: 0.75em;
+    background: lightblue;
 }
-.forumail .post:first-child {
-        border-top: 1px dotted;
+.forumail .threadedFalse .post {
+    margin-bottom: 0.75em;
+}
+.forumail .threadedTrue .header {
+    margin-top: 0.75em;
 }
 .forumail .foot,
 .forumail .head {
