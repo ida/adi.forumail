@@ -1,6 +1,14 @@
+.section-forumail div.width-full {
+    width: 100%;
+}
+.section-forumail div.position-0 {
+    margin-left: -100%;
+}
 .forumail {
-    padding: 0 1.82em 1.82em 1.82em;
-    background: lightgreen;
+    padding: 0.27em;
+    max-width: 640px;
+    margin: 0 auto;
+    background: #FDE19B; /*lightorange*/
 font-family:Courier;
 letter-spacing: -0.075em;
 }
@@ -9,13 +17,12 @@ letter-spacing: -0.075em;
 }
 .forumail .post {
     position: relative;
-    background: lightblue;
+    padding: 0.27em;
+    margin-bottom: 0.27em;
+    background: #E5F2F5; /*lightblue*/
 }
+.forumail .threadedTrue .header,
 .forumail .threadedFalse .post {
-    margin-bottom: 0.75em;
-}
-.forumail .threadedTrue .header {
-    margin-top: 0.75em;
 }
 .forumail .foot,
 .forumail .head {
@@ -24,7 +31,7 @@ letter-spacing: -0.075em;
 .forumail .post .foot,
 .forumail .post .head {
     color: #999;
-    font-size: 0.8em;
+    font-size: 0.85em;
 }
 .forumail .indentator {
     margin-left: 1.5em;
@@ -48,6 +55,9 @@ letter-spacing: -0.075em;
     }
 }
 /* DEV
-body{ background:#111;color:#e2e2e2;}
+    background:#111;color:#e2e2e2;
 */
+body{
+margin: 0;
+}
 
