@@ -182,7 +182,7 @@ class View(BrowserView):
     def getReplyDepthIter(self, post_id):
         reply_iters = ()
         i = self.getReplyDepth(post_id) + 1
-        for j in range(i-1): # minus one to exclude first div
+        for j in range(i-1): # minus one to exclude last text-div
             reply_iters += ('i',)
         return reply_iters
 

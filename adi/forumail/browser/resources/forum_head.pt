@@ -1,10 +1,6 @@
 <div class="head" tal:define="url context/absolute_url; ptype context/portal_type">
-    <a class="back" tal:condition="python: ptype != 'Folder'" tal:attributes="href string:{url}/..">
-&lt;- Back to forum
-    </a>
-    <a class="add" tal:attributes="href view/getAddUrl">
-+ Add new post
-    </a>
+    <a class="back" tal:condition="python: ptype != 'Folder'" tal:attributes="href string:{url}/..; title string:Go back to forum">&#x21a9;</a>
+    <a class="add" tal:attributes="href view/getAddUrl; title string:Add a new post">&#x271a;</a>
     <div class="sorting">
         <div class="resultsTypes">
             <a class="listed selected" tal:attributes="title string:Listed view; href url; alt string:Trigramm for earth">&#x2630;</a>
