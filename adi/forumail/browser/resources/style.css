@@ -1,6 +1,3 @@
-/*
-body{ background:#111;color:#e2e2e2;}
-*/
 .forumail {
     padding: 0 0.61em;
 font-family:Courier;
@@ -11,10 +8,11 @@ letter-spacing: -0.075em;
 }
 .forumail .post {
     position: relative;
-border-bottom: 1px solid lightblue;
+border-color: darkblue;
+border-bottom: 1px solid;
 }
 .forumail .post:first-child {
-border-top: 1px solid lightblue;
+border-top: 1px solid;
 }
 .forumail .post img.avatar {
     height: 1.25em;
@@ -27,14 +25,8 @@ display: none;
     text-align: right;
 }
 .forumail .post .foot,
-.forumail .post .head span,
-.forumail .post .head a:not(.title, .id) {
+.forumail .post .head {
     font-size: 0.8em;
-}
-.forumail .post .title {
-/*
-    line-height: 1.75em;
-*/
 }
 .forumail .post .id,
 .forumail .post .title {
@@ -46,3 +38,7 @@ display: none;
 .forumail .post .text div {
     margin-left: 1.5em;
 }
+/*
+body{ background:#111;color:#e2e2e2;}
+*/
+
