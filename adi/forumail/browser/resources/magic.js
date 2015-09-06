@@ -94,7 +94,6 @@ function main() { if($('.section-forumail').length != -1) {
     $('.post .text').hide()  
 */
    $('.post .text').css({'max-height':'5.5em','overflow':'hidden'})  
-//    $('.post .head').attr('dir','rtl')
     
 
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
