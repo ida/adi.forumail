@@ -1,6 +1,8 @@
 .forumail {
-    padding: 0 0.61em;
-    border-color: darkblue;
+    padding: 0 1.82em 1.82em 1.82em;
+        background: lightyellow;
+        border-color: darkblue;
+        border-color: transparent;
 font-family:Courier;
 letter-spacing: -0.075em;
 }
@@ -9,10 +11,12 @@ letter-spacing: -0.075em;
 }
 .forumail .post {
     position: relative;
-    border-bottom: 1px dotted;
+        background: lightblue;
+        border-bottom: 1px dotted;
+        margin-bottom: 0.75em;
 }
 .forumail .post:first-child {
-    border-top: 1px dotted;
+        border-top: 1px dotted;
 }
 .forumail .foot,
 .forumail .head {
@@ -23,26 +27,26 @@ letter-spacing: -0.075em;
     color: #999;
     font-size: 0.8em;
 }
-/* For wider viewports (~ >= 555px):
-.forumail .post .foot,
-.forumail .post .head {
-    color: #999;
-    position: absolute;
-    right: 0;
-}
-.forumail .post .head {
-    top: 0;
-}
-.forumail .post .foot {
-    bottom: 0;
-}
-*/
 .forumail .indentator {
     margin-left: 1.5em;
 }
 .forumail .post img.avatar {
     height: 1.25em;
     width: 1.25em;
+}
+@media screen and (min-width: 640px) {
+    .forumail .post .foot,
+    .forumail .post .head {
+        color: #999;
+        position: absolute;
+        right: 0;
+    }
+    .forumail .post .head {
+        top: 0;
+    }
+    .forumail .post .foot {
+        bottom: 0;
+    }
 }
 /* DEV
 body{ background:#111;color:#e2e2e2;}
