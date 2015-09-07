@@ -90,11 +90,5 @@ function main() { if($('.section-forumail').length != -1) {
 
     applyEventListeners(results_id, results_types_class)
 
-/* DEV
-    $('.post .text').hide()  
-*/
-   $('.post .text').css({'max-height':'5.5em','overflow':'hidden'})  
-    
-
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 

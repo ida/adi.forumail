@@ -1,5 +1,13 @@
 /*
-* {outline:1px dotted red}
+img {
+display: none;
+}
+* {
+outline: 1px dotted red;
+}
+.forumail .post .body {
+display: none;
+}
 */
 .section-forumail div.width-full {
     width: 100%;
@@ -13,11 +21,23 @@ letter-spacing: 0.0125em;
 font-family:Courier;
 letter-spacing: -0.075em;
 font-size: 1.27em;
-    padding: 0.27em;
-    max-width: 640px;
-    margin: 0 auto;
-    color: #444;
 background: #FDE19B; /*lightorange*/
+color: #444;
+max-width: 640px;
+margin: 0 auto;
+padding: 0.27em;
+    line-height: 1.5em;
+}
+.forumail .add {
+    font-weight: bold;
+    font-size: 1.27em;
+float: right;
+}
+.forumail .sorting .resultsTypes a,
+.forumail .add {
+    display: inline-block;
+    text-align: center;
+    width: 1em;
 }
 .forumail .sorting a:not(.selected) {
     color: #E5F2F5; /*lightblue*/
@@ -52,7 +72,11 @@ background: #FDE19B; /*lightorange*/
     color: #777;
     font-size: 0.77em;
 }
+.forumail .post .head > * {
+float: right;
+}
 .forumail .post .foot {
+text-align: right;
     font-size: 0.75em;
 }
 .forumail .post .header {

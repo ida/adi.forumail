@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from adi.forumail import post_portal_type
-
 from plone import api
-
 from Acquisition import aq_inner, aq_parent
-
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
