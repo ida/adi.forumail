@@ -28,15 +28,6 @@ things to do, just ping.
 If people get involved, the author (meh) will certainly love to move
 this addon into the collective-namespace.
 
-"Old-style"-techniques are used for the sake of holding everything configurable
-via a site's UI, which is one of my attempts, when developing addons, in order to
-empower the site-users and not be depending on hiring a Ploneirdo, or learn how to
-plone for next two years, before being able, to become truly productive.
-
-Nevertheless alternative suggestions will be happily considered and ideally,
-sub-packages are created, to keep it modular and even have several possibilities
-to choose of.
-
 
 Requirements
 =============
@@ -67,7 +58,7 @@ You can use the installer-script './build_forumail.sh', read its first lines,
 to get further instructions, or, if you have a Plone-instance already, also do
 the following steps manually.
 
-Note: The usual prompt-prefix for commands is ommited, so one can copy'n'paste them.
+Note: In the following, the usual prompt-prefix for commands is ommited, so one can copy'n'paste them, easier.
 
 
 Add cron for fetching mails of inbox
@@ -137,16 +128,6 @@ Update build
     ./bin/instance fg
 
 
-Log in site as admin
---------------------
-
-In a browser open:
-
-    localhost:8080/Plone/forumail
-
-Login as 'admin', password is also 'admin'.
-
-
 Set sender-mailaccount
 ----------------------
 
@@ -159,7 +140,7 @@ Install forumail
 
 Navigate to http://example.org:8080/yourPloneSiteId/prefs_install_products_form,
 check the box at 'adi.forumail', click 'Activate addon'.
-
+You should now find a folder called 'forumail' on first level of your site.
 
 Specify 'To'-address in contentrule for mail-notifica
 -----------------------------------------------------
@@ -198,7 +179,7 @@ Before adding posts, please add at a least one user to the forumail-group,
 otherwise the mailnotifica-contentrule will rightfully moan, there's no
 recipients available to send the noti to.
 
-Alternatively, disable the contentrule, if you only want to use the forum's web-UI.
+Alternatively disable the contentrule, if you only want to use the forum's web-UI.
 
 Create users via:
 
@@ -206,29 +187,28 @@ Create users via:
 
 Enter at least the user-id, the user-mailaddress
 and make sure, to check the box at the group 'Forumailers'.
-Click save. Repeat as je belieeft.
+Click save.
 
 
 Usage
 =====
 
-
 Add post via Web-UI
 -------------------
 
-Click 'Add new post', fill out form, save.
+Click plus-symbol on top, fill out title- and text-field, apply tags, save.
 
 
 Reply to post via Web-UI
 ------------------------
 
-Click 'Reply', fill out form, save.
+Click 'Reply', fill out text-field, save.
 
 
 Add post via mail
 -----------------
 
-Send a mail to your inboxes address.
+Send a mail to your inbox'es address.
 
 Optionally add categories in the last line of your mail like this:
 
