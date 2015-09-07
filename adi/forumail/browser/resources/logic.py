@@ -79,7 +79,7 @@ class View(BrowserView):
         context = aq_inner(self.context)
         if context.Type() == post_portal_type:
             context = aq_parent(self.context)
-        posts = api.content.find(context=context, portal_type=post_portal_type, sort_on='created', sort_order='reverse', Subject=['users','core-developers'])
+        posts = api.content.find(context=context, portal_type=post_portal_type, sort_on='created', sort_order='reverse')
         return posts
 
     def getThreads(self):
