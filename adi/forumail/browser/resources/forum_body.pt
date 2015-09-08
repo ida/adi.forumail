@@ -1,3 +1,6 @@
+<!--
+<div tal:content='structure request' />
+-->
 <div id="forum-body" class="body"><div id="forum-body-loader" tal:define="
     mtool nocall: context/portal_membership;
     navroot_url string:${context/@@plone_portal_state/navigation_root_url};

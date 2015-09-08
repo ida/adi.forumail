@@ -4,8 +4,6 @@
  xmlns:browser="http://namespaces.zope.org/browser"
  i18n_domain="adi.forumail">
 
-    <include package="plone.app.contentmenu" />
-
     <browser:resourceDirectory
         name="adi.forumail.resources"
         directory="resources"
@@ -14,7 +12,7 @@
     <browser:page
         for="*"
         name="forumail_view"
-        class=".resources.logic.View"
+        class=".resources.main.View"
         permission="zope2.View"
         layer=".interfaces.IAdiForumail"
       />
