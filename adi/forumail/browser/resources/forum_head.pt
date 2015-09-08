@@ -1,4 +1,7 @@
+<!--
+<div tal:content='structure request' />
 <div tal:content='python:request["QUERY_STRING"]' /> <!--.form["und"]' />-->
+-->
 <div class="head" tal:define="url context/absolute_url; ptype context/portal_type">
     <a class="back" tal:condition="python: ptype != 'Folder'" tal:attributes="href string:{url}/..; title string:Go back to forum">&#x21a9;</a>
     <a class="add" tal:attributes="href view/getAddUrl; title string:Add a new post">&#xff0b;</a>
@@ -7,7 +10,7 @@
             <a class="listed selected" tal:attributes="title string:Listed view; href url; alt string:Trigramm for earth">&#x2630;</a>
             <a class="threaded" tal:attributes="title string:Treaded view; href string:${url}?results_type=threaded; alt string:Trigramm for heaven">&#x2637;</a>
         </span>
-        <span class="resultsCategories" tal:define="cats context/Subject" tal:repeat="cat cats">
+        <span class="categories" tal:define="cats context/Subject" tal:repeat="cat cats">
             <input type="checkbox" checked=checked" tal:attributes="id string:cat-${cat};">
             <label tal:content="cat" tal:attributes="for string:cat-${cat};">
 Category

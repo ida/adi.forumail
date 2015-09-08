@@ -8,7 +8,9 @@
     posts nocall: view/getResults"
     tal:attributes="class string:posts threaded${threaded}">
 <tal:repetitor tal:repeat="post posts"><tal:comment tal:replace="nothing">
-Repetitor-ele avoids defining vars in parent-ele for each loop. Better define once, then loop.</tal:comment>
+- Repetitor-ele avoids defining vars in parent-ele for each loop. Better define once, then loop.
+Additionally we can possibly insert eles between '.posts'-ele and '.post'-eles.
+- Non-breakable-space in date-conversion will not turn around YY-MM-DD and hh:mm, when direction is 'rtl'.</tal:comment>
 <div class="post" tal:define="
     isIniPost nocall: view/isIniPost;
     getReplyDepthIter nocall: view/getReplyDepthIter;
@@ -17,7 +19,7 @@ Repetitor-ele avoids defining vars in parent-ele for each loop. Better define on
     categories post/Subject;
     author post/Creator;
     date post/CreationDate;
-    date python: date[:10] + ' ' + date[12:16];
+    date python: date[:10] + '&nbsp;' + date[12:16];
     post_url string:${forum_url}/${id};
     reply_url string:${add_post_url}&Title=${id};
     reply_depth_iter python: getReplyDepthIter(id);
@@ -30,7 +32,7 @@ Repetitor-ele avoids defining vars in parent-ele for each loop. Better define on
                tal:define="portrait python: mtool.getPersonalPortrait(author);
                            portrait_url portrait/absolute_url;
                            default_img python: portrait_url.endswith('/defaultUser.png');">
-            <tal:exchangeDefaultPortrait tal:condition="default_img" tal:define="portrait_url string:${navroot_url}/++resource++adi.forumail.resources/plone_symbol.png">
+            <tal:exchangeDefaultPortrait tal:condition="default_img" tal:define="portrait_url string:${navroot_url}/++resource++adi.forumail.resources/default_avatar.png">
                 <img class="avatar"
                     tal:attributes="src string:${portrait_url}; alt string:\
 Fallback avatar">

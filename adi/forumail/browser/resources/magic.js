@@ -85,10 +85,19 @@ function main() { if($('.section-forumail').length != -1) {
 
     var results_id = 'forum-body'
     var results_types_class = 'resultsTypes'
+    var categories_class = 'categories'
 
     getAndSetSelection(results_types_class)
 
     applyEventListeners(results_id, results_types_class)
-
+//////////////////////////////////////////////////////////////////////////////////////
+$('.categories input').click(function() {
+    var selected_categories = []
+    $(this).parent().parent().find('input:checked ~ label').each(function() {
+        selected_categories.push($(this).text())
+    });
+    console.log(selected_categories)
+});
+//////////////////////////////////////////////////////////////////////////////////////
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
