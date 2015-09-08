@@ -1,0 +1,124 @@
+/*
+img {
+display: none;
+}
+* {
+outline: 1px dotted red;
+}
+.forumail .post .body {
+display: none;
+}
+background: #202D57;
+body{
+font: 100%, Arial, FreeSans, sans-serif;
+}
+*/
+.forumail {
+border: 1px dotted #555;
+background: #FDE19B; /*lightorange*/
+background: #202D57;/*darkblue*/
+background: #fff;
+color: #c2c2c2;
+color: #444;
+font-family: 'Times New Roman';
+letter-spacing: 0.0125em;
+font-family:Courier;
+letter-spacing: -0.075em;
+max-width: 640px;
+margin: 0 auto;
+padding: 0.27em;
+    line-height: 1.5em;
+}
+.forumail > .head {
+    padding: 0.27em 0;
+    margin-top: 0.27em;
+}
+.forumail .add {
+    font-weight: bold;
+    font-size: 1.27em;
+float: right;
+}
+.forumail .sorting .resultsTypes a,
+.forumail .add {
+    display: inline-block;
+    text-align: center;
+    width: 1em;
+}
+/*nightsight
+.forumail .sorting a.selected, 
+.forumail > .head input:checked + label {
+    color: #E5F2F5;
+}
+*/
+/*daysight*/
+.forumail .sorting a:not(.selected),
+.forumail > .head input:not(:checked) + label {
+    color: #E5F2F5;
+}
+.forumail > .head input + label {
+    color: #205c90;/*plonelinkblue*/
+}
+
+.forumail .post {
+background: #202D57;/*darkblue*/
+border: 1px dotted #555;
+    background: #E5F2F5; /*lightblue*/
+    border: 1px dotted #999;
+    padding: 0.27em;
+    margin-top: 0.27em;
+}
+.forumail .post:last-child,
+.forumail .post .body,
+.forumail .threadedTrue .post .header,
+.forumail .post .head {
+    margin-bottom: 0.27em;
+}
+.forumail .post .body,
+.forumail .threadedTrue .post.iniTrue {
+    margin-top: 0.27em;
+}
+.forumail .post:first-child,
+.forumail .threadedTrue .post,
+.forumail .threadedTrue .post.iniTrue:first-child {
+    margin-top: 0;
+}
+.forumail .post .foot,
+.forumail .post .head {
+    color: #777;
+    font-size: 0.77em;
+}
+.forumail .post .head > * {
+    margin-left:  0.27em;
+    margin-right:  0.27em;
+float: right;
+}
+.forumail .post .head > *:first-child { 
+/*    margin-left: 0;*/
+margin-right: 0;
+}
+.forumail .post .head > *:last-child {
+/*    margin-right: 0;*/
+margin-left: 0;
+}
+.forumail .post .foot {
+text-align: right;
+    font-size: 0.75em;
+}
+.forumail .post .header {
+    font-size: 1.11em;
+}
+.forumail .indentator {
+    margin-left: 1.5em;
+}
+.forumail .post img.avatar {
+background: inherit;
+    height: 1.25em;
+    width: 1.25em;
+}
+.section-forumail div.width-full {
+    width: 100%;
+}
+.section-forumail div.position-0 {
+    margin-left: -100%;
+}
+
