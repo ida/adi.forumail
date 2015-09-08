@@ -9,24 +9,29 @@ outline: 1px dotted red;
 display: none;
 }
 */
-.section-forumail div.width-full {
-    width: 100%;
-}
-.section-forumail div.position-0 {
-    margin-left: -100%;
+body{
+background: #202D57;
+font: 100%, Arial, FreeSans, sans-serif;
 }
 .forumail {
-font-family:sans;
+border: 1px dotted #555;
+background: #FDE19B; /*lightorange*/
+background: #202D57;/*darkblue*/
+color: #444;
+color: #e2e2e2;
+color: #c2c2c2;
+font-family: 'Times New Roman';
 letter-spacing: 0.0125em;
 font-family:Courier;
 letter-spacing: -0.075em;
-font-size: 1.27em;
-background: #FDE19B; /*lightorange*/
-color: #444;
 max-width: 640px;
 margin: 0 auto;
 padding: 0.27em;
     line-height: 1.5em;
+}
+.forumail > .head {
+    padding: 0.27em 0;
+    margin-top: 0.27em;
 }
 .forumail .add {
     font-weight: bold;
@@ -39,18 +44,29 @@ float: right;
     text-align: center;
     width: 1em;
 }
+/*daysight
+.forumail > .head input + label,
 .forumail .sorting a:not(.selected) {
-    color: #E5F2F5; /*lightblue*/
+    color: #E5F2F5;
 }
-.forumail > .head {
-    padding: 0.27em;
-    margin-top: 0.27em;
+.forumail > .head input:checked + label {
 }
+*/
+/*nightsight*/
+.forumail > .head input + label,
+.forumail .sorting a.selected 
+    color: #E5F2F5;
+}
+.forumail > .head input:checked + label {
+}
+
 .forumail .post {
+    background: #E5F2F5; /*lightblue*/
+background: #202D57;/*darkblue*/
+    border: 1px dotted #999;
+border: 1px dotted #555;
     padding: 0.27em;
     margin-top: 0.27em;
-    background: #E5F2F5; /*lightblue*/
-    border: 1px dotted #999;
 }
 .forumail .post:last-child,
 .forumail .post .body,
@@ -74,6 +90,7 @@ float: right;
 }
 .forumail .post .head > * {
 float: right;
+margin-left: 0.27em;
 }
 .forumail .post .foot {
 text-align: right;
@@ -86,7 +103,14 @@ text-align: right;
     margin-left: 1.5em;
 }
 .forumail .post img.avatar {
+background: #272727;
     height: 1.25em;
     width: 1.25em;
+}
+.section-forumail div.width-full {
+    width: 100%;
+}
+.section-forumail div.position-0 {
+    margin-left: -100%;
 }
 
