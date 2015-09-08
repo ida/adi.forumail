@@ -8,9 +8,10 @@
             <a class="threaded" tal:attributes="title string:Treaded view; href string:${url}?results_type=threaded; alt string:Trigramm for heaven">&#x2637;</a>
         </span>
         <span class="resultsCategories" tal:define="cats context/Subject" tal:repeat="cat cats">
-            <a class="category selected" tal:content="cat" tal:attributes="href string:#; alt cat">
+            <input type="checkbox" checked=checked" tal:attributes="id string:cat-${cat};">
+            <label tal:content="cat" tal:attributes="for string:cat-${cat};">
 Category
-            </a>
+            </label>
         </span>
     </div>
 </div>

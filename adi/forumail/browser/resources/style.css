@@ -53,11 +53,12 @@ float: right;
 }
 */
 /*nightsight*/
-.forumail > .head input + label,
-.forumail .sorting a.selected 
+.forumail .sorting a.selected, 
+.forumail > .head input:checked + label {
     color: #E5F2F5;
 }
-.forumail > .head input:checked + label {
+.forumail > .head input + label {
+    color: #205c90;/*plonelinkblue*/
 }
 
 .forumail .post {
