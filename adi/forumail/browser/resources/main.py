@@ -48,7 +48,10 @@ class View(BrowserView):
 #        return pairs
 
     def getUrlParaVal(self, para):
-        val = self.request.form[para]
+        val = None
+        forum_form = self.request.form
+        if para in forum_form:
+            val = forum_form[para]
         print val
         return val
 
@@ -193,7 +196,8 @@ class View(BrowserView):
         return IS_REPLY
 
     def isThreaded(self):
-        if self.getResultsType() == 'threaded': return True
+        val = self.getUrlParaVal('threaded')
+        if val in bool_true_symbolic_strings: return True
         else: return False
 
 #EOF
