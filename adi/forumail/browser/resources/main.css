@@ -1,26 +1,15 @@
+*{outline:1px dotted red}
 /*
-img {
-display: none;
-}
-* {
-outline: 1px dotted red;
-}
-.forumail .post .body {
-display: none;
-}
-background: #202D57;
-body{
-font: 100%, Arial, FreeSans, sans-serif;
-}
+#E5F2F5 lightblue
+#205c90 plonelinkblue
+#202D57 darkblue
 */
 .forumail {
 border-color: #555;
 border: 1px dotted;
-background: #FDE19B; /*lightorange*/
-background: #202D57;/*darkblue*/
-background: #fff;
-color: #c2c2c2;
+background: #202D57;
 color: #444;
+color: #c2c2c2;
 font-family: 'Times New Roman';
 letter-spacing: 0.0125em;
 font-family:Courier;
@@ -50,15 +39,17 @@ float: right;
 .forumail > .head input:checked + label {
     color: #E5F2F5;
 }
-*/
-/*daysight*/
+/*daysight
 .forumail .sorting a:not(.selected),
 .forumail > .head input:not(:checked) + label {
     color: #E5F2F5; /*lightblue*/
 }
 .forumail > .head input + label {
+    color: #E5F2F5; /*lightblue*/
     color: #205c90;/*plonelinkblue*/
 }
+*/
+
 
 .forumail .post {
 background: #202D57;/*darkblue*/

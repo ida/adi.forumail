@@ -24,6 +24,71 @@ function hideReplyFormEles(parent_ele) {
         parent_ele.find(hide_eles[i]).hide()
     }
 }
+function setBrowserUrlWithoutReload(url) {
+    window.history.pushState(null, '', url)
+}
+function getUrlQueryVarVals(variable) {
+    var vals = []
+    var query = window.location.search.substring(1)
+    var vars = query.split("&")
+    for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=")
+            if(pair[0] == variable) {
+                vals.push(pair[1])
+            }
+    }
+    return(vals)
+}
+function changeUrlQuery(variable, values){
+    var new_search = '?'
+    // Get current search and remove questionmark of beginning:
+    var search_string = window.location.search.substring(1)
+    // Remove former var and its val(s) of current search:
+    if(search_string.indexOf(variable) != -1) {
+        // We have multiple paras:
+        if(search_string.indexOf('&') != -1) {
+            var searches = search_string.split('&')
+            for(var i=0;i<searches.length;i++) {
+                if(searches[i].split('=')[0] != variable) {
+                    if(new_search != '?') {
+                        new_search += '&'
+                    }
+                    new_search += searches[i]
+                }
+            }
+        }
+        // Just one para:
+        else {
+            if(search_string.split('=')[0] != variable) {
+                new_search += search_string
+            }
+        }
+    }
+    // The passed var isn't present, keep complete old search:
+    else {
+        new_search += search_string
+    }
+    // Now, add new paras, we can have a list of vals, here:
+    if(Array.isArray(values)) {
+        for(var j=0;j<values.length;j++) {
+            if(new_search != '?') {
+                new_search += '&'
+            }
+            new_search += variable + '=' + values[j]
+        }
+    }
+    // Or just one val:
+    else {
+        if(new_search != '?') {
+            new_search += '&'
+        }
+        new_search += variable + '=' + values
+    }
+    // Get current url without search-query:
+    var url = String(window.location).split('?')[0]
+    // Set new query:
+    setBrowserUrlWithoutReload(url + new_search)
+}
 function doAfterTinyMCELoaded() {
     tinyMCE.getInstanceById('text').focus()
     $('ul.formTabs').hide()
@@ -63,8 +128,8 @@ function getAndSetSelection(threaded_class) {
 }
 function loadResults(eve, results_id) {
     eve.preventDefault()
-    var link_url = $(eve.target).attr('href')
-    window.history.pushState(null, null, link_url)
+    var url = $(eve.target).attr('href')
+    setBrowserUrlWithoutReload(url)
     $('#' + results_id).load(link_url + ' #' + results_id + '-loader', function () {
         applyReplyListener()
     }); 
@@ -75,7 +140,7 @@ function applyReplyListener() {
     });
 }
 function applyEventListeners(results_id, threaded_class) {
-    $('.' + threaded_class_class + ' a').click(function(eve) {
+    $('.' + threaded_class + ' a').click(function(eve) {
         loadResults(eve, results_id)
         getAndSetSelection(threaded_class)
     });
@@ -85,7 +150,6 @@ function main() { if($('.section-forumail').length != -1) {
 
     var results_id = 'forum-body'
     var threaded_class = 'threaded'
-    var categories_class = 'categories'
 
     getAndSetSelection(threaded_class)
 
@@ -96,7 +160,7 @@ $('.categories input').click(function() {
     $(this).parent().parent().find('input:checked ~ label').each(function() {
         selected_categories.push($(this).text())
     });
-    //console.log(selected_categories)
+    console.debug(selected_categories)
 });
 //////////////////////////////////////////////////////////////////////////////////////
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);

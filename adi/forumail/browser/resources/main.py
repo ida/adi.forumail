@@ -43,6 +43,14 @@ class View(BrowserView):
             add_url = forum_url + '/createObject?type_name=' + post_portal_type
         return add_url
 
+    def getCurrentUrl(self):
+        url = self.request['ACTUAL_URL'] + '?' + self.request['QUERY_STRING']
+        #context = aq_inner(self.context)
+        #url = context.absolute_url()
+#        url = self.getForumUrl()
+        print url
+        return url
+
 #    def getUrlParas(self):
 #        pairs = self.request.form.keys()
 #        return pairs
@@ -52,7 +60,6 @@ class View(BrowserView):
         forum_form = self.request.form
         if para in forum_form:
             val = forum_form[para]
-        print val
         return val
 
     def getResults(self):

@@ -3,60 +3,58 @@
 <div tal:content='python:request["QUERY_STRING"]' /> 
 <div tal:content='python:request.form["threaded"]' />
 -->
-<ul class="head" tal:define="url context/absolute_url; ptype context/portal_type">
-    <li>
-        <ul class="buttons">
-            <li>
-                <a class="back"
-                   tal:condition="python: ptype != 'Folder'"
-                   tal:content="string:&#x21a9;"
-                   tal:attributes="href string:{url}/..;
-                                   title string:Go back to forum">
-                </a>
-            </li>
-            <li>
-                <a class="add"
-                   tal:content="string:&#xff0b;"
-                   tal:attributes="href view/getAddUrl;
-                                   title string:Add a new post">
-                </a>
-            </li>
-        </ul>
-        <ul class="sorting">
-            <li>
-                <ul class="threaded">
-                    <li class="listed selected">
-                        <a tal:content="string:&#x2630;"
-                           tal:attributes="title string:Listed view;
-                                           href url;
-                                           alt string:Trigramm for heaven">
+<div class="head" tal:define="forum_url nocall: view/getForumUrl;
+                             getCurrentUrl nocall:view/getCurrentUrl;
+                             url context/absolute_url; 
+                            ptype context/portal_type">
+    <span tal:define="current_url python:getCurrentUrl()" tal:content="current_url" />
+    <ul class="buttons">
+        <li>
+            <a class="back"
+               tal:condition="python: ptype != 'Folder'"
+               tal:content="string:&#x21a9;"
+               tal:attributes="href string:${forum_url};
+                               title string:Go back to forum">
+            </a>
+        </li>
+        <li>
+            <a class="add"
+               tal:content="string:&#xff0b;"
+               tal:attributes="href view/getAddUrl;
+                               title string:Add a new post">
+            </a>
+        </li>
+    </ul>
+    <ul class="sorting">
+        <li>
+            <ul class="threaded">
+                <li class="listed selected">
+                    <a tal:content="string:&#x2630;"
+                       tal:attributes="title string:Listed view;
+                                       href string:${url}?threaded=false;
+                                       alt string:Trigramm for heaven">
 ☰
-                        </a>
-                    </li>
-                    <li class="threaded">
-                        <a tal:content="string:&#x2637;"
-                           tal:attributes="title string:Treaded view;
-                                           href string:${url}?results_type=threaded;
-                                           alt string:Trigramm for earth">
+                    </a>
+                </li>
+                <li class="threaded">
+                    <a tal:content="string:&#x2637;"
+                       tal:attributes="title string:Treaded view;
+                                       href string:${url}?threaded=true;
+                                       alt string:Trigramm for earth;">
 ☷
-                        </a>
-                    </li>
-                </ul>
-                <ul class="categories"
-                    tal:define="cats context/Subject"
-                    tal:repeat="cat cats">
-                    <li>
-                        <input type="checkbox"
-                               checked="checked"
-                               tal:attributes="id string:cat-${cat};" />
-                        <label tal:content="cat"
-                               tal:attributes="for string:cat-${cat};">
+                    </a>
+                </li>
+            </ul>
+            <ul class="categories" tal:define="cats context/Subject">
+                <li class="cat selected" tal:repeat="cat cats">
+                    <a tal:content="cat"
+                       tal:attributes="title string:Show all posts categorized as ${cat};
+                                       href string:${url}&Subject%3Alist=${cat};">
 Category
-                        </label>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-</ul>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
 
