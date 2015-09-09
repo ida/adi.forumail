@@ -222,7 +222,7 @@ class View(BrowserView):
                     if query.find(para_pair) != -1:
                         query = self.removeParaPair(query, para_pair)
                 else:
-                    self.exchangeParaVal(query, para, val)
+                    query = self.exchangeParaVal(query, para, val)
             else:
                 query += '&' + para_pair
         else:
@@ -231,14 +231,17 @@ class View(BrowserView):
         return new_url
 
     def exchangeParaVal(self, query, para, val):
-        print query
-        print para 
-        print val
         query_splits = query.split(para)
         query_start = query_splits[0]
-        query_end = query_splits[1]
-        query_end_splits = query_end.split('&')
-        query_end = query_end_splits[1]
+        query_rest = query_splits[1]
+        query_rest_splits = query_rest.split('&')
+        query_end_splits = query_rest_splits[1:]
+        if type(query_end_splits) == list:
+            query_end = '&'.join(query_end_splits)
+        else:
+            query_end = query_end_splits
         query = query_start + para + '=' + val + query_end
-        print query
+        return query
+
 #EOF
+
