@@ -47,7 +47,10 @@ function doAfterTinyMCELoaded(ini) {
         tinyMCE.getInstanceById('text').focus()
     }
     else {
-        $('#fieldset-categorization').show()    
+        $('#fieldset-categorization').show(function() {
+console.debug('ho')
+            $('.existingTagsTitle span').css('border','10px solid red')//.innerHTML = 'Select categories for this post:'
+        });
     }
     $('ul.formTabs').hide()
     $('.add').remove()

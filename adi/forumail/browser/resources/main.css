@@ -3,8 +3,13 @@
 202D57 plonedarkblue (like on '#category a.link-category:hover' of public.css))
 205c90 plonepublishedlinkblue
 E5F2F5 lightblue
-*/
+body.section-forumail:not(.userrole-manager) .selectedTagsSection,
 body.section-forumail:not(.userrole-manager) .newTagsSection {
+    display: none;
+}
+*/
+body.section-forumail .selectedTagsSection,
+body.section-forumail .newTagsSection {
     display: none;
 }
 body.section-forumail #category a.link-category,
