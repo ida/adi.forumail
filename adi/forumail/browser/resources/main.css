@@ -1,19 +1,28 @@
 /*
 *{outline:1px dotted red}
-##205c90 plonedarkblue (like on '#category a.link-category:hover' of public.css))
-#205c90 plonepublishedlinkblue
-#E5F2F5 lightblue
+202D57 plonedarkblue (like on '#category a.link-category:hover' of public.css))
+205c90 plonepublishedlinkblue
+E5F2F5 lightblue
 */
+body.section-forumail #category a.link-category,
+body.section-forumail span.selectedTag,
+body.section-forumail {
+overflow:hidden; /*DEV*/
+    background: #202D57;
+    color: #e2e2e2;
+    border-color: #e2e2e2;
+    line-height: 1.5em;
+}
+body.section-forumail #category a.link-category,
+body.section-forumail span.selectedTag {
+    background: #205c90;
+}
 .forumail {
 border-color: #555;
 border: 1px dotted;
-background: lightyellow;
-color: #444;
-font: 100% Arial,FreeSans,sans-serif;
 max-width: 640px;
 margin: 0 auto;
 padding: 0.27em;
-    line-height: 1.5em;
 }
 .forumail > .head {
     padding: 0.27em 0;
@@ -44,9 +53,7 @@ float: right;
 
 
 .forumail .post {
-background: #202D57;/*darkblue*/
-border: 1px dotted #555;
-    background: #E5F2F5; /*lightblue*/
+border: 1px dotted;
     border: 1px dotted #999;
     padding: 0.27em;
     margin-top: 0.27em;
@@ -70,7 +77,7 @@ border: 1px dotted #555;
     border-top: none;
 }
 .forumail .threadedTrue .post.iniTrue {
-    border-top: 1px dotted #999;
+    border-top: 1px dotted;
 }
 .forumail .post .foot,
 .forumail .post .head {

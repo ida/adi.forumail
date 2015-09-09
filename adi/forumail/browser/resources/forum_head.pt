@@ -24,7 +24,7 @@
     </ul>
     <ul class="sorting">
         <li>
-            <ul class="threaded">
+            <ul class="layout">
                 <li class="listed selected">
                     <a tal:content="string:&#x2630;"
                        tal:attributes="title string:Listed view;

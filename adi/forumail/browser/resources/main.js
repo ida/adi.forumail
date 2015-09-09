@@ -81,9 +81,15 @@ function loadResults(eve, results_id) {
             var msg2 = '<div>Please reload the page, you should get the selected results, then.</div>'
             $('<div class="error">' + msg + xhr.status + ' ' + xhr.statusText + msg2 + '</div>').insertAfter('#' + results_id)
         }
+        reApplyEventListeners()
     });
 }
-function applyEventListeners(results_id) {
+function reApplyEventListeners() {
+    $('.reply.link').click(function(eve) {
+        replyClicked(eve)
+    });
+}
+function iniApplyEventListeners(results_id) {
     $('.reply.link').click(function(eve) {
         replyClicked(eve)
     });
@@ -99,9 +105,10 @@ function main() { if($('.section-forumail').length != -1) {
     
     var results_id = 'forum-body'
     
-    applyEventListeners(results_id)
+    iniApplyEventListeners(results_id)
 
-//    if($('.template-atct_edit').length != -1) {
+//   if($('.template-atct_edit').length != -1) {
+    $('')click
         $('script').each(function () {
             if( endswith(String($(this).attr('src')), '/form_tabbing.js') ) {
 console.log('AHOI!')
