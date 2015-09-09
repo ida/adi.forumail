@@ -49,22 +49,59 @@ class View(BrowserView):
         return forum_url
 
     def getPosts(self):
+        cats = []
         context = aq_inner(self.context)
         if context.Type() == post_portal_type:
             context = aq_parent(self.context)
+        if self.getUrlParaVal('Subject'):
+            cats self.getUrlParaVal('Subject')
         posts = api.content.find(context=context,
                                  portal_type=post_portal_type,
+                                 Subject=cats,
                                  sort_on='created',
                                  sort_order='reverse')
         return posts
 
+    def getReplyDepth(self, post_id):
+        return self.getReplyIdAndDepth(post_id)[1]
+
+    def getReplyDepthIter(self, post_id):
+        reply_iters = ()
+        i = self.getReplyDepth(post_id) + 1
+        for j in range(i-1): # minus one to exclude orig-text-ele
+            reply_iters += ('i',)
+        return reply_iters
+
+    def getReplyId(self, post_id):
+        return self.getReplyIdAndDepth(post_id)[0]
+
+    def getReplyIdAndDepth(self, post_id):
+        reply_id = None
+        reply_depth = 0
+        nrs = ['1','2','3','4','5','6','7','8','9','0']
+        i = len(post_id)
+        while i > 0:
+            i -= 1
+            if post_id[i] in nrs:
+                while post_id[i] in nrs or post_id[i] == '-':
+                    if post_id[i] == '-':
+                        reply_depth += 1
+                    i -= 1
+                reply_id = post_id[i+1:]
+            else:
+                break
+        if reply_id:
+             reply_id = '1' + reply_id
+        else:
+            reply_id = '1'
+        return reply_id, reply_depth
+
     def getResults(self):
         """ Main function to return list of posts to view, depending on user's selection via URL-para."""
-
         posts = None
         context = aq_inner(self.context)
         threaded = self.getUrlParaVal('threaded')
-        if threaded in bool_false_symbolic_strings:
+        if threaded in bool_true_symbolic_strings:
             if context.Type() == post_portal_type:
                 posts = self.getThread(context.getId(), threaded)
             else:
@@ -140,51 +177,15 @@ class View(BrowserView):
                 threads_ids += (self.getThreadId(post_id),)
         return threads_ids
 
-    def getReplyDepth(self, post_id):
-        return self.getReplyIdAndDepth(post_id)[1]
-
-    def getReplyDepthIter(self, post_id):
-        reply_iters = ()
-        i = self.getReplyDepth(post_id) + 1
-        for j in range(i-1): # minus one to exclude orig-text-ele
-            reply_iters += ('i',)
-        return reply_iters
-
-    def getReplyId(self, post_id):
-        return self.getReplyIdAndDepth(post_id)[0]
-
-    def getReplyIdAndDepth(self, post_id):
-        reply_id = None
-        reply_depth = 0
-        nrs = ['1','2','3','4','5','6','7','8','9','0']
-        i = len(post_id)
-        while i > 0:
-            i -= 1
-            if post_id[i] in nrs:
-                while post_id[i] in nrs or post_id[i] == '-':
-                    if post_id[i] == '-':
-                        reply_depth += 1
-                    i -= 1
-                reply_id = post_id[i+1:]
-            else:
-                break
-        if reply_id:
-             reply_id = '1' + reply_id
-        else:
-            reply_id = '1'
-        return reply_id, reply_depth
-
-# Not used, but keeping for reference:
-#    def getUrlParas(self):
-#        pairs = self.request.form.keys()
-#        return pairs
-
     def getUrlParaVal(self, para):
         val = None
         forum_form = self.request.form
         if para in forum_form:
             val = forum_form[para]
         return val
+
+    def getUrlParaVals(self, para):
+        pass
 
     def isIniPost(self, post_id):
         reply_depth = self.getReplyDepth(post_id)
@@ -247,7 +248,8 @@ class View(BrowserView):
                 query += '&' + para_pair
         else:
             query = para_pair
-        new_url = url + '?' + query
+        if query != '': query = '?' + query
+        new_url = url + query
         return new_url
 
 #EOF
