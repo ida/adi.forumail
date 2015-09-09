@@ -2,13 +2,10 @@
 <div tal:content='structure request' />
 <div tal:content='python:request["QUERY_STRING"]' /> 
 <div tal:content='python:request.form["threaded"]' />
-<br>
-    <div tal:content="python:updateUrlQuery('Subject%3Alist=communications')" />
 -->
 <div class="head" tal:define="ptype context/portal_type;
                               forum_url view/getForumUrl;
                               updateUrlQuery nocall: view/updateUrlQuery;">
-    <div tal:content="python:updateUrlQuery('threaded=1')" />
     <ul class="buttons">
         <li>
             <a class="back"
@@ -32,7 +29,7 @@
                 <li class="listed selected">
                     <a tal:content="string:&#x2630;"
                        tal:attributes="title string:Listed view;
-                                       href string:updateUrlQuery('threaded=0');
+                                       href python: updateUrlQuery('threaded=0');
                                        alt string:Trigramm for heaven">
 ☰
                     </a>
@@ -40,7 +37,7 @@
                 <li class="threaded">
                     <a tal:content="string:&#x2637;"
                        tal:attributes="title string:Treaded view;
-                                       href string:updateUrlQuery('threaded=1');
+                                       href python: updateUrlQuery('threaded=1');
                                        alt string:Trigramm for earth;">
 ☷
                     </a>
@@ -50,7 +47,7 @@
                 <li class="cat selected" tal:repeat="cat cats">
                     <a tal:content="cat" tal:define="para_pair string:Subject%3Alist=${cat};"
                        tal:attributes="title string:Show all posts categorized as ${cat};
-                                       href string:updateUrlQuery(para_pair);">
+                                       href python: updateUrlQuery(para_pair);">
 Category
                     </a>
                 </li>
