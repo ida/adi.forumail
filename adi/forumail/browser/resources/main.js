@@ -13,15 +13,16 @@ function hideReplyFormEles(parent_ele) {
 '#archetypes-fieldname-imageCaption',
 '#archetypes-fieldname-location',
 '#cmfeditions_version_comment_block',
-    ]
-/*
+// addform:
 '#archetypes-fieldname-language',
 '#archetypes-fieldname-relatedItems',
 '#archetypes-fieldname-subject .formQuestion',
+/* rest of fieldsets, visible if js not enabled:
 '#fieldset-dates',
 '#fieldset-creators',
 '#fieldset-settings',
 */
+    ]
     for(var i=0;i<hide_eles.length; i++) {
         parent_ele.find(hide_eles[i]).hide()
     }
@@ -44,6 +45,9 @@ function getUrlQueryVarVals(variable) {
 function doAfterTinyMCELoaded(ini) {
     if(ini=='false') {
         tinyMCE.getInstanceById('text').focus()
+    }
+    else {
+        $('#fieldset-categorization').show()    
     }
     $('ul.formTabs').hide()
     $('.add').remove()
