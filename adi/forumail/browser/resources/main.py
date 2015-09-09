@@ -246,6 +246,7 @@ class View(BrowserView):
             query_end = '&'.join(query_end_splits)
         else:
             query_end = query_end_splits
+        if query_end != '': query_end = '&' + query_end
         query = query_start + para + '=' + val + query_end
         return query
 
