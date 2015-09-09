@@ -1,15 +1,13 @@
 /*
 *{outline:1px dotted red}
+##205c90 plonedarkblue (like on '#category a.link-category:hover' of public.css))
+#205c90 plonepublishedlinkblue
 #E5F2F5 lightblue
-#205c90 plonelinkblue
-#202D57 darkblue
 */
 .forumail {
 border-color: #555;
 border: 1px dotted;
-background: #202D57;
-background: #E5F2F5;
-color: #c2c2c2;
+background: lightyellow;
 color: #444;
 font: 100% Arial,FreeSans,sans-serif;
 max-width: 640px;
@@ -40,11 +38,7 @@ float: right;
 /*daysight
 .forumail .sorting a:not(.selected),
 .forumail > .head input:not(:checked) + label {
-    color: #E5F2F5; /*lightblue*/
-}
-.forumail > .head input + label {
-    color: #E5F2F5; /*lightblue*/
-    color: #205c90;/*plonelinkblue*/
+    color: #E5F2F5;
 }
 */
 
@@ -71,6 +65,12 @@ border: 1px dotted #555;
 .forumail .threadedTrue .post,
 .forumail .threadedTrue .post.iniTrue:first-child {
     margin-top: 0;
+}
+.forumail .threadedTrue .post {
+    border-top: none;
+}
+.forumail .threadedTrue .post.iniTrue {
+    border-top: 1px dotted #999;
 }
 .forumail .post .foot,
 .forumail .post .head {

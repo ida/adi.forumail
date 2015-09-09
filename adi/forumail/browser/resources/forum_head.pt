@@ -3,13 +3,12 @@
 <div tal:content='python:request["QUERY_STRING"]' /> 
 <div tal:content='python:request.form["threaded"]' />
 -->
-<div class="head" tal:define="ptype context/portal_type;
-                              forum_url view/getForumUrl;
+<div class="head" tal:define="is_forum view/isForum;
+                              forum_url nocall: view/getForumUrl;
                               updateUrlQuery nocall: view/updateUrlQuery;">
     <ul class="buttons">
-        <li>
+        <li tal:condition="not: is_forum">
             <a class="back"
-               tal:condition="python: ptype != 'Folder'"
                tal:content="string:&#x21a9;"
                tal:attributes="href view/getForumUrl;
                                title string:Go back to forum">
@@ -43,11 +42,12 @@
                     </a>
                 </li>
             </ul>
-            <ul class="categories" tal:define="cats context/Subject">
+            <ul id="category" class="categories" tal:condition="is_forum" tal:define="cats context/Subject">
                 <li class="cat selected" tal:repeat="cat cats">
                     <a tal:content="cat" tal:define="para_pair string:Subject%3Alist=${cat};"
                        tal:attributes="title string:Show all posts categorized as ${cat};
-                                       href python: updateUrlQuery(para_pair);">
+                                       href python: updateUrlQuery(para_pair);
+                                       class string:link-category">
 Category
                     </a>
                 </li>

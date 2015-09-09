@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from adi.forumail import post_portal_type
 from adi.forumail import bool_false_symbolic_strings
 from adi.forumail import bool_true_symbolic_strings
+from adi.forumail import forum_portal_type
+from adi.forumail import post_portal_type
+
 from plone import api
+
 from Acquisition import aq_inner, aq_parent
+
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
@@ -185,8 +189,10 @@ class View(BrowserView):
             val = forum_form[para]
         return val
 
-    def getUrlParaVals(self, para):
-        pass
+    def isForum(self):
+        context = aq_inner(self.context)
+        if context.Type() == forum_portal_type: return True
+        else: return False
 
     def isIniPost(self, post_id):
         reply_depth = self.getReplyDepth(post_id)
