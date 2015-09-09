@@ -63,28 +63,27 @@ function replyClicked(eve) {
         reply_form.find('#title').val(title).hide()
         reply_form.css('height', 'auto')
     });
-    // Trigger waiting for TinyMCEditor to be loaded, 
-    // which will execute doAfterTinyMCELoaded(), afterwards:
     setTimeout(checkTinyMCELoaded(), 100)
 }
 function loadResults(eve, results_id) {
     eve.preventDefault()
     var url = $(eve.target).attr('href')
-console.debug(url)
     setUrlWithoutReload(url)
     $('#' + results_id).load(url + ' #' + results_id + '-loader', function () {
     }); 
 }
 function main() { if($('.section-forumail').length != -1) {
+    
     var results_id = 'forum-body'
+    
     $('.reply.link').click(function(eve) {
         replyClicked(eve)
     });
-//////////////////////////////////////////////////////////////////////////////////////
+    
     $('.sorting a').click(function(eve) {
-console.debug('klk')
         loadResults(eve, results_id)
     });
-//////////////////////////////////////////////////////////////////////////////////////
+
+
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
