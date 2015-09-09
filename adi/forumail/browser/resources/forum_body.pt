@@ -56,12 +56,10 @@ Categories
         </span>
     </div><tal:comment tal:replace="nothing">.post .head</tal:comment>
     <div class="header">
-        <a tal:content="title"  tal:condition="is_thread_ini" tal:attributes="class string:title; href string:${post_url}">
+        <a  tal:condition="python: is_thread_ini and threaded" tal:content="title" tal:attributes="class string:title; href string:${post_url}">
 Title
         </a>
-    </div><tal:comment tal:replace="nothing">.post .header</tal:comment>
-    <div class="header" tal:condition="not: threaded">
-        <a tal:content="id" tal:condition="not: is_thread_ini" tal:attributes="class string:id; href string:${post_url}">
+        <a tal:condition="not: is_thread_ini" tal:content="id" tal:attributes="class string:id; href string:${post_url}">
 Id
         </a>
     </div><tal:comment tal:replace="nothing">.post .header</tal:comment>
