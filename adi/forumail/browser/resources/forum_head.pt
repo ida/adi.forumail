@@ -5,11 +5,11 @@
 -->
 <div class="head" tal:define="ptype context/portal_type;
                               forum_url view/getForumUrl;
-                              updateUrl nocall: view/updateUrl;
-                              current_url view/getCurrentUrlWithSearchQuery;">
-    <div tal:content="current_url" />
-<br>
+                              updateUrlQuery nocall: view/updateUrlQuery;">
+    <div tal:content="python:updateUrlQuery('Subject%3Alist=communications')" />
+<!--
     <div tal:content="python:updateUrl('threaded=1')" />
+-->
     <ul class="buttons">
         <li>
             <a class="back"
@@ -33,7 +33,7 @@
                 <li class="listed selected">
                     <a tal:content="string:&#x2630;"
                        tal:attributes="title string:Listed view;
-                                       href python:updateUrl('threaded=0');
+                                       href string:updateUrlQuery('threaded=0');
                                        alt string:Trigramm for heaven">
 ☰
                     </a>
@@ -41,7 +41,7 @@
                 <li class="threaded">
                     <a tal:content="string:&#x2637;"
                        tal:attributes="title string:Treaded view;
-                                       href python:updateUrl('threaded=1');
+                                       href string:updateUrlQuery('threaded=1');
                                        alt string:Trigramm for earth;">
 ☷
                     </a>
@@ -51,7 +51,7 @@
                 <li class="cat selected" tal:repeat="cat cats">
                     <a tal:content="cat" tal:define="para_pair string:Subject%3Alist=${cat};"
                        tal:attributes="title string:Show all posts categorized as ${cat};
-                                       href python:updateUrl(para_pair);">
+                                       href string:updateUrlQuery(para_pair);">
 Category
                     </a>
                 </li>

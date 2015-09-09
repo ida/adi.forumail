@@ -35,13 +35,6 @@ class View(BrowserView):
             add_url = forum_url + '/createObject?type_name=' + post_portal_type
         return add_url
 
-    def getCurrentUrlWithSearchQuery(self):
-        query = self.request['QUERY_STRING']
-        if query == '':
-            query = 'threaded=false'
-        url = self.request['ACTUAL_URL'] + '?' + query
-        return url
-
     def getForumUrl(self):
         forum_url = None
         context = aq_inner(self.context)
@@ -176,9 +169,10 @@ class View(BrowserView):
             reply_id = '1'
         return reply_id, reply_depth
 
-    def getUrlParas(self):
-        pairs = self.request.form.keys()
-        return pairs
+# Not used, but keeping for reference:
+#    def getUrlParas(self):
+#        pairs = self.request.form.keys()
+#        return pairs
 
     def getUrlParaVal(self, para):
         val = None
@@ -206,10 +200,37 @@ class View(BrowserView):
         if val in bool_true_symbolic_strings: return True
         else: return False
 
-    def updateUrl(self, para_pair):
-#        if para in current_url:
-#            removePara
-        current_url = self.getCurrentUrlWithSearchQuery() + '&' + para_pair
-        return current_url
+    def removeParaPair(self, query, para_pair):
+        query_splits = query.split(para_pair)
+        query_start = query_splits[0]
+        query_end = query_splits[1]
+        query = query_start + query_end
+        if query.startswith('&'):
+            query = query[1:]
+        return query
+
+    def updateUrlQuery(self, para_pair):
+        print 'A'
+        new_url = None
+        url = self.context.absolute_url()
+        query = self.request['QUERY_STRING']
+        para = para_pair.split('=')[0]
+        val = para_pair.split('=')[1]
+
+        if query != '':
+            if query.find(para_pair) != -1:
+                if para.endswith('%3Alist'):
+                    query = self.removeParaPair(query, para_pair)
+                else:
+                    pass#self.exchangeParaVal
+            else:
+                query += para_pair
+        else:
+            query = para_pair
+        new_url = url + '?' + query
+#        print para_pair
+#        print url + '?' + query
+#        print new_url
+        return new_url
 
 #EOF
