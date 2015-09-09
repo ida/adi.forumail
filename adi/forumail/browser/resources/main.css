@@ -4,6 +4,9 @@
 205c90 plonepublishedlinkblue
 E5F2F5 lightblue
 */
+body.section-forumail {
+    display: none;
+}
 body.section-forumail #category a.link-category,
 body.section-forumail span.selectedTag,
 body.section-forumail {

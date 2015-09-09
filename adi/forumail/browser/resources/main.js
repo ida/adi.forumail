@@ -13,6 +13,7 @@ function hideReplyFormEles(parent_ele) {
 '#archetypes-fieldname-imageCaption',
 '#archetypes-fieldname-location',
 '#cmfeditions_version_comment_block',
+    ]
 /*
 '#archetypes-fieldname-language',
 '#archetypes-fieldname-relatedItems',
@@ -21,7 +22,6 @@ function hideReplyFormEles(parent_ele) {
 '#fieldset-creators',
 '#fieldset-settings',
 */
-    ]
     for(var i=0;i<hide_eles.length; i++) {
         parent_ele.find(hide_eles[i]).hide()
     }
@@ -55,17 +55,23 @@ function checkTinyMCELoaded() {
     }
     doAfterTinyMCELoaded()
 }
-function replyClicked(eve) {
+function replyClicked(eve, ini=false) {
     eve.preventDefault()
     var link = $(eve.target)
     var title = link.attr("href").split('&Title=')[1]
     var reply_form = $('<div class="reply-form">Reply form\</div>').insertAfter(link.parent()).css({'height':'0','overflow':'hidden'})
     reply_form.load(window.location.href.split('?')[0] + '/createObject?type_name=News+Item', function() {
         hideReplyFormEles(reply_form)
-        reply_form.find('#title').val(title).hide()
+        if(ini) {
+            reply_form.find('#title').val(title).hide()
+        }
         reply_form.css('height', 'auto')
     });
     setTimeout(checkTinyMCELoaded(), 100)
+}
+function addClicked(eve) {
+    replyClicked(eve, ini=true)
+    eve.preventDefault()
 }
 function loadResults(eve, results_id) {
 
@@ -85,20 +91,15 @@ function loadResults(eve, results_id) {
     });
 }
 function reApplyEventListeners() {
-    $('.reply.link').click(function(eve) {
-        replyClicked(eve)
-    });
+    $('.add').click(function(eve) { addClicked(eve) });
+    $('.reply').click(function(eve) { replyClicked(eve) });
 }
 function iniApplyEventListeners(results_id) {
-    $('.reply.link').click(function(eve) {
-        replyClicked(eve)
-    });
-    $('.sorting a').click(function(eve) {
-        loadResults(eve, results_id)
-    });
+    $('.sorting a').click(function(eve) { loadResults(eve, results_id) });
+    reApplyEventListeners()
 }
 function endswith(str, sub) {
-    if( str.sub(0, sub.length == sub) ) { return true }
+    if( str.substr(0, sub.length == sub) ) { return true }
     else { return false }
 }
 function main() { if($('.section-forumail').length != -1) {
@@ -107,15 +108,22 @@ function main() { if($('.section-forumail').length != -1) {
     
     iniApplyEventListeners(results_id)
 
-//   if($('.template-atct_edit').length != -1) {
-    $('')click
+   if($('.template-atct_edit').length != -1) {
+//    $('.add').click(function(eve) {
+//        eve.preventDefault()i
         $('script').each(function () {
-            if( endswith(String($(this).attr('src')), '/form_tabbing.js') ) {
-console.log('AHOI!')
-                $(this).remove()
+            var script = $(this)
+            var source = String(script.attr('src'))
+console.debug(source)            
+            if( endswith(source, 'form_tabbing.js') ) {
+
+console.debug('AHOI!')
+
+                script.remove()
             }
         });
-//    }
+//    });
+    }
 
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
