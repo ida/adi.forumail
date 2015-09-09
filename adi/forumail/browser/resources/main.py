@@ -28,6 +28,13 @@ class View(BrowserView):
     def renderForumBody(self):
         return self.forum_body()
 
+    def getAddUrl(self):
+        add_url = None
+        forum_url = self.getForumUrl()
+        if forum_url:
+            add_url = forum_url + '/createObject?type_name=' + post_portal_type
+        return add_url
+
     def getForumUrl(self):
         forum_url = None
         context = aq_inner(self.context)
@@ -36,31 +43,15 @@ class View(BrowserView):
         forum_url = context.absolute_url()
         return forum_url
 
-    def getAddUrl(self):
-        add_url = None
-        forum_url = self.getForumUrl()
-        if forum_url:
-            add_url = forum_url + '/createObject?type_name=' + post_portal_type
-        return add_url
-
-    def getCurrentUrl(self):
-        url = self.request['ACTUAL_URL'] + '?' + self.request['QUERY_STRING']
-        #context = aq_inner(self.context)
-        #url = context.absolute_url()
-#        url = self.getForumUrl()
-        print url
-        return url
-
-#    def getUrlParas(self):
-#        pairs = self.request.form.keys()
-#        return pairs
-
-    def getUrlParaVal(self, para):
-        val = None
-        forum_form = self.request.form
-        if para in forum_form:
-            val = forum_form[para]
-        return val
+    def getPosts(self):
+        context = aq_inner(self.context)
+        if context.Type() == post_portal_type:
+            context = aq_parent(self.context)
+        posts = api.content.find(context=context,
+                                 portal_type=post_portal_type,
+                                 sort_on='created',
+                                 sort_order='reverse')
+        return posts
 
     def getResults(self):
         """ Main function to return list of posts to view, depending on user's selection via URL-para."""
@@ -78,13 +69,6 @@ class View(BrowserView):
                 posts = self.getThread(context.getId(), threaded)
             else:
                 posts = self.getThreads()
-        return posts
-
-    def getPosts(self):
-        context = aq_inner(self.context)
-        if context.Type() == post_portal_type:
-            context = aq_parent(self.context)
-        posts = api.content.find(context=context, portal_type=post_portal_type, sort_on='created', sort_order='reverse')
         return posts
 
     def getThreads(self):
@@ -151,6 +135,19 @@ class View(BrowserView):
                 threads_ids += (self.getThreadId(post_id),)
         return threads_ids
 
+    def getReplyDepth(self, post_id):
+        return self.getReplyIdAndDepth(post_id)[1]
+
+    def getReplyDepthIter(self, post_id):
+        reply_iters = ()
+        i = self.getReplyDepth(post_id) + 1
+        for j in range(i-1): # minus one to exclude orig-text-ele
+            reply_iters += ('i',)
+        return reply_iters
+
+    def getReplyId(self, post_id):
+        return self.getReplyIdAndDepth(post_id)[0]
+
     def getReplyIdAndDepth(self, post_id):
         reply_id = None
         reply_depth = 0
@@ -172,21 +169,16 @@ class View(BrowserView):
             reply_id = '1'
         return reply_id, reply_depth
 
-    def getReplyId(self, post_id):
-        return self.getReplyIdAndDepth(post_id)[0]
+    def getUrlParas(self):
+        pairs = self.request.form.keys()
+        return pairs
 
-    def getReplyDepth(self, post_id):
-        return self.getReplyIdAndDepth(post_id)[1]
-
-    def getReplyDepthAsStr(self, post_id):
-        return self.getReplyIdAndDepth(post_id)[1]
-
-    def getReplyDepthIter(self, post_id):
-        reply_iters = ()
-        i = self.getReplyDepth(post_id) + 1
-        for j in range(i-1): # minus one to exclude last text-div
-            reply_iters += ('i',)
-        return reply_iters
+    def getUrlParaVal(self, para):
+        val = None
+        forum_form = self.request.form
+        if para in forum_form:
+            val = forum_form[para]
+        return val
 
     def isIniPost(self, post_id):
         reply_depth = self.getReplyDepth(post_id)
@@ -206,5 +198,17 @@ class View(BrowserView):
         val = self.getUrlParaVal('threaded')
         if val in bool_true_symbolic_strings: return True
         else: return False
+
+    def updateUrl(self, para_pair):
+#        if para in current_url:
+#            removePara
+        current_url = current_url + '&' + para_pair
+        return current_url
+#    def getCurrentUrlWithSearchQuery(self):
+#        query = self.request['QUERY_STRING']
+#        if query == '':
+#            query = 'threaded=false'
+#        url = self.request['ACTUAL_URL'] + '?' + query
+#        return url
 
 #EOF

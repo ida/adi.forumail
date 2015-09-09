@@ -3,17 +3,19 @@
 <div tal:content='python:request["QUERY_STRING"]' /> 
 <div tal:content='python:request.form["threaded"]' />
 -->
-<div class="head" tal:define="forum_url nocall: view/getForumUrl;
-                             getCurrentUrl nocall:view/getCurrentUrl;
-                             url context/absolute_url; 
-                            ptype context/portal_type">
-    <span tal:define="current_url python:getCurrentUrl()" tal:content="current_url" />
+<div class="head" tal:define="ptype context/portal_type;
+                              forum_url view/getForumUrl;
+                              updateUrl nocall: view/updateUrl;
+                              current_url view/getCurrentUrlWithSearchQuery;">
+aha
+    <div tal:content="python:updateUrl('threaded=1')" />
+soso
     <ul class="buttons">
         <li>
             <a class="back"
                tal:condition="python: ptype != 'Folder'"
                tal:content="string:&#x21a9;"
-               tal:attributes="href string:${forum_url};
+               tal:attributes="href view/getForumUrl;
                                title string:Go back to forum">
             </a>
         </li>
@@ -31,7 +33,7 @@
                 <li class="listed selected">
                     <a tal:content="string:&#x2630;"
                        tal:attributes="title string:Listed view;
-                                       href string:${url}?threaded=false;
+                                       href python:updateUrl('threaded=0');
                                        alt string:Trigramm for heaven">
 ☰
                     </a>
@@ -39,7 +41,7 @@
                 <li class="threaded">
                     <a tal:content="string:&#x2637;"
                        tal:attributes="title string:Treaded view;
-                                       href string:${url}?threaded=true;
+                                       href python:updateUrl('threaded=1');
                                        alt string:Trigramm for earth;">
 ☷
                     </a>
@@ -47,9 +49,9 @@
             </ul>
             <ul class="categories" tal:define="cats context/Subject">
                 <li class="cat selected" tal:repeat="cat cats">
-                    <a tal:content="cat"
+                    <a tal:content="cat" tal:define="para_pair string:Subject%3Alist=${cat};"
                        tal:attributes="title string:Show all posts categorized as ${cat};
-                                       href string:${url}&Subject%3Alist=${cat};">
+                                       href python:updateUrl(para_pair);">
 Category
                     </a>
                 </li>

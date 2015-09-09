@@ -1,5 +1,5 @@
-*{outline:1px dotted red}
 /*
+*{outline:1px dotted red}
 #E5F2F5 lightblue
 #205c90 plonelinkblue
 #202D57 darkblue
@@ -8,12 +8,10 @@
 border-color: #555;
 border: 1px dotted;
 background: #202D57;
-color: #444;
+background: #E5F2F5;
 color: #c2c2c2;
-font-family: 'Times New Roman';
-letter-spacing: 0.0125em;
-font-family:Courier;
-letter-spacing: -0.075em;
+color: #444;
+font: 100% Arial,FreeSans,sans-serif;
 max-width: 640px;
 margin: 0 auto;
 padding: 0.27em;
@@ -28,7 +26,7 @@ padding: 0.27em;
     font-size: 1.27em;
 float: right;
 }
-.forumail .sorting .resultsTypes a,
+.forumail > .head .threaded a,
 .forumail .add {
     display: inline-block;
     text-align: center;
@@ -105,7 +103,6 @@ text-align: right;
     border-left: 1px dotted;
 }
 .forumail .post img.avatar {
-background: inherit;
     height: 1.27em;
     width: 1.27em;
 }
