@@ -202,7 +202,7 @@ class View(BrowserView):
 
     def removeParaPair(self, query, para_pair):
         query_splits = query.split(para_pair)
-        query_start = query_splits[0]
+        query_start = query_splits[0][:-1]
         query_end = query_splits[1]
         query = query_start + query_end
         if query.startswith('&'):
