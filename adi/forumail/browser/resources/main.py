@@ -218,9 +218,10 @@ class View(BrowserView):
         val = para_pair.split('=')[1]
 
         if query != '':
-            if query.find(para_pair) != -1:
+            if query.find(para + '=') != -1:
                 if para.endswith('%3Alist'):
-                    query = self.removeParaPair(query, para_pair)
+                    if query.find(para_pair) != -1:
+                        query = self.removeParaPair(query, para_pair)
                 else:
                     pass#self.exchangeParaVal
             else:
