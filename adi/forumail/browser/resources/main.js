@@ -41,10 +41,13 @@ function getUrlQueryVarVals(variable) {
     }
     return(vals)
 }
-function doAfterTinyMCELoaded() {
-    tinyMCE.getInstanceById('text').focus()
+function doAfterTinyMCELoaded(ini) {
+    if(ini=='false') {
+        tinyMCE.getInstanceById('text').focus()
+    }
     $('ul.formTabs').hide()
-    $('.reply.link').remove()
+    $('.add').remove()
+    $('.reply').remove()
 }
 function checkTinyMCELoaded() {
     // Thanks to Luca Fabbri, a.k.a. 'keul, for kindly sharing this snippet on:
@@ -53,25 +56,35 @@ function checkTinyMCELoaded() {
         setTimeout(checkTinyMCELoaded, 100)
         return
     }
-    doAfterTinyMCELoaded()
+    doAfterTinyMCELoaded(ini)
 }
-function replyClicked(eve, ini=false) {
+function replyClicked(eve, ini='false') {
+
     eve.preventDefault()
+
     var link = $(eve.target)
     var title = link.attr("href").split('&Title=')[1]
-    var reply_form = $('<div class="reply-form">Reply form\</div>').insertAfter(link.parent()).css({'height':'0','overflow':'hidden'})
+    var reply_form = $('<div class="reply-form">Reply form\</div>')
+                     .insertAfter(link.parent())
+                     .css({'height':'0','overflow':'hidden'})
+
     reply_form.load(window.location.href.split('?')[0] + '/createObject?type_name=News+Item', function() {
+
         hideReplyFormEles(reply_form)
-        if(ini) {
+
+        if(ini=='false') {
             reply_form.find('#title').val(title).hide()
         }
+
         reply_form.css('height', 'auto')
+
     });
-    setTimeout(checkTinyMCELoaded(), 100)
+
+    setTimeout(checkTinyMCELoaded(ini), 100)
+
 }
 function addClicked(eve) {
     replyClicked(eve, ini=true)
-    eve.preventDefault()
 }
 function loadResults(eve, results_id) {
 
@@ -108,22 +121,23 @@ function main() { if($('.section-forumail').length != -1) {
     
     iniApplyEventListeners(results_id)
 
+/*
    if($('.template-atct_edit').length != -1) {
 //    $('.add').click(function(eve) {
-//        eve.preventDefault()i
+//        eve.preventDefault()
         $('script').each(function () {
             var script = $(this)
             var source = String(script.attr('src'))
-console.debug(source)            
             if( endswith(source, 'form_tabbing.js') ) {
+console.debug(source)            
 
 console.debug('AHOI!')
 
-                script.remove()
+//                script.remove()
             }
         });
 //    });
     }
-
+*/
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
