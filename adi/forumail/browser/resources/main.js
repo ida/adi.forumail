@@ -91,15 +91,24 @@ function applyEventListeners(results_id) {
         loadResults(eve, results_id)
     });
 }
+function endswith(str, sub) {
+    if( str.sub(0, sub.length == sub) ) { return true }
+    else { return false }
+}
 function main() { if($('.section-forumail').length != -1) {
     
     var results_id = 'forum-body'
     
     applyEventListeners(results_id)
 
-    if($('.template-atct_edit').length != -1) {
-        console.log('AHOI!')
-    }
+//    if($('.template-atct_edit').length != -1) {
+        $('script').each(function () {
+            if( endswith(String($(this).attr('src')), '/form_tabbing.js') ) {
+console.log('AHOI!')
+                $(this).remove()
+            }
+        });
+//    }
 
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
