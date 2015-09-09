@@ -35,6 +35,13 @@ class View(BrowserView):
             add_url = forum_url + '/createObject?type_name=' + post_portal_type
         return add_url
 
+    def getCurrentUrlWithSearchQuery(self):
+        query = self.request['QUERY_STRING']
+        if query == '':
+            query = 'threaded=false'
+        url = self.request['ACTUAL_URL'] + '?' + query
+        return url
+
     def getForumUrl(self):
         forum_url = None
         context = aq_inner(self.context)
@@ -202,13 +209,7 @@ class View(BrowserView):
     def updateUrl(self, para_pair):
 #        if para in current_url:
 #            removePara
-        current_url = current_url + '&' + para_pair
+        current_url = self.getCurrentUrlWithSearchQuery() + '&' + para_pair
         return current_url
-#    def getCurrentUrlWithSearchQuery(self):
-#        query = self.request['QUERY_STRING']
-#        if query == '':
-#            query = 'threaded=false'
-#        url = self.request['ACTUAL_URL'] + '?' + query
-#        return url
 
 #EOF

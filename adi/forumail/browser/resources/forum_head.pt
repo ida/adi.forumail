@@ -7,9 +7,9 @@
                               forum_url view/getForumUrl;
                               updateUrl nocall: view/updateUrl;
                               current_url view/getCurrentUrlWithSearchQuery;">
-aha
+    <div tal:content="current_url" />
+<br>
     <div tal:content="python:updateUrl('threaded=1')" />
-soso
     <ul class="buttons">
         <li>
             <a class="back"
