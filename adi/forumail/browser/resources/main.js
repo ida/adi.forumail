@@ -68,24 +68,38 @@ function replyClicked(eve) {
     setTimeout(checkTinyMCELoaded(), 100)
 }
 function loadResults(eve, results_id) {
+
     eve.preventDefault()
+
     var url = $(eve.target).attr('href')
+
     setUrlWithoutReload(url)
-    $('#' + results_id).load(url + ' #' + results_id + '-loader', function () {
-    }); 
+
+    $('#' + results_id).load(url + ' #' + results_id + '-loader', function (response, status, xhr) {
+        if(status == "error") {
+            var msg1 = '<div>Sorry, but there was an error:</div>'
+            var msg2 = '<div>Please reload the page, you should get the selected results, then.</div>'
+            $('<div class="error">' + msg + xhr.status + ' ' + xhr.statusText + msg2 + '</div>').insertAfter('#' + results_id)
+        }
+    });
+}
+function applyEventListeners(results_id) {
+    $('.reply.link').click(function(eve) {
+        replyClicked(eve)
+    });
+    $('.sorting a').click(function(eve) {
+        loadResults(eve, results_id)
+    });
 }
 function main() { if($('.section-forumail').length != -1) {
     
     var results_id = 'forum-body'
     
-    $('.reply.link').click(function(eve) {
-        replyClicked(eve)
-    });
-    
-    $('.sorting a').click(function(eve) {
-        loadResults(eve, results_id)
-    });
+    applyEventListeners(results_id)
 
+    if($('.template-atct_edit').length != -1) {
+        console.log('AHOI!')
+    }
 
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
