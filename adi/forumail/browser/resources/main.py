@@ -16,17 +16,22 @@ class View(BrowserView):
 
     forum_body = ViewPageTemplateFile("forum_body.pt")
 
-    def render(self):
-        return self.index()
-
     def __call__(self):
         return self.render()
 
-    def renderForumHead(self):
-        return self.forum_head()
-
-    def renderForumBody(self):
-        return self.forum_body()
+    def exchangeParaVal(self, query, para, val):
+        query_splits = query.split(para)
+        query_start = query_splits[0]
+        query_rest = query_splits[1]
+        query_rest_splits = query_rest.split('&')
+        query_end_splits = query_rest_splits[1:]
+        if type(query_end_splits) == list:
+            query_end = '&'.join(query_end_splits)
+        else:
+            query_end = query_end_splits
+        if query_end != '': query_end = '&' + query_end
+        query = query_start + para + '=' + val + query_end
+        return query
 
     def getAddUrl(self):
         add_url = None
@@ -200,6 +205,15 @@ class View(BrowserView):
         if val in bool_true_symbolic_strings: return True
         else: return False
 
+    def render(self):
+        return self.index()
+
+    def renderForumHead(self):
+        return self.forum_head()
+
+    def renderForumBody(self):
+        return self.forum_body()
+
     def removeParaPair(self, query, para_pair):
         query_splits = query.split(para_pair)
         query_start = query_splits[0][:-1]
@@ -235,20 +249,6 @@ class View(BrowserView):
             query = para_pair
         new_url = url + '?' + query
         return new_url
-
-    def exchangeParaVal(self, query, para, val):
-        query_splits = query.split(para)
-        query_start = query_splits[0]
-        query_rest = query_splits[1]
-        query_rest_splits = query_rest.split('&')
-        query_end_splits = query_rest_splits[1:]
-        if type(query_end_splits) == list:
-            query_end = '&'.join(query_end_splits)
-        else:
-            query_end = query_end_splits
-        if query_end != '': query_end = '&' + query_end
-        query = query_start + para + '=' + val + query_end
-        return query
 
 #EOF
 
