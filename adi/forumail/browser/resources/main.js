@@ -5,23 +5,24 @@ function hideReplyFormEles(parent_ele) {
 '#portal-breadcrumbs',
 '#content > div:nth-child(1)',
 '#content > div:nth-child(2)',
+'#archetypes-fieldname-title .formQuestion',
 '#archetypes-fieldname-description',
-'#archetypes-fieldname-location',
-'#archetypes-fieldname-language',
-'#archetypes-fieldname-relatedItems',
+'#archetypes-fieldname-text .formQuestion',
+'.fieldTextFormat',
 '#archetypes-fieldname-image',
 '#archetypes-fieldname-imageCaption',
-'#archetypes-fieldname-title .formQuestion',
-'#archetypes-fieldname-text .formQuestion',
-'#archetypes-fieldname-subject .formQuestion',
+'#archetypes-fieldname-location',
 '#cmfeditions_version_comment_block',
-'.fieldTextFormat',
+
+'#archetypes-fieldname-language',
+'#archetypes-fieldname-relatedItems',
+'#archetypes-fieldname-subject .formQuestion',
 '#fieldset-dates',
 '#fieldset-creators',
 '#fieldset-settings',
     ]
     for(var i=0;i<hide_eles.length; i++) {
-        parent_ele.find(hide_eles[i]).hide()
+//        parent_ele.find(hide_eles[i]).hide()
     }
 }
 function setUrlWithoutReload(url) {
