@@ -54,7 +54,9 @@ class View(BrowserView):
         if context.Type() == post_portal_type:
             context = aq_parent(self.context)
         if self.getUrlParaVal('Subject'):
-            cats self.getUrlParaVal('Subject')
+            cats = self.getUrlParaVal('Subject')
+        else:
+            cats = self.context.Subject()
         posts = api.content.find(context=context,
                                  portal_type=post_portal_type,
                                  Subject=cats,
