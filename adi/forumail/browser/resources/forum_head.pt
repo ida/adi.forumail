@@ -6,10 +6,9 @@
 <div class="head" tal:define="ptype context/portal_type;
                               forum_url view/getForumUrl;
                               updateUrlQuery nocall: view/updateUrlQuery;">
+    <div tal:content="python:updateUrlQuery('threaded=1')" />
+<br>
     <div tal:content="python:updateUrlQuery('Subject%3Alist=communications')" />
-<!--
-    <div tal:content="python:updateUrl('threaded=1')" />
--->
     <ul class="buttons">
         <li>
             <a class="back"

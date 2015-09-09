@@ -210,7 +210,6 @@ class View(BrowserView):
         return query
 
     def updateUrlQuery(self, para_pair):
-        print 'A'
         new_url = None
         url = self.context.absolute_url()
         query = self.request['QUERY_STRING']
@@ -223,15 +222,23 @@ class View(BrowserView):
                     if query.find(para_pair) != -1:
                         query = self.removeParaPair(query, para_pair)
                 else:
-                    pass#self.exchangeParaVal
+                    self.exchangeParaVal(query, para, val)
             else:
-                query += para_pair
+                query += '&' + para_pair
         else:
             query = para_pair
         new_url = url + '?' + query
-#        print para_pair
-#        print url + '?' + query
-#        print new_url
         return new_url
 
+    def exchangeParaVal(self, query, para, val):
+        print query
+        print para 
+        print val
+        query_splits = query.split(para)
+        query_start = query_splits[0]
+        query_end = query_splits[1]
+        query_end_splits = query_end.split('&')
+        query_end = query_end_splits[1]
+        query = query_start + para + '=' + val + query_end
+        print query
 #EOF
