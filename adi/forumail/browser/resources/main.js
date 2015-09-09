@@ -13,16 +13,17 @@ function hideReplyFormEles(parent_ele) {
 '#archetypes-fieldname-imageCaption',
 '#archetypes-fieldname-location',
 '#cmfeditions_version_comment_block',
-
+/*
 '#archetypes-fieldname-language',
 '#archetypes-fieldname-relatedItems',
 '#archetypes-fieldname-subject .formQuestion',
 '#fieldset-dates',
 '#fieldset-creators',
 '#fieldset-settings',
+*/
     ]
     for(var i=0;i<hide_eles.length; i++) {
-//        parent_ele.find(hide_eles[i]).hide()
+        parent_ele.find(hide_eles[i]).hide()
     }
 }
 function setUrlWithoutReload(url) {
