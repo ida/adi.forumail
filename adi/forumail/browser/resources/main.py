@@ -49,17 +49,19 @@ class View(BrowserView):
         return forum_url
 
     def getPosts(self):
-        cats = []
         context = aq_inner(self.context)
         if context.Type() == post_portal_type:
             context = aq_parent(self.context)
         if self.getUrlParaVal('Subject'):
             cats = self.getUrlParaVal('Subject')
+            posts = api.content.find(context=context,
+                                     portal_type=post_portal_type,
+                                     Subject=cats,
+                                     sort_on='created',
+                                     sort_order='reverse')
         else:
-            cats = self.context.Subject()
-        posts = api.content.find(context=context,
+            posts = api.content.find(context=context,
                                  portal_type=post_portal_type,
-                                 Subject=cats,
                                  sort_on='created',
                                  sort_order='reverse')
         return posts
@@ -103,16 +105,13 @@ class View(BrowserView):
         posts = None
         context = aq_inner(self.context)
         threaded = self.getUrlParaVal('threaded')
-        if threaded in bool_true_symbolic_strings:
-            if context.Type() == post_portal_type:
-                posts = self.getThread(context.getId(), threaded)
+        if context.Type() == post_portal_type:
+            posts = self.getThread(context.getId(), threaded)
+        else:
+            if threaded in bool_true_symbolic_strings:
+                posts = self.getThreads()
             else:
                 posts = self.getPosts()
-        else:
-            if context.Type() == post_portal_type:
-                posts = self.getThread(context.getId(), threaded)
-            else:
-                posts = self.getThreads()
         return posts
 
     def getThreads(self):
