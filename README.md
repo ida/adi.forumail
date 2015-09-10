@@ -10,10 +10,10 @@ on the filesystem in plaintext. See installation-chapter below, for details.
 Mindset
 =======
 
-- Be robust *and* fancy: Work fully also, if Javascript is disabled, or is not a possibility for a user. Then, enhance with JS.magic.
-- _K_eep _I_t _S_imple, _S_weetheart: Dont' confuse simplicity with stupidity.
-- Keep it modular: Enhance to your will, but make sure components cann smoothly be added and removed.
-- Flat is better than nested: Well Emails are flat, let the forum be also a container simply holding a flat list of posts.
+- Be robust *and* fancy: Work fully also, if Javascript is disabled, or is not a possibility for a user. Then, enhance with JS-magic.
+- __K__eep __I__t __S__imple, __S__weetheart: Dont' confuse simplicity with stupidity.
+- Keep it modular: Enhance to your will, but make sure components can smoothly be added and removed.
+- Flat is better than nested: Well, Emails are flat, let the forum be also a container simply holding a flat list of posts.
 - Less is more: Try to avoid superfluous UI-elements, the slicker, the better.
 
 Preamble
