@@ -56,7 +56,7 @@ console.debug('ho')
     $('.add').remove()
     $('.reply').remove()
 }
-function checkTinyMCELoaded() {
+function checkTinyMCELoaded(ini) {
     // Thanks to Luca Fabbri, a.k.a. 'keul, for kindly sharing this snippet on:
     // http://stackoverflow.com/questions/32088348
     if (window.tinymce==undefined || !tinymce.editors.length) {
@@ -128,23 +128,5 @@ function main() { if($('.section-forumail').length != -1) {
     
     iniApplyEventListeners(results_id)
 
-/*
-   if($('.template-atct_edit').length != -1) {
-//    $('.add').click(function(eve) {
-//        eve.preventDefault()
-        $('script').each(function () {
-            var script = $(this)
-            var source = String(script.attr('src'))
-            if( endswith(source, 'form_tabbing.js') ) {
-console.debug(source)            
-
-console.debug('AHOI!')
-
-//                script.remove()
-            }
-        });
-//    });
-    }
-*/
 } /* EO .section-forumail */ } /* EO main */ main() }); /* EO doc.ready */ })(jQuery);
 
