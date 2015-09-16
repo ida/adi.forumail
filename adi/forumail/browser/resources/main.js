@@ -48,7 +48,6 @@ function doAfterTinyMCELoaded(ini) {
     }
     else {
         $('#fieldset-categorization').show(function() {
-console.debug('ho')
             $('.existingTagsTitle span').css('border','10px solid red')//.innerHTML = 'Select categories for this post:'
         });
     }
