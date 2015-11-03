@@ -15,18 +15,23 @@ body.section-forumail .newTagsSection {
 body.section-forumail #category a.link-category,
 body.section-forumail span.selectedTag,
 body.section-forumail {
-overflow:hidden; /*DEV*/
+overflow:hidden; /*
     background: #202D57;
     color: #e2e2e2;
     border-color: #e2e2e2;
+DEV*/
     line-height: 1.5em;
 }
 body.section-forumail #category a.link-category,
 body.section-forumail span.selectedTag {
+/*
     background: #205c90;
+*/
 }
 .forumail {
+/*
 border-color: #555;
+*/
 border: 1px dotted;
 max-width: 640px;
 margin: 0 auto;
@@ -47,22 +52,8 @@ float: right;
     text-align: center;
     width: 1em;
 }
-/*nightsight
-.forumail .sorting a.selected, 
-.forumail > .head input:checked + label {
-    color: #E5F2F5;
-}
-/*daysight
-.forumail .sorting a:not(.selected),
-.forumail > .head input:not(:checked) + label {
-    color: #E5F2F5;
-}
-*/
-
-
 .forumail .post {
 border: 1px dotted;
-    border: 1px dotted #999;
     padding: 0.27em;
     margin-top: 0.27em;
 }

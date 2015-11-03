@@ -1,66 +1,27 @@
 Introduction
 ============
 
-An experimental proof of concept for a mailinglist/forum-hybrid, realized with Plone.
-
-Currently ment for development-purposes only: Will store the inboxe's password
-on the filesystem in plaintext. See installation-chapter below, for details.
-
-
-Mindset
-=======
-
-- Be robust *and* fancy: Work fully also, if Javascript is disabled, or is not a possibility for a user. Then, enhance with JS-magic.
-- _K_eep _I_t _S_imple, _S_weetheart: Dont' confuse simplicity with stupidity.
-- Keep it modular: Enhance to your will, but make sure components can smoothly be added and removed.
-- Flat is better than nested: Well, Emails are flat, let the forum be also a container simply holding a flat list of posts.
-- Less is more: Try to avoid superfluous UI-elements, the slicker, the better.
-
-Preamble
-========
-
-If you have questions or suggestions or would like to contribute, don't
-hesitate to open an issue, or, if you don't have/want a GitHub-account,
-send a mail to <contact@ida-ebkes.eu>.
-
-Plone-newbies and -wannabies, are very welcome to participate, basic skills
-with CSS and/or JS and/or Python should help, but there's always non-programming
-things to do, just ping.
-
-If people get involved, the author (meh) will certainly love to move
-this addon into the collective-namespace.
+A mailinglist/forum-hybrid, realized with Plone.
 
 
 Requirements
 =============
 
-- Operating-system is unixish and the sys-pckgs Plone needs, are preinstalled.
+- SMTP-server for sending mails.
 
-- Two mailaccounts, residing at the same domain:
-One with SMTP-support for sending mail, e.g. 'forumail@example.org',
-and one with IMAP-support for receiving mail, e.g. 'forumailers@example.org'.
+- Mail-inbox with IMAP-support.
 
 
 Dependencies
 ============
 
-Will be installed by buildout along the way:
+- mailtoplone.base
 
-- mailtoplone.base (development-version)
-
-- collective.contentrules.mailtogroup (development-version)
-
-- collective.formcriteria
+- collective.contentrules.mailtogroup
 
 
 Installation
 ============
-
-You can use the installer-script './build_forumail.sh', read its first lines,
-to get further instructions, or, if you have a Plone-instance already, also do
-the following steps manually.
-
-Note: In the following, the usual prompt-prefix for commands is ommited, so one can copy'n'paste them, easier.
 
 
 Add cron for fetching mails of inbox
@@ -121,8 +82,8 @@ Modify your buildout.cfg accordingly:
             mailtoplone.base
 
 
-Update build
-------------
+Update build and raise server
+-----------------------------
 
     cd your/instance
     ./bin/instance stop
@@ -152,10 +113,11 @@ http://example.org:8080/yourPloneSiteId/++rule++forumail/@@manage-elements,
 scroll down to "Send email to groups and members", click "Edit".
 
 You should now get a popup-form, in there, enter your inbox-address in the 
-field "Email source", replace '[INBOX_MAIL_ADDRESS]' with your inbox-address, scroll down, click "Save".
+field "Email source", replace '[INBOX_MAIL_ADDRESS]' with your inbox-address,
+scroll down, click "Save".
 
-You'll land back on the contentrule-form. To be on the sure side, also there click "Save",
-right below the "Enabled"-field.
+You'll land back on the contentrule-form. To be on the sure side, also there
+click "Save", right below the "Enabled"-field.
 
 
 Define allowed categories
@@ -165,23 +127,25 @@ Navigate to:
 
     http://localhost:8080/Plone/forumail/edit/#fieldsetlegend-categorization
 
-Enter the categories you want to be available, where it's written "Create and apply new tags", and click save.
+Enter the categories you want to be available, where it's written "Create and
+apply new tags", click save.
 
 Categories are filtered of mails, whether the parent-folder holds the given
 categories, too, or not.
 
-Users adding posts via the web-UI can only choose of categories you defined on the
-forum's folder.
+Users adding posts via the web-UI can only choose of categories you defined on
+the forum's folder.
 
 
 Create users for forumail-group
 -------------------------------
 
 Before adding posts, please add at a least one user to the forumail-group,
-otherwise the mailnotifica-contentrule will rightfully moan, there's no
-recipients available to send the noti to.
+otherwise the mail-notifica-contentrule will rightfully moan there's no
+recipients available to send the notification to.
 
-Alternatively disable the contentrule, if you only want to use the forum's web-UI.
+Alternatively disable the contentrule, if you only want to use the forum's
+web-UI and don't need the mailing-functionality.
 
 Create users via:
 
