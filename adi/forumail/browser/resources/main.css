@@ -1,41 +1,9 @@
-/*
-*{outline:1px dotted red}
-202D57 plonedarkblue (like on '#category a.link-category:hover' of public.css))
-205c90 plonepublishedlinkblue
-E5F2F5 lightblue
-body.section-forumail:not(.userrole-manager) .selectedTagsSection,
-body.section-forumail:not(.userrole-manager) .newTagsSection {
-    display: none;
-}
-*/
-body.section-forumail .selectedTagsSection,
-body.section-forumail .newTagsSection {
-    display: none;
-}
-body.section-forumail #category a.link-category,
-body.section-forumail span.selectedTag,
-body.section-forumail {
-overflow:hidden; /*
-    background: #202D57;
-    color: #e2e2e2;
-    border-color: #e2e2e2;
-DEV*/
-    line-height: 1.5em;
-}
-body.section-forumail #category a.link-category,
-body.section-forumail span.selectedTag {
-/*
-    background: #205c90;
-*/
-}
 .forumail {
-/*
-border-color: #555;
-*/
-border: 1px dotted;
-max-width: 640px;
-margin: 0 auto;
-padding: 0.27em;
+    line-height: 1.5em;
+    border: 1px dotted;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0.27em;
 }
 .forumail > .head {
     padding: 0.27em 0;
@@ -44,7 +12,7 @@ padding: 0.27em;
 .forumail .add {
     font-weight: bold;
     font-size: 1.27em;
-float: right;
+    float: right;
 }
 .forumail > .head .threaded a,
 .forumail .add {
@@ -53,7 +21,7 @@ float: right;
     width: 1em;
 }
 .forumail .post {
-border: 1px dotted;
+    border: 1px dotted;
     padding: 0.27em;
     margin-top: 0.27em;
 }
@@ -86,15 +54,13 @@ border: 1px dotted;
 .forumail .post .head > * {
     margin-left:  0.27em;
     margin-right:  0.27em;
-float: right;
+    float: right;
 }
 .forumail .post .head > *:first-child { 
-/*    margin-left: 0;*/
-margin-right: 0;
+    margin-right: 0;
 }
 .forumail .post .head > *:last-child {
-/*    margin-right: 0;*/
-margin-left: 0;
+    margin-left: 0;
 }
 .forumail .post .foot {
 text-align: right;
@@ -117,5 +83,9 @@ text-align: right;
 }
 .section-forumail div.position-0 {
     margin-left: -100%;
+}
+body.section-forumail:not(.userrole-manager) .selectedTagsSection,
+body.section-forumail:not(.userrole-manager) .newTagsSection {
+    display: none;
 }
 

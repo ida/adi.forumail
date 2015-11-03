@@ -1,6 +1,7 @@
 (function($) { $(document).ready(function() {
 function hideReplyFormEles(parent_ele) {
     var hide_eles = [
+'#portal-footer-wrapper',
 '#portal-top',
 '#portal-breadcrumbs',
 '#content > div:nth-child(1)',
@@ -13,11 +14,11 @@ function hideReplyFormEles(parent_ele) {
 '#archetypes-fieldname-imageCaption',
 '#archetypes-fieldname-location',
 '#cmfeditions_version_comment_block',
-// addform:
+// Add-form:
 '#archetypes-fieldname-language',
 '#archetypes-fieldname-relatedItems',
 '#archetypes-fieldname-subject .formQuestion',
-/* rest of fieldsets, visible if js not enabled:
+/* Rest of fieldsets. Visible, if JS is disabled:
 '#fieldset-dates',
 '#fieldset-creators',
 '#fieldset-settings',
@@ -47,16 +48,14 @@ function doAfterTinyMCELoaded(ini) {
         tinyMCE.getInstanceById('text').focus()
     }
     else {
-        $('#fieldset-categorization').show(function() {
-            $('.existingTagsTitle span').css('border','10px solid red')//.innerHTML = 'Select categories for this post:'
-        });
+        $('#fieldset-categorization').show()
     }
     $('ul.formTabs').hide()
     $('.add').remove()
     $('.reply').remove()
 }
 function checkTinyMCELoaded(ini) {
-    // Thanks to Luca Fabbri, a.k.a. 'keul, for kindly sharing this snippet on:
+    // Thanks to Luca Fabbri, a.k.a. 'keul', for kindly sharing this snippet on:
     // http://stackoverflow.com/questions/32088348
     if (window.tinymce==undefined || !tinymce.editors.length) {
         setTimeout(checkTinyMCELoaded, 100)
@@ -104,7 +103,7 @@ function loadResults(eve, results_id) {
         if(status == "error") {
             var msg1 = '<div>Sorry, but there was an error:</div>'
             var msg2 = '<div>Please reload the page, you should get the selected results, then.</div>'
-            $('<div class="error">' + msg + xhr.status + ' ' + xhr.statusText + msg2 + '</div>').insertAfter('#' + results_id)
+            $('<div class="error">' + msg1 + xhr.status + ' ' + xhr.statusText + msg2 + '</div>').insertAfter('#' + results_id)
         }
         reApplyEventListeners()
     });
