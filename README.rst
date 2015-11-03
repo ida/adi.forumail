@@ -178,7 +178,7 @@ Send a mail to your inbox'es address.
 
 Optionally add categories in the last line of your mail like this:
 
-    [a category, another category, cat é gory]
+    ['a category', 'another category', 'cat é gory']
 
 
 Reply to post via mail
