@@ -47,8 +47,8 @@ When done, hit Esc-key for leaving insertion-mode and type ':wq' to save and
 close the file. The cron wil be active immediately.
 
 In case needed, you can remove the entry again like this:
-After opening with 'crontab -e', hit the 'd'-key as long,
- until nothing's left, then again do ':wq'.
+After opening with 'crontab -e', double-hit the 'd'-key,
+to remove the entry, then again do ':wq'.
 
 
 Get addon and its dependencies
@@ -178,7 +178,7 @@ Send a mail to your inbox'es address.
 
 Optionally add categories in the last line of your mail like this:
 
-    ['a category', 'another category', 'cat é gory']
+    [a category, another category, cat é gory]
 
 
 Reply to post via mail
