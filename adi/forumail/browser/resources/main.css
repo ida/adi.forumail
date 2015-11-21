@@ -50,6 +50,7 @@
 .forumail .post .head {
     color: #777;
     font-size: 0.77em;
+    clear: both;
 }
 .forumail .post .head > * {
     margin-left:  0.27em;
@@ -63,8 +64,8 @@
     margin-left: 0;
 }
 .forumail .post .foot {
-text-align: right;
     font-size: 0.77em;
+    text-align: right;
 }
 .forumail .post .header {
     font-size: 1.27em;
