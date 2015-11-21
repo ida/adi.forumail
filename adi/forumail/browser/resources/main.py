@@ -148,7 +148,7 @@ class View(BrowserView):
         thread_id = self.getThreadId(post_id)
         for post in posts:
             post_id = post['id']
-            if post_id == thread_id or self.isReply(post_id, thread_id):
+            if post_id == thread_id or self.isReplyOf(post_id, thread_id):
                 thread_posts += (post,)
         if threaded in bool_true_symbolic_strings:
             thread_posts = sorted(thread_posts, key = lambda post: (post.id))
@@ -171,7 +171,7 @@ class View(BrowserView):
     def getThreadIds(self, posts_ids, thread_id):
         thread_ids = ()
         for post_id in posts_ids:
-            if post_id == thread_id or self.isReply(post_id, thread_id):
+            if post_id == thread_id or self.isReplyOf(post_id, thread_id):
                 thread_ids += (post_id,)
         return thread_ids
 
@@ -199,7 +199,7 @@ class View(BrowserView):
         if reply_depth == 0: return True
         else: return False
 
-    def isReply(self, post_id, thread_id):
+    def isReplyOf(self, post_id, thread_id):
         IS_REPLY = False
         nrs = ['1','2','3','4','5','6','7','8','9','0']
         if len(post_id) >= len(thread_id) + 1 \
@@ -234,6 +234,12 @@ class View(BrowserView):
         if query.startswith('&'):
             query = query[1:]
         return query
+
+    def showInThreadedView(self, id_):
+        SHOW = True
+        if not self.isIniPost(id_) and self.isThreaded():
+            SHOW = False
+        return SHOW
 
     def updateUrlQuery(self, para_pair):
         new_url = None

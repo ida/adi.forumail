@@ -17,16 +17,18 @@ Additionally we can possibly insert eles between '.posts'-ele and '.post'-eles.
 <div class="post" tal:define="
     isIniPost nocall: view/isIniPost;
     getReplyDepthIter nocall: view/getReplyDepthIter;
+    showInThreadedView nocall: view/showInThreadedView;
     id post/id;
     title post/Title;
     categories post/Subject;
     author post/Creator;
     date post/CreationDate;
     date python: date[:10] + '&nbsp;' + date[12:16];
+    is_thread_ini python: isIniPost(id);
     post_url string:${forum_url}/${id};
     reply_url string:${add_post_url}&Title=${id};
     reply_depth_iter python: getReplyDepthIter(id);
-    is_thread_ini python: isIniPost(id);
+    show_in_threaded_view python: showInThreadedView(id);
     text python: post.getObject().getText();"
     tal:attributes="class string:post ini${is_thread_ini}">
     <div class="head">
@@ -52,7 +54,7 @@ Date
 Author
         </span>
         <span class="categories"
-              tal:define="cats python: len(categories)"
+              tal:define="cats python: show_in_threaded_view and len(categories)"
               tal:condition="python: cats != 0">
 [<span class="category" tal:repeat="cat categories"><span tal:content="cat">
 A category
@@ -63,12 +65,17 @@ A category
         </span>
     </div><tal:comment tal:replace="nothing">EO .post .head</tal:comment>
     <div class="header">
+        <a  tal:condition="show_in_threaded_view" tal:content="title" tal:attributes="class string:title; href string:${post_url}">
+Title
+        </a>
+        <!--
         <a  tal:condition="python: is_thread_ini and threaded" tal:content="title" tal:attributes="class string:title; href string:${post_url}">
 Title
         </a>
         <a tal:condition="not: is_thread_ini" tal:content="id" tal:attributes="class string:id; href string:${post_url}">
 Id
         </a>
+        -->
     </div><tal:comment tal:replace="nothing">EO .post .header</tal:comment>
     <div class="body">
         <tal:indentator tal:condition="threaded" tal:repeat="i reply_depth_iter"
