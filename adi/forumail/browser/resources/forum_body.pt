@@ -54,18 +54,14 @@ Author
         <span class="categories"
               tal:define="cats python: len(categories)"
               tal:condition="python: cats != 0">
-[
-            <span class="category" tal:repeat="cat categories">
-                <span tal:content="cat">
+[<span class="category" tal:repeat="cat categories"><span tal:content="cat">
 A category
                 </span><span tal:condition="python: repeat['cat'].number() != repeat['cat'].length()"
-                      tal:content="string:,">
+                      tal:content="string:, ">
 ,
-                </span>
-             </span>
-]
+                </span></span>]
         </span>
-    </div><tal:comment tal:replace="nothing">.post .head</tal:comment>
+    </div><tal:comment tal:replace="nothing">EO .post .head</tal:comment>
     <div class="header">
         <a  tal:condition="python: is_thread_ini and threaded" tal:content="title" tal:attributes="class string:title; href string:${post_url}">
 Title
@@ -73,7 +69,7 @@ Title
         <a tal:condition="not: is_thread_ini" tal:content="id" tal:attributes="class string:id; href string:${post_url}">
 Id
         </a>
-    </div><tal:comment tal:replace="nothing">.post .header</tal:comment>
+    </div><tal:comment tal:replace="nothing">EO .post .header</tal:comment>
     <div class="body">
         <tal:indentator tal:condition="threaded" tal:repeat="i reply_depth_iter"
          tal:define='opening_tag string:&lt;div class="indentator"&gt;' tal:content="structure opening_tag"/>
@@ -87,8 +83,8 @@ Text
 Reply
         </a>
     </div>
-</div><tal:comment tal:replace="nothing">.post</tal:comment>
+</div><tal:comment tal:replace="nothing">EO .post</tal:comment>
 </tal:repetitor>
-</div><tal:comment tal:replace="nothing">#forum-body-loader</tal:comment>
-</div><tal:comment tal:replace="nothing">#forum-body</tal:comment>
+</div><tal:comment tal:replace="nothing">EO #forum-body-loader</tal:comment>
+</div><tal:comment tal:replace="nothing">EO #forum-body</tal:comment>
 
