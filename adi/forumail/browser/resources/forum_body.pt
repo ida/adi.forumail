@@ -51,14 +51,19 @@ Date
         <span class="author" tal:content="author">
 Author
         </span>
-        <span id="category" class="categories"
-              tal:condition="python: len(categories) != 0">
-              <a class="link-category category"
-                 tal:repeat="cat categories"
-                 tal:attributes="href string:${navroot_url}/@@search?Subject%3Alist=${cat}"
-                 tal:content="cat">
+        <span class="categories"
+              tal:define="cats python: len(categories)"
+              tal:condition="python: cats != 0">
+[
+            <span class="category" tal:repeat="cat categories">
+                <span tal:content="cat">
 A category
-             </a>
+                </span><span tal:condition="python: repeat['cat'].number() != repeat['cat'].length()"
+                      tal:content="string:,">
+,
+                </span>
+             </span>
+]
         </span>
     </div><tal:comment tal:replace="nothing">.post .head</tal:comment>
     <div class="header">
