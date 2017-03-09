@@ -35,21 +35,6 @@ sender_user_id=''   # some-domain-0042
 smtp_host=''        # smtp.provider.org
 smtp_port=25
 
-
-inbox_address=forumailers@ida-ebkes.eu
-inbox_password=2DragO7fdh
-inbox_user_id=ida-ebkeseu-0004
-
-imap_host=imap.udag.de
-imap_port=993
-
-sender_address=forumail@ida-ebkes.eu
-sender_password=$inbox_password
-sender_user_id=ida-ebkeseu-0003
-
-smtp_host=smtp.udag.de
-smtp_port=25
-
 # Optionally change:
 
 project_dir=$HOME/forumail
