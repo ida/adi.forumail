@@ -52,7 +52,7 @@ plone_version='4.3.6'
 #
 # Count in about 15 minutes for the install, if you're not using a shared eggs-dir.
 #
-# If everything went allright, you should see 'ZOPE ready for taking requests', the
+# If everything went allright, you should see 'ZOPE ready for taking requests' on the
 # prompt, then open http://localhost:8080/Plone/forumail and login with 'admin:admin'.
 #
 #
@@ -170,7 +170,7 @@ products = adi.forumail
 }
 buildOut() {
     cd $instance_dir
-    buildout -U # U(pdate)-option ignores a possible existing '~/.buildout/default.cfg'.
+    buildout -U # U(pdate)-option ignores a possibly existing '~/.buildout/default.cfg'.
                     echo $devinfo_prefix Buildout finished.
 }
 runInstance() {
